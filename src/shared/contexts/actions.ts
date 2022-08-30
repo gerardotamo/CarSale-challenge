@@ -8,5 +8,5 @@ export enum Type {
 
 export interface Action {
     type: Type,
-    payload: User
+    payload: User | undefined
 }
