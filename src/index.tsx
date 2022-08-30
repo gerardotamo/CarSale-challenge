@@ -4,6 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StoreProvider } from './shared/contexts/StoreProvider';
+import { ApolloClient, HttpLink, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+export const link = new HttpLink({
+  uri: 'https://new-anchovy-87.hasura.app/v1/graphql',
+  headers: {
+    'x-hasura-admin-secret': 'rTisquXVdS2Ffxe5nK92OnNQjK72OpuKTPWUpM4kbr33bUF5zVHj63tET1N8jhez'
+  }
+})
+export const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link
+})
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +23,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <StoreProvider>
-      <App />
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
     </StoreProvider>
   </React.StrictMode>
 );
