@@ -1,15 +1,19 @@
-import { User } from "../contexts/provider.types";
 
 const storage = () => {
     function get(name: string) {
         return localStorage.getItem(name) === null ? {
             auth: {
-                admin: {}
+                admin: {
+                    uuid: undefined
+                }
             }
         }
             : {
                 auth: {
-                    admin: JSON.stringify(localStorage.getItem(name))
+                    admin: {
+                        uuid: '',
+                        ...JSON.parse(JSON.stringify(localStorage.getItem(name)))
+                    }
                 }
             }
 

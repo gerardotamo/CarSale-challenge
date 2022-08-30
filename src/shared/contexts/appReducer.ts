@@ -20,7 +20,9 @@ export function appReducer(state: Appstate, action: Action) {
             return {
                 ...state,
                 auth: {
-                    admin: {}
+                    admin: {
+                        
+                    }
                 }
             }
     }
