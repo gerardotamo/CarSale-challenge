@@ -1,11 +1,11 @@
 import * as usersQuery from '../../../shared/graphql/query/userQuery';
 import { useLazyQuery } from '@apollo/client'
 
-export const useFindUser = (email: string) => {
+export const useFindUser = () => {
     const [getUser, result] = useLazyQuery(usersQuery.FIND_USER);
 
-    const findUser = () => {
-        getUser({
+    const findUser = async (email: string) => {
+        await getUser({
             variables: {
                 "where": {
                     "email": {

@@ -22,9 +22,14 @@ const storage = () => {
         return localStorage.setItem(key, value)
     }
 
+    function remove(name: string) {
+        return localStorage.removeItem(name);
+    }
+
     return {
         get: get,
-        set: set
+        set: set,
+        remove
     }
 
 };

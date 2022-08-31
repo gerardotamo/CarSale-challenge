@@ -20,6 +20,7 @@ export const FIND_USER = gql`
             email
             first_name
             last_name
+            uuid
         }
      }
 `

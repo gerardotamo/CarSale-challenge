@@ -21,7 +21,7 @@ const Welcome = () => {
     <styled.Container >
       <styled.Section>
         {
-          uuid &&
+          uuid !== undefined &&
           <Button>Favorites</Button>
         }
         <Link to={'cars'}>

@@ -10,6 +10,7 @@ export function appReducer(state: Appstate, action: Action) {
     const { type, payload } = action;
     switch (type) {
         case Type.LOGIN:
+            storage.set('user', JSON.stringify(payload))
             return {
                 ...state,
                 auth: {
@@ -17,6 +18,7 @@ export function appReducer(state: Appstate, action: Action) {
                 }
             }
         case Type.LOGOUT:
+            storage.remove('user')
             return {
                 ...state,
                 auth: {
