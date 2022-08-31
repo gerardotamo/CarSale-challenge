@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom"
+import Navbar from "../../../components/NavBar/Navbar"
 import { FavoritesCars } from "../../../pages/FavoritesCars/FavoritesCars"
 import { Login } from "../../../pages/Login/Login"
 import { Cars } from "../../../pages/ViewCars/Cars"
@@ -8,10 +9,13 @@ import ProtectedRoutes from "../ProtectedRoutes/ProtectedRoutes"
 const AppRouter = () => {
     return (
         <Routes>
-            <Route element={<Welcome />} path="/" />
-            <Route element={<Cars />} path="cars/" />
-            <Route element={<ProtectedRoutes />}>
-                <Route element={<FavoritesCars />} path="cars/favorites" />
+            <Route element={<Navbar />}>
+                <Route element={<Welcome />} path="/" />
+                <Route element={<Cars />} path="cars/" />
+                <Route element={<ProtectedRoutes />}>
+                    <Route element={<FavoritesCars />} path="cars/favorites" />
+                </Route>
+
             </Route>
             <Route element={<Login />} path="login" />
         </Routes>

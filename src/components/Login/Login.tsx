@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { BaseColor } from '../../config/color';
 import { Type } from '../../shared/contexts/actions';
 import { useGeneralContext } from '../../shared/contexts/StoreProvider';
 import { useFindUser } from '../../shared/graphql/request/userRequest';
@@ -15,10 +16,13 @@ const LoginComponent = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (result.data !== undefined && result.data?.users.length !==0) {
+        if (result.data !== undefined && result.data?.users.length !== 0) {
             console.log("RESULTADO", result.data)
-            context?.dispatch({type:Type.LOGIN, payload: result.data?.users[0]})
+            context?.dispatch({ type: Type.LOGIN, payload: result.data?.users[0] })
             return navigate('/')
+        }
+        if (result.data?.users.length === 0) {
+            setError('Email not register')
         }
     }, [result.data])
 
@@ -42,19 +46,16 @@ const LoginComponent = () => {
 
     return (
         <Form >
-            <h1>
-                {
 
-
-                }
-            </h1>
             <Section>
-                <TextInput placeholder='email' value={email} onChange={(text) => setEmail(text.target.value)} />
+                <TextInput placeholder='Email' value={email} onChange={(text) => setEmail(text.target.value)} />
                 <ErrorText> {error} </ErrorText>
             </Section>
-            <Button border='5px' onClick={handleClickLogin} disabled={result.loading}>
+            <ButtonLogin border='5px' onClick={handleClickLogin}
+                disabled={result.loading} borderColor={BaseColor.lightBluePrimaryColor}
+                backgroundColor={BaseColor.blackSecondaryColor} color={BaseColor.lightBluePrimaryColor} disable={result.loading}>
                 {result.loading ? "Loading..." : "Login"}
-            </Button>
+            </ButtonLogin>
         </Form>
     )
 }
@@ -62,14 +63,27 @@ const LoginComponent = () => {
 
 export default LoginComponent;
 
+
+
 const Form = styled('form')`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: ${BaseColor.blueDarkColor};
+    padding: 50px;
+    justify-content: center;
+    border-radius: 15px;
 `
 
 const TextInput = styled('input')`
-    
+    height: 30px;
+    border: 0px solid;
+    border-bottom-width: 2px;
+    border-bottom-color: ${BaseColor.lightBluePrimaryColor};
+    background-color: ${BaseColor.blueDarkColor};
+    outline: none;
+    color: ${BaseColor.whiteColor};
+    margin-bottom: 15px;
 `
 
 const ErrorText = styled('p')`
@@ -80,4 +94,13 @@ const ErrorText = styled('p')`
 `
 const Section = styled('div')`
     
+`
+const ButtonLogin = styled(Button) <{ disable: boolean }>`
+    cursor: ${props => props.disable ? "wait": "pointer" };
+    
+    width: 100%;
+    :hover{
+        background-color: ${props => props.disable ? '' : BaseColor.lightBluePrimaryColor};
+        color: ${props => props.disable ? '' : BaseColor.whiteColor};
+    }
 `

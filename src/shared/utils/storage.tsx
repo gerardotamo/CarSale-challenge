@@ -12,7 +12,7 @@ const storage = () => {
                 auth: {
                     admin: {
                         uuid: '',
-                        ...JSON.parse(JSON.stringify(localStorage.getItem(name)))
+                        ...JSON.parse((localStorage.getItem(name)?.toString()) || "")
                     }
                 }
             }
