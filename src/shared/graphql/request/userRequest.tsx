@@ -18,6 +18,9 @@ export const useFindUser = () => {
 
     return {
         findUser,
-        result
+        errorRequest: result.error,
+        data: result.data,
+        loading: result.loading
     }
+
 }

@@ -1,3 +1,4 @@
+import { ApolloError } from '@apollo/client';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,21 +11,26 @@ import Button from '../Button/Button';
 
 const LoginComponent = () => {
     const [email, setEmail] = useState('');
-    const [error, setError] = useState('')
-    const { findUser, result } = useFindUser()
-    const context = useGeneralContext()
+    const [error, setError] = useState('');
+    const { findUser, errorRequest, data, loading } = useFindUser();
+
     const navigate = useNavigate()
 
+    const { dispatch } = useGeneralContext();
+
     useEffect(() => {
-        if (result.data !== undefined && result.data?.users.length !== 0) {
-            console.log("RESULTADO", result.data)
-            context?.dispatch({ type: Type.LOGIN, payload: result.data?.users[0] })
+        if (errorRequest?.message) {
+            return setError(errorRequest?.message + "")
+        }
+
+        if (data !== undefined && data?.users.length !== 0) {
+            dispatch({ type: Type.LOGIN, payload: data?.users[0] })
             return navigate('/')
         }
-        if (result.data?.users.length === 0) {
+        if (data?.users.length === 0) {
             setError('Email not register')
         }
-    }, [result.data])
+    }, [data, errorRequest])
 
     const handleClickLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -33,10 +39,11 @@ const LoginComponent = () => {
                 return setError('Email not valid')
             }
             setError('')
+            console.log(errorRequest?.graphQLErrors)
             await findUser(email);
-            //console.log(result.data)
-        } catch (error) {
-            console.log(error)
+            console.log(errorRequest?.cause)
+        } catch (e) {
+            console.log("ERROR CARCH", e)
         }
     }
 
@@ -52,9 +59,9 @@ const LoginComponent = () => {
                 <ErrorText> {error} </ErrorText>
             </Section>
             <ButtonLogin border='5px' onClick={handleClickLogin}
-                disabled={result.loading} borderColor={BaseColor.lightBluePrimaryColor}
-                 disable={result.loading}>
-                {result.loading ? "Loading..." : "Login"}
+                disabled={loading} borderColor={BaseColor.lightBluePrimaryColor}
+                disable={loading}>
+                {loading ? "Loading..." : "Login"}
             </ButtonLogin>
         </Form>
     )
@@ -96,7 +103,7 @@ const Section = styled('div')`
     
 `
 const ButtonLogin = styled(Button) <{ disable: boolean }>`
-    cursor: ${props => props.disable ? "wait": "pointer" };
+    cursor: ${props => props.disable ? "wait" : "pointer"};
     
     width: 100%;
     

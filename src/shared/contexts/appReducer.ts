@@ -27,5 +27,9 @@ export function appReducer(state: Appstate, action: Action) {
                     }
                 }
             }
+        default:
+            return {
+                ...state
+            }
     }
 }

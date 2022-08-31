@@ -10,8 +10,7 @@ export const Login = () => {
 
 
     const context = useGeneralContext();
-    const uuid = context?.state.auth.admin.uuid;
-
+    const uuid = context.state.auth.admin.uuid;
 
     if (uuid !== undefined) {
         return <Navigate to={"/"} />

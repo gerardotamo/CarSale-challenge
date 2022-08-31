@@ -1,9 +1,10 @@
 import React, { useContext, useReducer, createContext } from "react";
+import { Action } from "./actions";
 import { Appstate, initialAppState, appReducer, ReducerActions } from './appReducer'
 
 type Dispatch = (action: ReducerActions) => void
 
-export const GeneralContext = createContext<{ state: Appstate, dispatch: Dispatch } | undefined>(undefined);
+const GeneralContext = createContext<{ state: Appstate, dispatch: React.Dispatch<ReducerActions> } | undefined>(undefined);
 
 export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(appReducer, initialAppState);
@@ -17,6 +18,8 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useGeneralContext = () => {
     const context = useContext(GeneralContext);
-    if (context === null) throw new Error('useGeneralContext must be used within a StoreProvider')
+    if (!context) {
+        throw new Error('useGeneralContext must be used within a StoreProvider')
+    }
     return context
 }
