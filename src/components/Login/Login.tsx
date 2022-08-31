@@ -53,7 +53,7 @@ const LoginComponent = () => {
             </Section>
             <ButtonLogin border='5px' onClick={handleClickLogin}
                 disabled={result.loading} borderColor={BaseColor.lightBluePrimaryColor}
-                backgroundColor={BaseColor.blackSecondaryColor} color={BaseColor.lightBluePrimaryColor} disable={result.loading}>
+                 disable={result.loading}>
                 {result.loading ? "Loading..." : "Login"}
             </ButtonLogin>
         </Form>
@@ -99,8 +99,5 @@ const ButtonLogin = styled(Button) <{ disable: boolean }>`
     cursor: ${props => props.disable ? "wait": "pointer" };
     
     width: 100%;
-    :hover{
-        background-color: ${props => props.disable ? '' : BaseColor.lightBluePrimaryColor};
-        color: ${props => props.disable ? '' : BaseColor.whiteColor};
-    }
+    
 `

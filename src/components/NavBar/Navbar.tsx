@@ -24,14 +24,14 @@ const Navbar = () => {
                 {
                     admin.uuid !== undefined &&
                     <Link to={'cars/favorites'}>
-                        <Button backgroundColor={BaseColor.lightBluePrimaryColor}>Favorites</Button>
+                        <Button >Favorites</Button>
                     </Link>
                 }
                 <Link to={'cars'}>
-                    <Button backgroundColor={BaseColor.lightBluePrimaryColor}>Cars</Button>
+                    <Button>Cars</Button>
                 </Link>
                 <styled.SectionLogin>
-                    <Button onClick={handleAuthentication} backgroundColor={BaseColor.lightBluePrimaryColor}>{admin.uuid === undefined ? 'Login' : 'Logout'}</Button>
+                    <Button onClick={handleAuthentication} >{admin.uuid === undefined ? 'Login' : 'Logout'}</Button>
                     {admin.uuid === undefined ? '' :
                         <styled.EmailText color={BaseColor.lightBluePrimaryColor}>
                             {admin.email}

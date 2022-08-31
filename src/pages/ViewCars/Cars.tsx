@@ -1,7 +1,9 @@
-import React from 'react'
+import * as styled from './styled'
 
 export const Cars = () => {
   return (
-    <div>Cars</div>
+    <styled.Container>
+        CARS
+    </styled.Container>
   )
 }
