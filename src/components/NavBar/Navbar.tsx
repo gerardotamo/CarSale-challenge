@@ -8,7 +8,7 @@ import * as styled from './styled';
 
 const Navbar = () => {
     const context = useGeneralContext();
-    const admin: User = (context?.state.auth.admin);
+    const admin: User = (context.state.auth.admin);
     const navigate = useNavigate()
 
     const handleAuthentication = () => {
@@ -16,7 +16,7 @@ const Navbar = () => {
             return navigate('login');
         }
 
-        context?.dispatch({ type: Type.LOGOUT, payload: undefined })
+        context.dispatch({ type: Type.LOGOUT, payload: undefined })
     }
     return (
         <>
