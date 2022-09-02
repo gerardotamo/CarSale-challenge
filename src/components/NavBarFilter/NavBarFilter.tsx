@@ -53,7 +53,7 @@ const Container = styled('div')`
     padding-inline: 20px;
     background-color: ${BaseColor.blackSecondaryColor};
     position: fixed;
-    margin-top: 70px;
+    margin-top: 65px;
     width: 96%;
     height: 45px;
 `

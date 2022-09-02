@@ -9,6 +9,9 @@ const BlackColor = {
     blackPrimaryColor: "black",
     blackSecondaryColor: "#222D32"
 }
+const GrayColor = {
+    primaryGrayColor: '#495057'
+}
 const YellowColor ={
     yellowPrimaryColor: "#ffb838"
 }
@@ -17,6 +20,7 @@ const BaseColor = {
     ...BluewColor,
     ...BlackColor,
     ...LightBlueColor,
+    ...GrayColor,
     primaryColor: "#282c34",
     whiteColor: "#FFFFFF",
     fieldColor: "#F5F6FC",
