@@ -20,7 +20,7 @@ const LoginComponent = () => {
 
     useEffect(() => {
         if (errorRequest?.message) {
-            return setError(errorRequest?.message + "")
+            return setError(errorRequest?.clientErrors + "")
         }
 
         if (data !== undefined && data?.users.length !== 0) {

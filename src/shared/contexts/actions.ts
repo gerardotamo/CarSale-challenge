@@ -1,5 +1,4 @@
-import { User } from './provider.types'
-
+import { Users } from '../graphql/__generate__/generated'
 
 export enum Type {
     LOGIN = 'APP_LOGIN',
@@ -8,5 +7,5 @@ export enum Type {
 
 export interface Action {
     type: Type,
-    payload: User | undefined 
+    payload: Users | undefined 
 }
