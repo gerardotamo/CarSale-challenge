@@ -8,7 +8,8 @@ export const Section = styled("div")`
     width: 100%;
     background-color: ${BaseColor.blueDarkColor};
     justify-content: flex-end;
-    
+    position: fixed;
+    height: 65px;
 `
 export const SectionLogin = styled('div')`
     display: flex;

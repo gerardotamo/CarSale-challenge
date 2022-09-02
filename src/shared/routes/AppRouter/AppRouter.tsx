@@ -3,7 +3,7 @@ import Navbar from "../../../components/NavBar/Navbar"
 import NavBarFilter from "../../../components/NavBarFilter/NavBarFilter"
 import { FavoritesCars } from "../../../pages/FavoritesCars/FavoritesCars"
 import { Login } from "../../../pages/Login/Login"
-import { Cars } from "../../../pages/ViewCars/Cars"
+import { ViewCars } from "../../../pages/ViewCars/Cars"
 import Welcome from "../../../pages/Welcome/Welcome"
 import ProtectedRoutes from "../ProtectedRoutes/ProtectedRoutes"
 
@@ -13,7 +13,7 @@ const AppRouter = () => {
             <Route element={<Navbar />}>
                 <Route element={<Welcome />} path="/" />
                 <Route element={<NavBarFilter />}>
-                    <Route element={<Cars />} path="cars/" />
+                    <Route element={<ViewCars />} path="cars/" />
                     <Route element={<ProtectedRoutes />}>
                         <Route element={<FavoritesCars />} path="cars/favorites" />
                     </Route>

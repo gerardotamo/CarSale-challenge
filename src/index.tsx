@@ -9,7 +9,7 @@ import { onError } from '@apollo/client/link/error'
 import { GraphQLError } from 'graphql'
 import { NetworkError } from '@apollo/client/errors';
 export const link = new HttpLink({
-  uri: 'https://new-anchovy-87.hasura.app/v1/graphqla',
+  uri: 'https://new-anchovy-87.hasura.app/v1/graphql',
   headers: {
     'x-hasura-admin-secret': 'rTisquXVdS2Ffxe5nK92OnNQjK72OpuKTPWUpM4kbr33bUF5zVHj63tET1N8jhez'
   },

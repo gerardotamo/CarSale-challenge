@@ -1,7 +1,9 @@
 import React from 'react'
-
+import * as styled from './styled'
 export const FavoritesCars = () => {
   return (
-    <div>FavoritesCars</div>
+    <styled.Container>
+      Favorites
+    </styled.Container>
   )
 }

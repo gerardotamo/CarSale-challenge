@@ -52,7 +52,10 @@ const Container = styled('div')`
     grid-gap: 20px;
     padding-inline: 20px;
     background-color: ${BaseColor.blackSecondaryColor};
-    padding-top: 15px;
+    position: fixed;
+    margin-top: 70px;
+    width: 96%;
+    height: 45px;
 `
 
 const Section = styled('div')`
