@@ -33,7 +33,7 @@ export const ViewCars = () => {
           )
         })
         :
-        ['', '', ''].map((item, index) => {
+        ['', ''].map((item, index) => {
           return (
             <CardItem loading={true} data={undefined} key={index} />
           )

@@ -27,10 +27,36 @@ export const CardItem = ({ loading, data }: Props) => {
                         baseColor={BaseColor.blueDarkColor}
                         highlightColor={BaseColor.lightBluePrimaryColor}>
                         <Skeleton width={155} height={116} />
+                        <InfoContainer>
+                            <Skeleton width={120} />
+                            <Section>
+                                <Skeleton width={100} />
+                                <Skeleton width={180} height={10} />
+                            </Section>
+                            <Skeleton width={120} />
+                        </InfoContainer>
+                        <InfoContainer>
+                            <Section>
+                                <Skeleton width={80} />
+                                <Skeleton width={50} height={10} />
+                            </Section>
+                            <Section>
+                                <Skeleton width={80} />
+                                <Skeleton width={50} height={10} />
+                            </Section>
+                        </InfoContainer>
                         <Skeleton width={70} />
-                        <Skeleton width={70} />
-                        <Skeleton width={70} />
-                        <Skeleton width={70} />
+                        
+                        <InfoContainer>
+                            <Section>
+                                <Skeleton width={50} />
+                                <Skeleton width={30} height={10} />
+                            </Section>
+                            <Section>
+                                <Skeleton width={50} />
+                                <Skeleton width={30} height={10} />
+                            </Section>
+                        </InfoContainer>
                     </SkeletonTheme>
                     :
                     data &&
