@@ -6,11 +6,10 @@ import { BaseColor } from "../../config/color";
 import { Cars } from "../../shared/graphql/__generate__/generated";
 import Button from "../Button/Button";
 interface Props {
-  loading: boolean;
   data: Cars | undefined;
 }
 
-export const CardItem = ({ loading, data }: Props) => {
+export const CardItem = ({ data }: Props) => {
   const condition = { A: "Salvage title", N: "New" };
   let cond: string = "Other";
   if (data?.condition === "A") {
@@ -21,91 +20,51 @@ export const CardItem = ({ loading, data }: Props) => {
 
   return (
     <Container>
-      {loading ? (
-        <SkeletonTheme
-          baseColor={BaseColor.blueDarkColor}
-          highlightColor={BaseColor.lightBluePrimaryColor}
-        >
-          <Skeleton width={155} height={116} />
+      {data && (
+        <>
+          <Image src={Delorean} />
           <InfoContainer>
-            <Skeleton width={120} />
+            <Title color={BaseColor.lightBluePrimaryColor}>{data.title}</Title>
             <Section>
-              <Skeleton width={100} />
-              <Skeleton width={180} height={10} />
+              <InfoItem>Batch number</InfoItem>
+              <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
+                {data.batch}
+              </SubInfoItem>
             </Section>
-            <Skeleton width={120} />
+            <AddFavoriteBUtton>Add Favorite</AddFavoriteBUtton>
           </InfoContainer>
           <InfoContainer>
             <Section>
-              <Skeleton width={80} />
-              <Skeleton width={50} height={10} />
+              <InfoItem>Odometer</InfoItem>
+              <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
+                {data.odometer}
+              </SubInfoItem>
             </Section>
             <Section>
-              <Skeleton width={80} />
-              <Skeleton width={50} height={10} />
+              <InfoItem>Price</InfoItem>
+              <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
+                {data.price}
+              </SubInfoItem>
             </Section>
           </InfoContainer>
-          <Skeleton width={70} />
+          <InfoContainer>
+            <InfoItem>{cond}</InfoItem>
+          </InfoContainer>
           <InfoContainer>
             <Section>
-              <Skeleton width={50} />
-              <Skeleton width={30} height={10} />
+              <InfoItem>City</InfoItem>
+              <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
+                {data.city.name}
+              </SubInfoItem>
             </Section>
             <Section>
-              <Skeleton width={50} />
-              <Skeleton width={30} height={10} />
+              <InfoItem>State</InfoItem>
+              <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
+                {data.city.state.name}
+              </SubInfoItem>
             </Section>
           </InfoContainer>
-        </SkeletonTheme>
-      ) : (
-        data && (
-          <>
-            <Image src={Delorean} />
-            <InfoContainer>
-              <Title color={BaseColor.lightBluePrimaryColor}>
-                {data.title}
-              </Title>
-              <Section>
-                <InfoItem>Batch number</InfoItem>
-                <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
-                  {data.batch}
-                </SubInfoItem>
-              </Section>
-              <AddFavoriteBUtton>Add Favorite</AddFavoriteBUtton>
-            </InfoContainer>
-            <InfoContainer>
-              <Section>
-                <InfoItem>Odometer</InfoItem>
-                <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
-                  {data.odometer}
-                </SubInfoItem>
-              </Section>
-              <Section>
-                <InfoItem>Price</InfoItem>
-                <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
-                  {data.price}
-                </SubInfoItem>
-              </Section>
-            </InfoContainer>
-            <InfoContainer>
-              <InfoItem>{cond}</InfoItem>
-            </InfoContainer>
-            <InfoContainer>
-              <Section>
-                <InfoItem>City</InfoItem>
-                <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
-                  {data.city.name}
-                </SubInfoItem>
-              </Section>
-              <Section>
-                <InfoItem>State</InfoItem>
-                <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
-                  {data.city.state.name}
-                </SubInfoItem>
-              </Section>
-            </InfoContainer>
-          </>
-        )
+        </>
       )}
     </Container>
   );

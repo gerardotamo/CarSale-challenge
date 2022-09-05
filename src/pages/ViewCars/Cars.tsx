@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CardItem } from "../../components/CardItem/CardItem";
 import { ALL_CARS } from "../../shared/graphql/query/carQuery";
 import { Cars } from "../../shared/graphql/__generate__/generated";
+import { SkeletonCar } from "./SkeletonCar";
 import * as styled from "./styled";
 
 export const ViewCars = () => {
@@ -21,10 +22,10 @@ export const ViewCars = () => {
       <Header />
       {!loading
         ? cars.map((item, index) => {
-            return <CardItem loading={loading} data={item} key={index} />;
+            return <CardItem data={item} key={index} />;
           })
-        : ["", ""].map((item, index) => {
-            return <CardItem loading={true} data={undefined} key={index} />;
+        : [,].map((item, index) => {
+            return <SkeletonCar key={index} />;
           })}
     </styled.Container>
   );
