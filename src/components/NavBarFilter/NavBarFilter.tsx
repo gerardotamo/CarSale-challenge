@@ -1,25 +1,32 @@
-import { Outlet } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, Outlet } from "react-router-dom"
 import styled from "styled-components"
 import { BaseColor } from "../../config/color"
 import Button from "../Button/Button"
-
+import { useLocation } from 'react-router-dom'
 interface Option {
     value: string,
     name: string
 }
 const NavBarFilter = () => {
+    const flag: boolean = (useLocation().pathname.includes('favorites'));
 
     const select: Option[] = [
         { value: 'year', name: 'year' }
     ]
-
     return (
         <>
             <Container>
                 <Section>
-                    <Button>
-                        Create
-                    </Button>
+                    {
+                        !flag ?
+                            <Link to={'cars/create'}>
+                                <Button>
+                                    Create
+                                </Button>
+                                </Link>
+                            : null
+                    }
                 </Section>
                 <Section style={{ justifyContent: 'flex-end' }}>
                     <SearchBar placeholder="search..." />
