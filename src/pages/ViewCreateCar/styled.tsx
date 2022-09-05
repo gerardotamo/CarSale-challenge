@@ -18,7 +18,24 @@ export const RegisterContainer = styled('div')`
      align-items: center;
 `
 export const Title = styled('h1')`
-
+    
+`
+export const Form = styled('form')`
+    width: 100%;
 `
 
-export const Select = styled('select')``
+export const EntryGroup = styled('div')`
+    width: 100%;
+    margin-block: 15px;
+`
+
+export const HeaderOption = styled('h6')`
+    margin: 0;
+`
+
+export const Select = styled('select')`
+    width: 100%;
+`
+
+export const Option = styled('option')``
+
