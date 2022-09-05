@@ -1,4 +1,13 @@
+import { gql } from "@apollo/client";
 
-export const multipleQuery = () => {
-
+export const multipleQuery = (query: string[]) => {
+    let nestedQuery: string = '';
+    for (const q of query) {
+        nestedQuery = nestedQuery + q;
+    }
+    return gql`
+        query {
+            ${nestedQuery}        
+        }
+    `;
 } 

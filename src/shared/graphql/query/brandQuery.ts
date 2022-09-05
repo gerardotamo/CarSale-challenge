@@ -1,14 +1,10 @@
-import { gql } from "@apollo/client";
-
-export const ALL_BRANDS = gql`
-    query {
-        brands {
-            id
+export const ALL_BRANDS = `
+    brands {
+        id
+        name
+        models {
             name
-            models {
-                name
-                id
-            }
+            id
         }
     }
 `
