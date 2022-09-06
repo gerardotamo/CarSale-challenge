@@ -53,6 +53,11 @@ export const useFindCar = () => {
                   },
                 },
               },
+              {
+                vin: {
+                  _iregex: search,
+                },
+              },
             ],
           },
           ...filter,
