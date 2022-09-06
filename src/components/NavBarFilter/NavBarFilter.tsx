@@ -14,8 +14,6 @@ const NavBarFilter = () => {
   const [search, setSearch] = useState("");
   const flag: boolean = useLocation().pathname.includes("favorites");
 
-  const select: Option[] = [{ value: "year", name: "year" }];
-
   const handleSearchSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     console.log("press");
   };
@@ -41,15 +39,8 @@ const NavBarFilter = () => {
           <Button onClick={handleSearchSubmit}>Search</Button>
         </SearchForm>
         <Section style={{ justifyContent: "flex-end" }}>
-          <SelectOptions>
-            {select.map((item: Option, index: number) => {
-              return (
-                <Options value={item.value} key={index}>
-                  {item.name}{" "}
-                </Options>
-              );
-            })}
-          </SelectOptions>
+          <OrderText>Order by</OrderText>
+          <OrderButton>Year</OrderButton>
         </Section>
       </Container>
       <Outlet />
@@ -61,7 +52,7 @@ export default NavBarFilter;
 
 const Container = styled("div")`
   display: grid;
-  grid-template-columns: 2fr 4fr 1fr;
+  grid-template-columns: 2fr 4fr 2fr;
   grid-gap: 20px;
   padding-inline: 20px;
   background-color: ${BaseColor.blackSecondaryColor};
@@ -84,7 +75,14 @@ const SearchForm = styled("form")`
 const SearchBar = styled("input")`
   height: 25px;
 `;
-const SelectOptions = styled("select")`
-  width: 100xpx;
+
+const OrderButton = styled(Button)`
+  width: 80px;
+  height: 25px;
 `;
-const Options = styled("option")``;
+
+const OrderText = styled("p")`
+  margin: 0;
+  font-size: 12px;
+  color: ${BaseColor.lightBluePrimaryColor};
+`;
