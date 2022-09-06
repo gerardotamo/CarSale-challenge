@@ -1,6 +1,11 @@
 import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import {
+  useForm,
+  SubmitHandler,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import { ALL_BRANDS } from "../../shared/graphql/query/brandQuery";
 import {
   Brands_Insert_Input,
@@ -25,13 +30,87 @@ interface IFormInput {
   city_id: number;
   state_name: string;
 }
+
+interface PropsBrands {
+  data: any;
+  register: UseFormRegister<IFormInput>;
+  setValue: UseFormSetValue<IFormInput>;
+}
+
+const SelectBrand = (props: PropsBrands) => {
+  const [brands, setBrands] = useState<Brands[] | undefined>();
+  const [models, setModels] = useState<Models[]>();
+
+  useEffect(() => {
+    if (props.data) {
+      setBrands(props.data.brands);
+      setModels(props.data.brands[0].models);
+    }
+  }, [props.data]);
+
+  const handleChangeBrand = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    event.preventDefault();
+    const model = brands?.find(
+      (brand) => brand.id === parseInt(event.target.value)
+    )?.models;
+    setModels(model);
+    console.log(model);
+    let model_id = -1;
+    if (model && model.length > 0) {
+      console.log("entra");
+      model_id = model[0].id;
+    }
+    props.setValue("model_id", model_id);
+  };
+
+  return (
+    <>
+      <styled.EntryGroup>
+        <styled.HeaderOption>Select Brand</styled.HeaderOption>
+        {brands && (
+          <styled.Select
+            {...props.register("brand_id", {
+              value: brands.length === 0 ? 0 : brands[0].id,
+            })}
+            onChange={handleChangeBrand}
+          >
+            {brands.map((item, id) => {
+              return (
+                <styled.Option value={item.id ? item.id : 0} key={id}>
+                  {item.name}
+                </styled.Option>
+              );
+            })}
+          </styled.Select>
+        )}
+      </styled.EntryGroup>
+      <styled.EntryGroup>
+        <styled.HeaderOption>Select Model</styled.HeaderOption>
+        {models && (
+          <styled.Select
+            {...props.register("model_id", {
+              value: models.length > 0 ? models[0].id : 0,
+            })}
+          >
+            {models.map((item) => {
+              return (
+                <styled.Option value={item.id} key={item.id}>
+                  {item.name}
+                </styled.Option>
+              );
+            })}
+          </styled.Select>
+        )}
+      </styled.EntryGroup>
+    </>
+  );
+};
+
 const ViewCreateCar = () => {
   const { data, loading, error } = useQuery(
     multipleQuery([ALL_BRANDS, ALL_CITIES])
   );
   const { register, handleSubmit, setValue } = useForm<IFormInput>();
-  const [brands, setBrands] = useState<Brands[]>();
-  const [models, setModels] = useState<Models[]>();
   const [cities, setCities] = useState<City[]>();
   const [state, setState] = useState<State>();
 
@@ -39,26 +118,10 @@ const ViewCreateCar = () => {
 
   useEffect(() => {
     if (data) {
-      setBrands(data.brands);
-      setModels(data.brands[0].models);
       setCities(data.cities);
       setState(data.cities[0].state);
     }
   }, [data]);
-
-  const handleChangeBrand = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    event.preventDefault();
-    const model = brands?.filter(
-      (item) => item.id?.toString() === event.target.value
-    )[0].models;
-    setModels(model);
-    console.log(model);
-    let model_id = -1;
-    if (model && model.length !== 0) {
-      model_id = model[0].id;
-    }
-    setValue("model_id", model_id);
-  };
 
   const handleChangeCity = (event: React.ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();
@@ -73,43 +136,8 @@ const ViewCreateCar = () => {
       <styled.RegisterContainer>
         <styled.Title>Create Car</styled.Title>
         <styled.Form onSubmit={handleSubmit(onSubmit)}>
-          <styled.EntryGroup>
-            <styled.HeaderOption>Select Brand</styled.HeaderOption>
-            {brands && (
-              <styled.Select
-                {...register("brand_id", {
-                  value: brands.length === 0 ? 0 : brands[0].id,
-                })}
-                onChange={handleChangeBrand}
-              >
-                {brands.map((item, id) => {
-                  return (
-                    <styled.Option value={item.id ? item.id : 0} key={id}>
-                      {item.name}
-                    </styled.Option>
-                  );
-                })}
-              </styled.Select>
-            )}
-          </styled.EntryGroup>
-          <styled.EntryGroup>
-            <styled.HeaderOption>Select Model</styled.HeaderOption>
-            {models && (
-              <styled.Select
-                {...register("model_id", {
-                  value: models.length !== 0 ? models[0].id : 0,
-                })}
-              >
-                {models.map((item, id) => {
-                  return (
-                    <styled.Option value={item.id ? item.id : 0} key={id}>
-                      {item.name}
-                    </styled.Option>
-                  );
-                })}
-              </styled.Select>
-            )}
-          </styled.EntryGroup>
+          <SelectBrand data={data} register={register} setValue={setValue} />
+
           <styled.EntryGroup>
             <styled.HeaderOption>Select City</styled.HeaderOption>
             {cities && (
