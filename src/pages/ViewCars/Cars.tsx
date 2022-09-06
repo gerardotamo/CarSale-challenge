@@ -17,11 +17,12 @@ export const ViewCars = () => {
 
   useEffect(() => {
     const search = searchParams.get("search");
-    const orderBy = searchParams.get("orderBy");
+    const orderByYear = searchParams.get("orderByYear");
+    const orderBySaleDate = searchParams.get("orderBySaleDate");
     if (search !== null) {
-      findCars(search, orderBy);
+      findCars(search, orderByYear, orderBySaleDate);
     } else {
-      findCars("", orderBy);
+      findCars("", orderByYear, orderBySaleDate);
     }
   }, [searchParams]);
 

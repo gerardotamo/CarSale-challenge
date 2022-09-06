@@ -10,11 +10,11 @@ import { TbArrowsDownUp } from "react-icons/tb";
 const NavBarFilter = () => {
   const [searchParams] = useSearchParams();
   const searchValue = searchParams.get("search");
-  const orderByValue = searchParams.get("orderBy");
+  const orderByYearValue = searchParams.get("orderByYear");
+  const orderBySaleDateValue = searchParams.get("orderBySaleDate");
   const [search, setSearch] = useState<string>(
     searchValue === null ? "" : searchValue.toString()
   );
-  const [order, setOrder] = useState<string | null>(orderByValue);
   const flag: boolean = useLocation().pathname.includes("favorites");
 
   useEffect(() => {
@@ -22,16 +22,6 @@ const NavBarFilter = () => {
       setSearch("");
     }
   }, [searchParams]);
-
-  const handleChangeOrder = () => {
-    if (searchValue === null) {
-      setOrder("asc");
-    } else if (order === "asc") {
-      setOrder("desc");
-    } else {
-      setOrder("asc");
-    }
-  };
 
   return (
     <>
@@ -56,8 +46,19 @@ const NavBarFilter = () => {
           </Section>
           <Section style={{ justifyContent: "flex-end" }}>
             <OrderText>Order by</OrderText>
+            <OrderBy
+              orderValue={orderByYearValue}
+              name={"orderByYear"}
+              text={"Year"}
+            />
+            <OrderBy
+              orderValue={orderBySaleDateValue}
+              name={"orderBySaleDate"}
+              text={"Sale Date"}
+            />
+            {/*<OrderText>Order by</OrderText>
             <OrderButton
-              name="orderBy"
+              name="orderByYear"
               value={order === null ? "" : order}
               onClick={handleChangeOrder}
             >
@@ -69,11 +70,50 @@ const NavBarFilter = () => {
                 <HiArrowDown />
               )}
               Year
-            </OrderButton>
+              </OrderButton>*/}
           </Section>
         </SearchForm>
       </Container>
       <Outlet />
+    </>
+  );
+};
+
+interface Props {
+  orderValue: string | null;
+  name: string;
+  text: string;
+}
+
+const OrderBy = (props: Props) => {
+  const [order, setOrder] = useState<string | null>(props.orderValue);
+
+  const handleChangeOrder = () => {
+    if (props.orderValue === null) {
+      setOrder("asc");
+    } else if (order === "asc") {
+      setOrder("desc");
+    } else {
+      setOrder("asc");
+    }
+  };
+
+  return (
+    <>
+      <OrderButton
+        name={props.name}
+        value={order === null ? "" : order}
+        onClick={handleChangeOrder}
+      >
+        {props.orderValue === null ? (
+          <TbArrowsDownUp />
+        ) : order === "asc" ? (
+          <HiArrowUp />
+        ) : (
+          <HiArrowDown />
+        )}
+        {props.text}
+      </OrderButton>
     </>
   );
 };
@@ -106,7 +146,7 @@ const SearchBar = styled("input")`
 `;
 
 const OrderButton = styled(Button)`
-  width: 80px;
+  width: 100px;
   height: 25px;
 `;
 
