@@ -30,7 +30,7 @@ export const ViewCars = () => {
       console.log(data.cars);
       setCars(data.cars);
     }
-  }, [loading]);
+  }, [loading, data]);
 
   return (
     <styled.Container>

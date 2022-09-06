@@ -11,11 +11,17 @@ const NavBarFilter = () => {
   const [searchParams] = useSearchParams();
   const searchValue = searchParams.get("search");
   const orderByValue = searchParams.get("orderBy");
-  const [search, setSearch] = useState(
-    searchValue === null ? "" : searchValue?.toString()
+  const [search, setSearch] = useState<string>(
+    searchValue === null ? "" : searchValue.toString()
   );
   const [order, setOrder] = useState<string | null>(orderByValue);
   const flag: boolean = useLocation().pathname.includes("favorites");
+
+  useEffect(() => {
+    if (searchParams.get("search") === null) {
+      setSearch("");
+    }
+  }, [searchParams]);
 
   const handleChangeOrder = () => {
     if (searchValue === null) {
