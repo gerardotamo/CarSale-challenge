@@ -1,4 +1,3 @@
-import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMultiple_QueryQuery } from "../../shared/graphql/__generate__/generated";
@@ -20,7 +19,7 @@ export interface IFormInput {
 const ViewCreateCar = () => {
   const { data, loading, error } = useMultiple_QueryQuery();
   const { register, handleSubmit, setValue, getValues } = useForm<IFormInput>();
-
+  const [odometer, setOdometer] = useState();
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
 
   return (
