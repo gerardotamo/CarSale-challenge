@@ -6,7 +6,7 @@ export const multipleQuery = (query: string[]) => {
         nestedQuery = nestedQuery + q;
     }
     return gql`
-        query {
+        query Multiple_Query{
             ${nestedQuery}        
         }
     `;
