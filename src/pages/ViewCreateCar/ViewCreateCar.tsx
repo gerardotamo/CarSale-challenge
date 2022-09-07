@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useMultiple_QueryQuery } from "../../shared/graphql/__generate__/generated";
 import SelectBrand from "./SelectBrand";
 import SelectCity from "./SelectCity";
+import SelectColor from "./SelectColor";
 import * as styled from "./styled";
 
 export interface IFormInput {
@@ -11,6 +12,7 @@ export interface IFormInput {
   model_id: number | string;
   city_id: number | string;
   state_id: number | string;
+  color_id: number | string;
 }
 
 const ViewCreateCar = () => {
@@ -41,6 +43,8 @@ const ViewCreateCar = () => {
                 setValue={setValue}
                 register={register}
               />
+
+              <SelectColor colors={data.colors} register={register} />
             </>
           )}
           <input type="submit" />
