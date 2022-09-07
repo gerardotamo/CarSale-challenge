@@ -13,6 +13,8 @@ export interface IFormInput {
   city_id: number | string;
   state_id: number | string;
   color_id: number | string;
+  condition: string;
+  vin: string;
 }
 
 const ViewCreateCar = () => {
@@ -21,8 +23,6 @@ const ViewCreateCar = () => {
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
 
-  console.log(getValues("brand_id") === 0);
-  console.log(getValues("brand_id"));
   return (
     <styled.Container>
       <styled.RegisterContainer>
@@ -45,6 +45,30 @@ const ViewCreateCar = () => {
               />
 
               <SelectColor colors={data.colors} register={register} />
+              <styled.EntryGroup>
+                <styled.HeaderOption>Select </styled.HeaderOption>
+                <styled.RadioButtonGroup>
+                  <styled.RadioButton
+                    {...register("condition")}
+                    type={"radio"}
+                    value={"A"}
+                    name={"condition"}
+                  />
+                  <styled.Label>A</styled.Label>
+                  <styled.RadioButton
+                    {...register("condition")}
+                    type={"radio"}
+                    value={"N"}
+                    name={"condition"}
+                  />
+                  <styled.Label>New</styled.Label>
+                </styled.RadioButtonGroup>
+              </styled.EntryGroup>
+
+              <styled.EntryGroup>
+                <styled.HeaderOption>VIN</styled.HeaderOption>
+                <styled.TextInput {...register("vin")} type={"text"} />
+              </styled.EntryGroup>
             </>
           )}
           <input type="submit" />
