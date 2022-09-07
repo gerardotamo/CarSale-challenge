@@ -20,6 +20,10 @@ export const multipleQuery = () => {
                     id
                     name
                 }
+            }
+            colors {
+                id
+                name
             }      
         }
     `;

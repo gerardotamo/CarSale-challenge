@@ -65,6 +65,8 @@ const SelectBrand = (props: PropsBrands) => {
             })}
           </styled.Select>
         )}
+      </styled.EntryGroup>
+      <styled.EntryGroup>
         <styled.HeaderOption>Select Model</styled.HeaderOption>
         {models && (
           <styled.Select {...props.register("model_id")}>

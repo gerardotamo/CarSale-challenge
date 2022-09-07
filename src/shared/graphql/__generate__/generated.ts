@@ -3785,6 +3785,11 @@ export type Find_CarQueryVariables = Exact<{
 
 export type Find_CarQuery = { __typename?: 'query_root', cars: Array<{ __typename?: 'cars', batch: any, condition: any, damage_type?: string | null, description?: string | null, id: number, odometer?: number | null, price: any, sale_date: any, title?: string | null, vin: string, year?: number | null, city: { __typename?: 'cities', name: string, id: number, state: { __typename?: 'states', id: number, name: string } }, color: { __typename?: 'colors', id: number, name: string }, model: { __typename?: 'models', id: number, name: string, brand: { __typename?: 'brands', id: number, name: string } } }> };
 
+export type Multiple_QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Multiple_QueryQuery = { __typename?: 'query_root', brands: Array<{ __typename?: 'brands', id: number, name: string, models: Array<{ __typename?: 'models', name: string, id: number }> }>, cities: Array<{ __typename?: 'cities', id: number, name: string, state: { __typename?: 'states', id: number, name: string } }>, colors: Array<{ __typename?: 'colors', id: number, name: string }> };
+
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3796,11 +3801,6 @@ export type Find_UserQueryVariables = Exact<{
 
 
 export type Find_UserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: number, email: string, first_name: string, last_name: string, uuid: any }> };
-
-export type Multiple_QueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type Multiple_QueryQuery = { __typename?: 'query_root', brands: Array<{ __typename?: 'brands', id: number, name: string, models: Array<{ __typename?: 'models', name: string, id: number }> }>, cities: Array<{ __typename?: 'cities', id: number, name: string, state: { __typename?: 'states', id: number, name: string } }> };
 
 
 export const CarDocument = gql`
@@ -3933,6 +3933,57 @@ export function useFind_CarLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<F
 export type Find_CarQueryHookResult = ReturnType<typeof useFind_CarQuery>;
 export type Find_CarLazyQueryHookResult = ReturnType<typeof useFind_CarLazyQuery>;
 export type Find_CarQueryResult = Apollo.QueryResult<Find_CarQuery, Find_CarQueryVariables>;
+export const Multiple_QueryDocument = gql`
+    query Multiple_Query {
+  brands {
+    id
+    name
+    models {
+      name
+      id
+    }
+  }
+  cities {
+    id
+    name
+    state {
+      id
+      name
+    }
+  }
+  colors {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useMultiple_QueryQuery__
+ *
+ * To run a query within a React component, call `useMultiple_QueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMultiple_QueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMultiple_QueryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMultiple_QueryQuery(baseOptions?: Apollo.QueryHookOptions<Multiple_QueryQuery, Multiple_QueryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Multiple_QueryQuery, Multiple_QueryQueryVariables>(Multiple_QueryDocument, options);
+      }
+export function useMultiple_QueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Multiple_QueryQuery, Multiple_QueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Multiple_QueryQuery, Multiple_QueryQueryVariables>(Multiple_QueryDocument, options);
+        }
+export type Multiple_QueryQueryHookResult = ReturnType<typeof useMultiple_QueryQuery>;
+export type Multiple_QueryLazyQueryHookResult = ReturnType<typeof useMultiple_QueryLazyQuery>;
+export type Multiple_QueryQueryResult = Apollo.QueryResult<Multiple_QueryQuery, Multiple_QueryQueryVariables>;
 export const UserDocument = gql`
     query User {
   users {
@@ -4010,50 +4061,3 @@ export function useFind_UserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type Find_UserQueryHookResult = ReturnType<typeof useFind_UserQuery>;
 export type Find_UserLazyQueryHookResult = ReturnType<typeof useFind_UserLazyQuery>;
 export type Find_UserQueryResult = Apollo.QueryResult<Find_UserQuery, Find_UserQueryVariables>;
-export const Multiple_QueryDocument = gql`
-    query Multiple_Query {
-  brands {
-    id
-    name
-    models {
-      name
-      id
-    }
-  }
-  cities {
-    id
-    name
-    state {
-      id
-      name
-    }
-  }
-}
-    `;
-
-/**
- * __useMultiple_QueryQuery__
- *
- * To run a query within a React component, call `useMultiple_QueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useMultiple_QueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMultiple_QueryQuery({
- *   variables: {
- *   },
- * });
- */
-export function useMultiple_QueryQuery(baseOptions?: Apollo.QueryHookOptions<Multiple_QueryQuery, Multiple_QueryQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<Multiple_QueryQuery, Multiple_QueryQueryVariables>(Multiple_QueryDocument, options);
-      }
-export function useMultiple_QueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Multiple_QueryQuery, Multiple_QueryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<Multiple_QueryQuery, Multiple_QueryQueryVariables>(Multiple_QueryDocument, options);
-        }
-export type Multiple_QueryQueryHookResult = ReturnType<typeof useMultiple_QueryQuery>;
-export type Multiple_QueryLazyQueryHookResult = ReturnType<typeof useMultiple_QueryLazyQuery>;
-export type Multiple_QueryQueryResult = Apollo.QueryResult<Multiple_QueryQuery, Multiple_QueryQueryVariables>;
