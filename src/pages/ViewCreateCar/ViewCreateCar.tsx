@@ -43,7 +43,11 @@ const ViewCreateCar = () => {
                 register={register}
               />
 
-              <SelectColor colors={data.colors} register={register} />
+              <SelectColor
+                colors={data.colors}
+                register={register}
+                setValue={setValue}
+              />
               <styled.EntryGroup>
                 <styled.HeaderOption>Select </styled.HeaderOption>
                 <styled.RadioButtonGroup>
