@@ -51,3 +51,7 @@ export const Label = styled("label")`
 export const TextInput = styled("input")`
   width: 50%;
 `;
+
+export const DatePicker = styled("input")`
+  width: 50%;
+`;

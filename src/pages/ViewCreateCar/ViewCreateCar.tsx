@@ -15,6 +15,7 @@ export interface IFormInput {
   color_id: number | string;
   condition: string;
   vin: string;
+  sale_date: string;
 }
 
 const ViewCreateCar = () => {
@@ -74,7 +75,7 @@ const ViewCreateCar = () => {
                 <styled.TextInput {...register("vin")} type={"text"} />
               </styled.EntryGroup>
 
-              <SelectDateTime />
+              <SelectDateTime register={register} setValue={setValue} />
             </>
           )}
           <input type="submit" />
