@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMultiple_QueryQuery } from "../../shared/graphql/__generate__/generated";
 import SelectBrand from "./SelectBrand";
-import SelectCity from "./SelectCity";
+import SelectState from "./SelectState";
 import SelectColor from "./SelectColor";
 import * as styled from "./styled";
 
@@ -36,8 +36,8 @@ const ViewCreateCar = () => {
                 setValue={setValue}
               />
 
-              <SelectCity
-                cities={data.cities}
+              <SelectState
+                state={data.states}
                 getValue={getValues}
                 setValue={setValue}
                 register={register}

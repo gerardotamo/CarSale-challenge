@@ -14,13 +14,13 @@ import { IFormInput } from "./ViewCreateCar";
 import SelectForm from "../../components/Select/Select";
 import { ActionMeta } from "react-select";
 import { useFindModel } from "../../shared/graphql/request/modelRequest";
+import { MyOption } from "../../shared/types/MyOptions";
 
 type Model = Pick<Models, "id" | "name">;
 type Brands = Pick<Brands_Insert_Input, "name"> & {
   models: Model[];
   id: number;
 };
-type MyOption = { label: InputMaybe<string> | undefined; value: number };
 interface PropsBrands {
   brands: Brands[];
   register: UseFormRegister<IFormInput>;
@@ -29,8 +29,7 @@ interface PropsBrands {
 }
 
 const SelectBrand = (props: PropsBrands) => {
-  const brands = props.brands;
-  const aux: MyOption[] = props.brands.map((item) => {
+  const brands = props.brands.map((item) => {
     return { value: item.id, label: item.name };
   });
   const { findModel, data, loading, errorRequest } = useFindModel();
@@ -68,7 +67,7 @@ const SelectBrand = (props: PropsBrands) => {
         {brands && (
           <>
             <div {...props.register("brand_id")}>
-              <SelectForm options={aux} onChange={handleChangeBrand} />
+              <SelectForm options={brands} onChange={handleChangeBrand} />
             </div>
             {/*<styled.Select
               {...props.register("brand_id")}

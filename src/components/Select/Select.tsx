@@ -6,7 +6,7 @@ import Select, {
 } from "react-select";
 import { BaseColor } from "../../config/color";
 import { InputMaybe } from "../../shared/graphql/__generate__/generated";
-type MyOption = { label: InputMaybe<string> | undefined; value: number };
+import { MyOption } from "../../shared/types/MyOptions";
 
 interface PropsSelect {
   options: OptionsOrGroups<MyOption, GroupBase<MyOption>>;
@@ -63,6 +63,8 @@ const customStyles: StylesConfig<MyOption, false, GroupBase<MyOption>> = {
 };
 
 const SelectForm = ({ options, onChange, isLoading }: PropsSelect) => {
+  console.log(isLoading);
+
   return (
     <Select
       styles={customStyles}
@@ -70,6 +72,7 @@ const SelectForm = ({ options, onChange, isLoading }: PropsSelect) => {
       aria-labelledby="aria-label"
       onChange={onChange}
       isLoading={isLoading}
+      noOptionsMessage={() => "No Categories Found"}
     />
   );
 };

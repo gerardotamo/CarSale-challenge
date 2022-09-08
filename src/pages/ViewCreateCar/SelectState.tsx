@@ -8,18 +8,18 @@ import { Cities, States } from "../../shared/graphql/__generate__/generated";
 import { useState } from "react";
 import { IFormInput } from "./ViewCreateCar";
 
-type City = Pick<Cities, "id" | "name" | "state">;
+type City = Pick<Cities, "id" | "name">;
 type State = Pick<States, "id" | "name">;
 
 interface PropsCities {
-  cities: Pick<City, "id" | "name">[];
+  state: Pick<City, "id" | "name">[];
   register: UseFormRegister<IFormInput>;
   getValue: UseFormGetValues<IFormInput>;
   setValue: UseFormSetValue<IFormInput>;
 }
 
-const SelectCity = (props: PropsCities) => {
-  const cities = props.cities;
+const SelectState = (props: PropsCities) => {
+  const cities = props.state;
   const [state, setState] = useState<State | undefined>(undefined);
 
   const handleChangeCity = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -66,4 +66,4 @@ const SelectCity = (props: PropsCities) => {
   );
 };
 
-export default SelectCity;
+export default SelectState;

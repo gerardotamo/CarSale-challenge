@@ -3795,7 +3795,7 @@ export type Find_ModelQuery = { __typename?: 'query_root', models: Array<{ __typ
 export type Multiple_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Multiple_QueryQuery = { __typename?: 'query_root', brands: Array<{ __typename?: 'brands', id: number, name: string, models: Array<{ __typename?: 'models', name: string, id: number }> }>, cities: Array<{ __typename?: 'cities', id: number, name: string, state: { __typename?: 'states', id: number, name: string } }>, colors: Array<{ __typename?: 'colors', id: number, name: string }> };
+export type Multiple_QueryQuery = { __typename?: 'query_root', brands: Array<{ __typename?: 'brands', id: number, name: string, models: Array<{ __typename?: 'models', name: string, id: number }> }>, states: Array<{ __typename?: 'states', id: number, name: string }>, colors: Array<{ __typename?: 'colors', id: number, name: string }> };
 
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3986,13 +3986,9 @@ export const Multiple_QueryDocument = gql`
       id
     }
   }
-  cities {
+  states {
     id
     name
-    state {
-      id
-      name
-    }
   }
   colors {
     id
