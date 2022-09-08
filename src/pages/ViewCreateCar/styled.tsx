@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import MuiInput from "@mui/material/Input";
 
 export const Container = styled("div")`
   margin-top: 65px;
@@ -54,4 +55,13 @@ export const TextInput = styled("input")`
 
 export const DatePicker = styled("input")`
   width: 50%;
+`;
+
+export const Input = styled(MuiInput)`
+  width: 90px;
+  margin-left: 15px;
+`;
+
+export const SelectOdo = styled("div")`
+  display: flex;
 `;
