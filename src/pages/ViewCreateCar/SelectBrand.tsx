@@ -6,17 +6,20 @@ import {
 } from "react-hook-form";
 import {
   Brands_Insert_Input,
+  InputMaybe,
   Models,
 } from "../../shared/graphql/__generate__/generated";
 import { useState } from "react";
 import { IFormInput } from "./ViewCreateCar";
+import SelectForm from "../../components/Select/Select";
+import { ActionMeta } from "react-select";
 
 type Model = Pick<Models, "id" | "name">;
 type Brands = Pick<Brands_Insert_Input, "name"> & {
   models: Model[];
   id: number;
 };
-
+type MyOption = { label: InputMaybe<string> | undefined; value: number };
 interface PropsBrands {
   brands: Brands[];
   register: UseFormRegister<IFormInput>;
@@ -26,19 +29,15 @@ interface PropsBrands {
 
 const SelectBrand = (props: PropsBrands) => {
   const brands = props.brands;
-  //const [brands, setBrands] = useState<Brands[] | undefined>();
-  const [models, setModels] = useState<Model[] | undefined>([]);
+  const aux: MyOption[] = props.brands.map((item) => {
+    return { value: item.id, label: item.name };
+  });
 
-  /*useEffect(() => {
-      if (props.data) {
-        setBrands(props.data.brands);
-        setModels(props.data.brands[0].models);
-      }
-    }, [props.data]);*/
+  console.log(aux);
+  const [models, setModels] = useState<Model[] | undefined>([]);
 
   const handleChangeBrand = (event: React.ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();
-
     const model = brands.find(
       (brand) => brand.id === parseInt(event.target.value)
     )?.models;
@@ -46,24 +45,39 @@ const SelectBrand = (props: PropsBrands) => {
     props.setValue("model_id", "");
   };
 
+  const change = (
+    option: MyOption | null,
+    actionMeta: ActionMeta<MyOption>
+  ) => {
+    console.log(option?.value);
+    if (option) {
+      props.setValue("brand_id", option.value);
+    }
+  };
+
   return (
     <>
       <styled.EntryGroup>
         <styled.HeaderOption>Select Brand</styled.HeaderOption>
         {brands && (
-          <styled.Select
-            {...props.register("brand_id")}
-            onChange={handleChangeBrand}
-          >
-            <styled.Option value={""}> Select Value</styled.Option>
-            {brands.map((item, id) => {
-              return (
-                <styled.Option value={item.id ? item.id : 0} key={id}>
-                  {item.name}
-                </styled.Option>
-              );
-            })}
-          </styled.Select>
+          <>
+            <div {...props.register("brand_id")}>
+              <SelectForm options={aux} onChange={change} />
+            </div>
+            {/*<styled.Select
+              {...props.register("brand_id")}
+              onChange={handleChangeBrand}
+            >
+              <styled.Option value={""}> Select Value</styled.Option>
+              {brands.map((item, id) => {
+                return (
+                  <styled.Option value={item.id ? item.id : 0} key={id}>
+                    {item.name}
+                  </styled.Option>
+                );
+              })}
+            </styled.Select>*/}
+          </>
         )}
       </styled.EntryGroup>
       <styled.EntryGroup>
