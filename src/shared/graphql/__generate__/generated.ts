@@ -3785,6 +3785,13 @@ export type Find_CarQueryVariables = Exact<{
 
 export type Find_CarQuery = { __typename?: 'query_root', cars: Array<{ __typename?: 'cars', batch: any, condition: any, damage_type?: string | null, description?: string | null, id: number, odometer?: number | null, price: any, sale_date: any, title?: string | null, vin: string, year?: number | null, city: { __typename?: 'cities', name: string, id: number, state: { __typename?: 'states', id: number, name: string } }, color: { __typename?: 'colors', id: number, name: string }, model: { __typename?: 'models', id: number, name: string, brand: { __typename?: 'brands', id: number, name: string } } }> };
 
+export type Find_ModelQueryVariables = Exact<{
+  where?: InputMaybe<Models_Bool_Exp>;
+}>;
+
+
+export type Find_ModelQuery = { __typename?: 'query_root', models: Array<{ __typename?: 'models', name: string, id: number }> };
+
 export type Multiple_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3933,6 +3940,42 @@ export function useFind_CarLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<F
 export type Find_CarQueryHookResult = ReturnType<typeof useFind_CarQuery>;
 export type Find_CarLazyQueryHookResult = ReturnType<typeof useFind_CarLazyQuery>;
 export type Find_CarQueryResult = Apollo.QueryResult<Find_CarQuery, Find_CarQueryVariables>;
+export const Find_ModelDocument = gql`
+    query Find_Model($where: models_bool_exp) {
+  models(where: $where) {
+    name
+    id
+  }
+}
+    `;
+
+/**
+ * __useFind_ModelQuery__
+ *
+ * To run a query within a React component, call `useFind_ModelQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFind_ModelQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFind_ModelQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useFind_ModelQuery(baseOptions?: Apollo.QueryHookOptions<Find_ModelQuery, Find_ModelQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Find_ModelQuery, Find_ModelQueryVariables>(Find_ModelDocument, options);
+      }
+export function useFind_ModelLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Find_ModelQuery, Find_ModelQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Find_ModelQuery, Find_ModelQueryVariables>(Find_ModelDocument, options);
+        }
+export type Find_ModelQueryHookResult = ReturnType<typeof useFind_ModelQuery>;
+export type Find_ModelLazyQueryHookResult = ReturnType<typeof useFind_ModelLazyQuery>;
+export type Find_ModelQueryResult = Apollo.QueryResult<Find_ModelQuery, Find_ModelQueryVariables>;
 export const Multiple_QueryDocument = gql`
     query Multiple_Query {
   brands {
