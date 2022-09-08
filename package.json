@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.0.6",
     "graphql": "^16.6.0",
     "react": "^18.2.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.34.2",
     "react-icons": "^4.4.0",
@@ -58,6 +59,7 @@
     "@graphql-codegen/typescript-operations": "^2.5.3",
     "@graphql-codegen/typescript-react-apollo": "^3.3.3",
     "@graphql-codegen/typescript-react-query": "^4.0.1",
+    "@types/react-datepicker": "^4.4.2",
     "@types/styled-components": "^5.1.26"
   }
 }

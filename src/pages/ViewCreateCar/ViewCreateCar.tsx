@@ -5,6 +5,7 @@ import SelectBrand from "./SelectBrand";
 import SelectState from "./SelectState";
 import SelectColor from "./SelectColor";
 import * as styled from "./styled";
+import SelectDateTime from "./SelectDateTime";
 
 export interface IFormInput {
   brand_id: number | string;
@@ -72,6 +73,8 @@ const ViewCreateCar = () => {
                 <styled.HeaderOption>VIN</styled.HeaderOption>
                 <styled.TextInput {...register("vin")} type={"text"} />
               </styled.EntryGroup>
+
+              <SelectDateTime />
             </>
           )}
           <input type="submit" />
