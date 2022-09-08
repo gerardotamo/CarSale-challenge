@@ -1,9 +1,7 @@
 import Select, {
   ActionMeta,
   GroupBase,
-  MenuProps,
   OptionsOrGroups,
-  Props,
   StylesConfig,
 } from "react-select";
 import { BaseColor } from "../../config/color";
@@ -13,6 +11,7 @@ type MyOption = { label: InputMaybe<string> | undefined; value: number };
 interface PropsSelect {
   options: OptionsOrGroups<MyOption, GroupBase<MyOption>>;
   value?: number;
+  isLoading?: boolean;
   onChange: (value: MyOption | null, actionMeta: ActionMeta<MyOption>) => void;
 }
 
@@ -63,13 +62,14 @@ const customStyles: StylesConfig<MyOption, false, GroupBase<MyOption>> = {
   },
 };
 
-const SelectForm = ({ options, onChange }: PropsSelect) => {
+const SelectForm = ({ options, onChange, isLoading }: PropsSelect) => {
   return (
     <Select
       styles={customStyles}
       options={options}
       aria-labelledby="aria-label"
       onChange={onChange}
+      isLoading={isLoading}
     />
   );
 };

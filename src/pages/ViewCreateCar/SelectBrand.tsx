@@ -9,10 +9,11 @@ import {
   InputMaybe,
   Models,
 } from "../../shared/graphql/__generate__/generated";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IFormInput } from "./ViewCreateCar";
 import SelectForm from "../../components/Select/Select";
 import { ActionMeta } from "react-select";
+import { useFindModel } from "../../shared/graphql/request/modelRequest";
 
 type Model = Pick<Models, "id" | "name">;
 type Brands = Pick<Brands_Insert_Input, "name"> & {
@@ -32,28 +33,33 @@ const SelectBrand = (props: PropsBrands) => {
   const aux: MyOption[] = props.brands.map((item) => {
     return { value: item.id, label: item.name };
   });
+  const { findModel, data, loading, errorRequest } = useFindModel();
 
-  console.log(aux);
-  const [models, setModels] = useState<Model[] | undefined>([]);
-
-  const handleChangeBrand = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    event.preventDefault();
-    const model = brands.find(
-      (brand) => brand.id === parseInt(event.target.value)
-    )?.models;
-    setModels(model ? model : []);
-    props.setValue("model_id", "");
-  };
-
-  const change = (
-    option: MyOption | null,
-    actionMeta: ActionMeta<MyOption>
-  ) => {
+  const [models, setModels] = useState<MyOption[]>([]);
+  const handleChangeBrand = async (option: MyOption | null) => {
     console.log(option?.value);
     if (option) {
       props.setValue("brand_id", option.value);
+      props.setValue("model_id", "");
+      await findModel(option.value);
     }
   };
+  const handleChangeModel = async (option: MyOption | null) => {
+    if (option) {
+      props.setValue("model_id", option.value);
+    }
+  };
+
+  useEffect(() => {
+    if (data) {
+      console.log(data.models);
+      setModels(
+        data.models.map((item) => {
+          return { value: item.id, label: item.name };
+        })
+      );
+    }
+  }, [data]);
 
   return (
     <>
@@ -62,7 +68,7 @@ const SelectBrand = (props: PropsBrands) => {
         {brands && (
           <>
             <div {...props.register("brand_id")}>
-              <SelectForm options={aux} onChange={change} />
+              <SelectForm options={aux} onChange={handleChangeBrand} />
             </div>
             {/*<styled.Select
               {...props.register("brand_id")}
@@ -82,7 +88,14 @@ const SelectBrand = (props: PropsBrands) => {
       </styled.EntryGroup>
       <styled.EntryGroup>
         <styled.HeaderOption>Select Model</styled.HeaderOption>
-        {models && (
+        <div {...props.register("model_id")}>
+          <SelectForm
+            options={models}
+            onChange={handleChangeModel}
+            isLoading={loading}
+          />
+        </div>
+        {/*models && (
           <styled.Select {...props.register("model_id")}>
             <styled.Option value={""}> Select Value</styled.Option>
             {models.map((item) => {
@@ -93,7 +106,7 @@ const SelectBrand = (props: PropsBrands) => {
               );
             })}
           </styled.Select>
-        )}
+          )*/}
       </styled.EntryGroup>
     </>
   );
