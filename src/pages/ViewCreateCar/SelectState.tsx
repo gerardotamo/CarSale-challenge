@@ -5,11 +5,13 @@ import {
   UseFormGetValues,
 } from "react-hook-form";
 import { Cities, States } from "../../shared/graphql/__generate__/generated";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IFormInput } from "./ViewCreateCar";
+import SelectForm from "../../components/Select/Select";
+import { MyOption } from "../../shared/types/MyOptions";
+import { useFindCity } from "../../shared/graphql/request/cityRequest";
 
 type City = Pick<Cities, "id" | "name">;
-type State = Pick<States, "id" | "name">;
 
 interface PropsCities {
   state: Pick<City, "id" | "name">[];
@@ -19,23 +21,45 @@ interface PropsCities {
 }
 
 const SelectState = (props: PropsCities) => {
-  const cities = props.state;
-  const [state, setState] = useState<State | undefined>(undefined);
+  const state = props.state.map((item) => {
+    return { value: item.id, label: item.name };
+  });
+  const { findCity, data, loading, errorRequest } = useFindCity();
 
-  const handleChangeCity = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    event.preventDefault();
-    const state = cities?.filter(
-      (item) => item.id.toString() === event.target.value
-    )[0];
-    setState(state);
-    props.setValue("state_id", "");
+  const [cities, setCities] = useState<MyOption[]>([]);
+
+  const handleChangeState = (option: MyOption | null) => {
+    if (option) {
+      props.setValue("state_id", option.value);
+      setCities([]);
+      findCity(option.value);
+      props.setValue("city_id", "");
+    }
   };
+  const handleChangeCity = (option: MyOption | null) => {
+    if (option) {
+      props.setValue("city_id", option.value);
+    }
+  };
+
+  useEffect(() => {
+    if (data) {
+      setCities(
+        data.cities.map((item) => {
+          return { value: item.id, label: item.name };
+        })
+      );
+    }
+  }, [data]);
 
   return (
     <>
       <styled.EntryGroup>
-        <styled.HeaderOption>Select City</styled.HeaderOption>
-        {cities && (
+        <styled.HeaderOption>Select State</styled.HeaderOption>
+        <div {...props.register("state_id")}>
+          <SelectForm options={state} onChange={handleChangeState} />
+        </div>
+        {/*cities && (
           <styled.Select
             {...props.register("city_id")}
             onChange={handleChangeCity}
@@ -49,18 +73,25 @@ const SelectState = (props: PropsCities) => {
               );
             })}
           </styled.Select>
-        )}
+          )*/}
       </styled.EntryGroup>
       <styled.EntryGroup>
-        <styled.HeaderOption>Select State</styled.HeaderOption>
-        {
+        <styled.HeaderOption>Select City</styled.HeaderOption>
+        <div {...props.register("city_id")}>
+          <SelectForm
+            options={cities}
+            onChange={handleChangeCity}
+            isLoading={loading}
+          />
+        </div>
+        {/*
           <styled.Select {...props.register("state_id")}>
             <styled.Option value={""}>Select Value</styled.Option>
             {state && (
               <styled.Option value={state.id}>{state.name}</styled.Option>
             )}
           </styled.Select>
-        }
+            */}
       </styled.EntryGroup>
     </>
   );

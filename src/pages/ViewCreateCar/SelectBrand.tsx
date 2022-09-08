@@ -39,6 +39,7 @@ const SelectBrand = (props: PropsBrands) => {
     console.log(option?.value);
     if (option) {
       props.setValue("brand_id", option.value);
+      setModels([]);
       props.setValue("model_id", "");
       await findModel(option.value);
     }
