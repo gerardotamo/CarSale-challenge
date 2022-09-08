@@ -17,53 +17,53 @@ export const useFindCar = () => {
         },
       ],
     };
+
+    let where: object = {
+      _or: [
+        {
+          model: {
+            name: {
+              _iregex: search,
+            },
+          },
+        },
+        {
+          model: {
+            brand: {
+              name: {
+                _iregex: search,
+              },
+            },
+          },
+        },
+        {
+          vin: {
+            _iregex: search,
+          },
+        },
+      ],
+    };
+
     if (
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
         search
       )
     ) {
-      await getCars({
-        variables: {
-          where: {
-            batch: {
-              _eq: search,
-            },
-          },
-          ...filter,
+      where = {
+        batch: {
+          _eq: search,
         },
-      });
-    } else {
-      await getCars({
-        variables: {
-          where: {
-            _or: [
-              {
-                model: {
-                  name: {
-                    _iregex: search,
-                  },
-                },
-              },
-              {
-                model: {
-                  brand: {
-                    name: {
-                      _iregex: search,
-                    },
-                  },
-                },
-              },
-              {
-                vin: {
-                  _iregex: search,
-                },
-              },
-            ],
-          },
-          ...filter,
-        },
-      });
+      };
     }
+
+    await getCars({
+      variables: {
+        where: {
+          ...where,
+        },
+        ...filter,
+      },
+    });
   };
 
   return {
