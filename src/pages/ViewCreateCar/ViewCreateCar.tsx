@@ -6,7 +6,8 @@ import SelectState from "./SelectState";
 import SelectColor from "./SelectColor";
 import * as styled from "./styled";
 import SelectDateTime from "./SelectDateTime";
-import { SelectOdometer } from "./SelectOdometer";
+import SelectOdometer from "./SelectOdometer";
+import SelectPrice from "./SelectPrice";
 
 export interface IFormInput {
   brand_id: number | string;
@@ -18,6 +19,7 @@ export interface IFormInput {
   vin: string;
   sale_date: string;
   odometer: number | number[];
+  price: number | number[];
 }
 
 const ViewCreateCar = () => {
@@ -79,6 +81,7 @@ const ViewCreateCar = () => {
 
               <SelectDateTime register={register} setValue={setValue} />
               <SelectOdometer register={register} setValue={setValue} />
+              <SelectPrice register={register} setValue={setValue} />
             </>
           )}
           <input type="submit" />
