@@ -29,7 +29,15 @@ export interface IFormInput {
 const ViewCreateCar = () => {
   const { data, loading, error } = useMultiple_QueryQuery();
   const { addCarOne, dataAdd, loadingADdCar, errorRequest } = useAddCar();
-  const { register, handleSubmit, setValue, getValues } = useForm<IFormInput>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm<IFormInput>({
+    mode: "onBlur",
+  });
   const [odometer, setOdometer] = useState();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
@@ -41,14 +49,14 @@ const ViewCreateCar = () => {
       ...data,
       title: title,
     };
-    try {
+    console.log(data);
+    /*try {
       const newCar = await addCarOne(data);
       console.log("NEW CAR", newCar);
     } catch (error) {
       console.log(error);
-    }
+    }*/
   };
-  console.log("NEW DATAADD", dataAdd);
 
   return (
     <styled.Container>
@@ -62,6 +70,7 @@ const ViewCreateCar = () => {
                 getValue={getValues}
                 register={register}
                 setValue={setValue}
+                errors={errors}
               />
 
               <SelectState

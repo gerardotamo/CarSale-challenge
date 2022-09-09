@@ -3,6 +3,7 @@ import {
   UseFormRegister,
   UseFormSetValue,
   UseFormGetValues,
+  FieldErrorsImpl,
 } from "react-hook-form";
 import {
   Brands_Insert_Input,
@@ -26,6 +27,7 @@ interface PropsBrands {
   register: UseFormRegister<IFormInput>;
   getValue: UseFormGetValues<IFormInput>;
   setValue: UseFormSetValue<IFormInput>;
+  errors: FieldErrorsImpl<IFormInput>;
 }
 
 const SelectBrand = (props: PropsBrands) => {
@@ -35,6 +37,12 @@ const SelectBrand = (props: PropsBrands) => {
   const { findModel, data, loading, errorRequest } = useFindModel();
 
   const [models, setModels] = useState<MyOption[]>([]);
+
+  const registerOptions = {
+    brand_id: { required: "Brand is required" },
+    model_id: { required: "Model is required" },
+  };
+
   const handleChangeBrand = async (option: MyOption | null) => {
     console.log(option?.value);
     if (option) {
@@ -69,8 +77,11 @@ const SelectBrand = (props: PropsBrands) => {
         <styled.HeaderOption>Select Brand</styled.HeaderOption>
         {brands && (
           <>
-            <div {...props.register("brand_id")}>
+            <div {...props.register("brand_id", registerOptions.brand_id)}>
               <SelectForm options={brands} onChange={handleChangeBrand} />
+              <small>
+                {props.errors.brand_id && props.errors.brand_id.message}
+              </small>
             </div>
             {/*<styled.Select
               {...props.register("brand_id")}
@@ -90,12 +101,15 @@ const SelectBrand = (props: PropsBrands) => {
       </styled.EntryGroup>
       <styled.EntryGroup>
         <styled.HeaderOption>Select Model</styled.HeaderOption>
-        <div {...props.register("model_id")}>
+        <div {...props.register("model_id", registerOptions.model_id)}>
           <SelectForm
             options={models}
             onChange={handleChangeModel}
             isLoading={loading}
           />
+          <small>
+            {props.errors.model_id && props.errors.model_id.message}
+          </small>
         </div>
         {/*models && (
           <styled.Select {...props.register("model_id")}>
