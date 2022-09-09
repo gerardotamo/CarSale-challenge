@@ -35,9 +35,7 @@ const SelectDateTime = (props: PropsDatePicker) => {
       <styled.DatePicker
         {...props.register("sale_date")}
         type="date"
-        name=""
-        id=""
-        defaultValue={dateValue}
+        //defaultValue={dateValue}
         min={date}
         value={dateValue}
         onChange={handleChangeSaleDate}
