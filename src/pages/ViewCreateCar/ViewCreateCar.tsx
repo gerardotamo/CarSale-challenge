@@ -56,10 +56,9 @@ const ViewCreateCar = () => {
 
     console.log(data);
     try {
-      const newCar = await addCarOne(data);
+      await addCarOne(data);
     } catch (error) {
       console.log(error);
-      console.log(errorRequest);
     }
   };
 
@@ -91,14 +90,16 @@ const ViewCreateCar = () => {
   }
 
   if (isCarAdd) {
-    <styled.Container>
-      <styled.RegisterContainer>
-        <styled.Title>The car is Adding</styled.Title>
-        <Link to={"cars"}>
-          <Button>View Cars</Button>
-        </Link>
-      </styled.RegisterContainer>
-    </styled.Container>;
+    return (
+      <styled.Container>
+        <styled.RegisterContainer>
+          <styled.Title>The car is Adding</styled.Title>
+          <Link to={"/cars"}>
+            <Button>View Cars</Button>
+          </Link>
+        </styled.RegisterContainer>
+      </styled.Container>
+    );
   }
 
   return (
