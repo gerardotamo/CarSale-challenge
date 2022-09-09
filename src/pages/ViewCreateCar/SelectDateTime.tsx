@@ -5,6 +5,7 @@ import * as styled from "./styled";
 import { IFormInput } from "./ViewCreateCar";
 
 interface PropsDatePicker {
+  isDisable: boolean;
   register: UseFormRegister<IFormInput>;
   setValue: UseFormSetValue<IFormInput>;
 }
@@ -39,6 +40,7 @@ const SelectDateTime = (props: PropsDatePicker) => {
         min={date}
         value={dateValue}
         onChange={handleChangeSaleDate}
+        disabled={props.isDisable}
       />
     </styled.EntryGroup>
   );

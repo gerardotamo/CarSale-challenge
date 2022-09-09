@@ -25,6 +25,7 @@ type Brands = Pick<Brands_Insert_Input, "name"> & {
 };
 interface PropsBrands {
   brands: Brands[];
+  isDisable: boolean;
   register: UseFormRegister<IFormInput>;
   getValue: UseFormGetValues<IFormInput>;
   setValue: UseFormSetValue<IFormInput>;
@@ -74,7 +75,11 @@ const SelectBrand = (props: PropsBrands) => {
         {brands && (
           <>
             <div {...props.register("brand_id", registerOptions.brand_id)}>
-              <SelectForm options={brands} onChange={handleChangeBrand} />
+              <SelectForm
+                options={brands}
+                onChange={handleChangeBrand}
+                isDisable={props.isDisable}
+              />
               <styled.ErrorMessage>
                 {props.errors.brand_id && props.errors.brand_id.message}
               </styled.ErrorMessage>
@@ -89,6 +94,7 @@ const SelectBrand = (props: PropsBrands) => {
             options={models}
             onChange={handleChangeModel}
             isLoading={loading}
+            isDisable={props.isDisable}
           />
           <styled.ErrorMessage>
             {props.errors.model_id && props.errors.model_id.message}

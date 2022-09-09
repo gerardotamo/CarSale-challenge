@@ -12,6 +12,7 @@ import { registerOptions } from "../../shared/utils/validatios";
 
 interface PropsCities {
   colors: Pick<Colors, "id" | "name">[];
+  isDisable: boolean;
   register: UseFormRegister<IFormInput>;
   setValue: UseFormSetValue<IFormInput>;
   errors: FieldErrorsImpl<IFormInput>;
@@ -32,7 +33,11 @@ const SelectColor = (props: PropsCities) => {
     <styled.EntryGroup>
       <styled.HeaderOption>Select Color</styled.HeaderOption>
       <div {...props.register("color_id", registerOptions.color_id)}>
-        <SelectForm options={colors} onChange={handleChangeColor} />
+        <SelectForm
+          options={colors}
+          onChange={handleChangeColor}
+          isDisable={props.isDisable}
+        />
         <styled.ErrorMessage>
           {props.errors.color_id && props.errors.color_id.message}
         </styled.ErrorMessage>

@@ -13,6 +13,7 @@ interface PropsSelect {
   value?: number;
   isLoading?: boolean;
   onChange: (value: MyOption | null, actionMeta: ActionMeta<MyOption>) => void;
+  isDisable: boolean;
 }
 
 const customStyles: StylesConfig<MyOption, false, GroupBase<MyOption>> = {
@@ -62,9 +63,12 @@ const customStyles: StylesConfig<MyOption, false, GroupBase<MyOption>> = {
   },
 };
 
-const SelectForm = ({ options, onChange, isLoading }: PropsSelect) => {
-  console.log(isLoading);
-
+const SelectForm = ({
+  options,
+  onChange,
+  isLoading,
+  isDisable,
+}: PropsSelect) => {
   return (
     <Select
       styles={customStyles}
@@ -73,6 +77,7 @@ const SelectForm = ({ options, onChange, isLoading }: PropsSelect) => {
       onChange={onChange}
       isLoading={isLoading}
       noOptionsMessage={() => "No Categories Found"}
+      isDisabled={isDisable}
     />
   );
 };

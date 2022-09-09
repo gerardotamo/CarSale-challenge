@@ -17,6 +17,7 @@ type City = Pick<Cities, "id" | "name">;
 
 interface PropsCities {
   state: Pick<City, "id" | "name">[];
+  isDisable: boolean;
   register: UseFormRegister<IFormInput>;
   getValue: UseFormGetValues<IFormInput>;
   setValue: UseFormSetValue<IFormInput>;
@@ -60,7 +61,11 @@ const SelectState = (props: PropsCities) => {
       <styled.EntryGroup>
         <styled.HeaderOption>Select State</styled.HeaderOption>
         <div {...props.register("state_id", registerOptions.state_id)}>
-          <SelectForm options={state} onChange={handleChangeState} />
+          <SelectForm
+            options={state}
+            onChange={handleChangeState}
+            isDisable={props.isDisable}
+          />
           <styled.ErrorMessage>
             {props.errors.brand_id && props.errors.brand_id.message}
           </styled.ErrorMessage>
@@ -73,6 +78,7 @@ const SelectState = (props: PropsCities) => {
             options={cities}
             onChange={handleChangeCity}
             isLoading={loading}
+            isDisable={props.isDisable}
           />
           <styled.ErrorMessage>
             {props.errors.city_id && props.errors.city_id.message}

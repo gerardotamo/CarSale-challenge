@@ -6,6 +6,7 @@ import { BaseColor } from "../../config/color";
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { IFormInput } from "./ViewCreateCar";
 interface PropsPrice {
+  isDisable: boolean;
   register: UseFormRegister<IFormInput>;
   setValue: UseFormSetValue<IFormInput>;
 }
@@ -46,6 +47,7 @@ const SelectPrice = (props: PropsPrice) => {
           aria-label="Default"
           max={valueMax}
           onChange={handleSliderChange}
+          disabled={props.isDisable}
         />
         <styled.Input
           {...props.register("price")}
@@ -64,6 +66,7 @@ const SelectPrice = (props: PropsPrice) => {
             borderBottomColor: BaseColor.whiteColor,
             color: BaseColor.whiteColor,
           }}
+          disabled={props.isDisable}
         />
       </styled.SelectOdo>
     </styled.EntryGroup>

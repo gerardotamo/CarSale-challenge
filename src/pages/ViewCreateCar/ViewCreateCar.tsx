@@ -10,6 +10,7 @@ import SelectOdometer from "./SelectOdometer";
 import SelectPrice from "./SelectPrice";
 import { useAddCar } from "../../shared/graphql/request/carRequest";
 import { InputYearVin } from "./InputYearVin";
+import { ApolloError } from "@apollo/client";
 
 export interface IFormInput {
   brand_id: number | string;
@@ -39,7 +40,6 @@ const ViewCreateCar = () => {
   } = useForm<IFormInput>({
     mode: "onBlur",
   });
-  const [odometer, setOdometer] = useState();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     const title = getValues("title")?.includes(getValues("year").toString())
@@ -51,13 +51,34 @@ const ViewCreateCar = () => {
       title: title,
     };
     console.log(data);
-    /*try {
+    try {
       const newCar = await addCarOne(data);
       console.log("NEW CAR", newCar);
     } catch (error) {
       console.log(error);
-    }*/
+      console.log(errorRequest);
+    }
   };
+
+  if (errorRequest) {
+    return (
+      <styled.Container>
+        <styled.RegisterContainer>
+          <styled.Title>{`Submission error! ${errorRequest.message}`}</styled.Title>
+        </styled.RegisterContainer>
+      </styled.Container>
+    );
+  }
+
+  if (loading) {
+    return (
+      <styled.Container>
+        <styled.RegisterContainer>
+          <styled.Title>Loading...</styled.Title>
+        </styled.RegisterContainer>
+      </styled.Container>
+    );
+  }
 
   return (
     <styled.Container>
@@ -72,6 +93,7 @@ const ViewCreateCar = () => {
                 register={register}
                 setValue={setValue}
                 errors={errors}
+                isDisable={loadingADdCar}
               />
 
               <SelectState
@@ -80,6 +102,7 @@ const ViewCreateCar = () => {
                 setValue={setValue}
                 register={register}
                 errors={errors}
+                isDisable={loadingADdCar}
               />
 
               <SelectColor
@@ -87,13 +110,26 @@ const ViewCreateCar = () => {
                 register={register}
                 setValue={setValue}
                 errors={errors}
+                isDisable={loadingADdCar}
               />
 
               <InputYearVin register={register} errors={errors} />
 
-              <SelectDateTime register={register} setValue={setValue} />
-              <SelectOdometer register={register} setValue={setValue} />
-              <SelectPrice register={register} setValue={setValue} />
+              <SelectDateTime
+                register={register}
+                setValue={setValue}
+                isDisable={loadingADdCar}
+              />
+              <SelectOdometer
+                register={register}
+                setValue={setValue}
+                isDisable={loadingADdCar}
+              />
+              <SelectPrice
+                register={register}
+                setValue={setValue}
+                isDisable={loadingADdCar}
+              />
 
               <styled.EntryGroup>
                 <styled.HeaderOption>Select Condition</styled.HeaderOption>
@@ -104,6 +140,7 @@ const ViewCreateCar = () => {
                     value={"A"}
                     name={"condition"}
                     checked
+                    disabled={loadingADdCar}
                   />
                   <styled.Label>Salvage Title</styled.Label>
                   <styled.RadioButton
@@ -111,6 +148,7 @@ const ViewCreateCar = () => {
                     type={"radio"}
                     value={"N"}
                     name={"condition"}
+                    disabled={loadingADdCar}
                   />
                   <styled.Label>New</styled.Label>
                 </styled.RadioButtonGroup>
