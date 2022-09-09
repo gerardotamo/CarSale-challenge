@@ -2,45 +2,52 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import styled from "styled-components";
 import { BaseColor } from "../../config/color";
 
-export const SkeletonCar = () => {
+export const SkeletonCar = ({ quantity }: { quantity: number }) => {
+  const quant = Array.from(Array(quantity));
   return (
-    <Container>
-      <SkeletonTheme
-        baseColor={BaseColor.blueDarkColor}
-        highlightColor={BaseColor.lightBluePrimaryColor}
-      >
-        <Skeleton width={155} height={116} />
-        <InfoContainer>
-          <Skeleton width={120} />
-          <Section>
-            <Skeleton width={100} />
-            <Skeleton width={180} height={10} />
-          </Section>
-          <Skeleton width={120} />
-        </InfoContainer>
-        <InfoContainer>
-          <Section>
-            <Skeleton width={80} />
-            <Skeleton width={50} height={10} />
-          </Section>
-          <Section>
-            <Skeleton width={80} />
-            <Skeleton width={50} height={10} />
-          </Section>
-        </InfoContainer>
-        <Skeleton width={70} />
-        <InfoContainer>
-          <Section>
-            <Skeleton width={50} />
-            <Skeleton width={30} height={10} />
-          </Section>
-          <Section>
-            <Skeleton width={50} />
-            <Skeleton width={30} height={10} />
-          </Section>
-        </InfoContainer>
-      </SkeletonTheme>
-    </Container>
+    <>
+      {quant.map((item, id) => {
+        return (
+          <Container key={id}>
+            <SkeletonTheme
+              baseColor={BaseColor.blueDarkColor}
+              highlightColor={BaseColor.lightBluePrimaryColor}
+            >
+              <Skeleton width={155} height={116} />
+              <InfoContainer>
+                <Skeleton width={120} />
+                <Section>
+                  <Skeleton width={100} />
+                  <Skeleton width={180} height={10} />
+                </Section>
+                <Skeleton width={120} />
+              </InfoContainer>
+              <InfoContainer>
+                <Section>
+                  <Skeleton width={80} />
+                  <Skeleton width={50} height={10} />
+                </Section>
+                <Section>
+                  <Skeleton width={80} />
+                  <Skeleton width={50} height={10} />
+                </Section>
+              </InfoContainer>
+              <Skeleton width={70} />
+              <InfoContainer>
+                <Section>
+                  <Skeleton width={50} />
+                  <Skeleton width={30} height={10} />
+                </Section>
+                <Section>
+                  <Skeleton width={50} />
+                  <Skeleton width={30} height={10} />
+                </Section>
+              </InfoContainer>
+            </SkeletonTheme>
+          </Container>
+        );
+      })}
+    </>
   );
 };
 

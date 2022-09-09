@@ -43,13 +43,13 @@ export const ViewCars = () => {
   return (
     <styled.Container>
       <HeaderListCar />
-      {!loading
-        ? cars.map((item, index) => {
-            return <CardItem data={item} key={index} />;
-          })
-        : [{}, {}].map((item, index) => {
-            return <SkeletonCar key={index} />;
-          })}
+      {!loading ? (
+        cars.map((item, index) => {
+          return <CardItem data={item} key={index} />;
+        })
+      ) : (
+        <SkeletonCar quantity={3} />
+      )}
     </styled.Container>
   );
 };
