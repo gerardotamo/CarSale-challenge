@@ -75,3 +75,22 @@ export const FIND_CARS = gql`
     }
   }
 `;
+
+export const ADD_CAR = gql`
+  mutation Add_Car($object: cars_insert_input!) {
+    insert_cars_one(object: $object) {
+      city_id
+      brand_id
+      color_id
+      condition
+      model_id
+      odometer
+      price
+      sale_date
+      state_id
+      vin
+      year
+      title
+    }
+  }
+`;

@@ -39,7 +39,7 @@ const SelectDateTime = (props: PropsDatePicker) => {
         id=""
         defaultValue={dateValue}
         min={date}
-        value={date}
+        value={dateValue}
         onChange={handleChangeSaleDate}
       />
     </styled.EntryGroup>

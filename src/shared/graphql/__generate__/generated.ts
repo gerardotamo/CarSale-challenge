@@ -3809,6 +3809,27 @@ export type Find_UserQueryVariables = Exact<{
 
 export type Find_UserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: number, email: string, first_name: string, last_name: string, uuid: any }> };
 
+export type Mutation_RootMutationVariables = Exact<{
+  object: Cars_Insert_Input;
+}>;
+
+
+export type Mutation_RootMutation = { __typename?: 'mutation_root', insert_cars_one?: { __typename?: 'cars', city_id: number, brand_id: number, color_id: number, condition: any, model_id: number, odometer?: number | null, price: any, sale_date: any, state_id: number, vin: string, year?: number | null } | null };
+
+export type Find_CitiesQueryVariables = Exact<{
+  where?: InputMaybe<Cities_Bool_Exp>;
+}>;
+
+
+export type Find_CitiesQuery = { __typename?: 'query_root', cities: Array<{ __typename?: 'cities', name: string, id: number }> };
+
+export type Add_CarMutationVariables = Exact<{
+  object: Cars_Insert_Input;
+}>;
+
+
+export type Add_CarMutation = { __typename?: 'mutation_root', insert_cars_one?: { __typename?: 'cars', city_id: number, brand_id: number, color_id: number, condition: any, model_id: number, odometer?: number | null, price: any, sale_date: any, state_id: number, vin: string, year?: number | null } | null };
+
 
 export const CarDocument = gql`
     query Car {
@@ -4100,3 +4121,125 @@ export function useFind_UserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type Find_UserQueryHookResult = ReturnType<typeof useFind_UserQuery>;
 export type Find_UserLazyQueryHookResult = ReturnType<typeof useFind_UserLazyQuery>;
 export type Find_UserQueryResult = Apollo.QueryResult<Find_UserQuery, Find_UserQueryVariables>;
+export const Mutation_RootDocument = gql`
+    mutation Mutation_root($object: cars_insert_input!) {
+  insert_cars_one(object: $object) {
+    city_id
+    brand_id
+    color_id
+    condition
+    model_id
+    odometer
+    price
+    sale_date
+    state_id
+    vin
+    year
+  }
+}
+    `;
+export type Mutation_RootMutationFn = Apollo.MutationFunction<Mutation_RootMutation, Mutation_RootMutationVariables>;
+
+/**
+ * __useMutation_RootMutation__
+ *
+ * To run a mutation, you first call `useMutation_RootMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMutation_RootMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [mutationRootMutation, { data, loading, error }] = useMutation_RootMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useMutation_RootMutation(baseOptions?: Apollo.MutationHookOptions<Mutation_RootMutation, Mutation_RootMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Mutation_RootMutation, Mutation_RootMutationVariables>(Mutation_RootDocument, options);
+      }
+export type Mutation_RootMutationHookResult = ReturnType<typeof useMutation_RootMutation>;
+export type Mutation_RootMutationResult = Apollo.MutationResult<Mutation_RootMutation>;
+export type Mutation_RootMutationOptions = Apollo.BaseMutationOptions<Mutation_RootMutation, Mutation_RootMutationVariables>;
+export const Find_CitiesDocument = gql`
+    query Find_Cities($where: cities_bool_exp) {
+  cities(where: $where) {
+    name
+    id
+  }
+}
+    `;
+
+/**
+ * __useFind_CitiesQuery__
+ *
+ * To run a query within a React component, call `useFind_CitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFind_CitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFind_CitiesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useFind_CitiesQuery(baseOptions?: Apollo.QueryHookOptions<Find_CitiesQuery, Find_CitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Find_CitiesQuery, Find_CitiesQueryVariables>(Find_CitiesDocument, options);
+      }
+export function useFind_CitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Find_CitiesQuery, Find_CitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Find_CitiesQuery, Find_CitiesQueryVariables>(Find_CitiesDocument, options);
+        }
+export type Find_CitiesQueryHookResult = ReturnType<typeof useFind_CitiesQuery>;
+export type Find_CitiesLazyQueryHookResult = ReturnType<typeof useFind_CitiesLazyQuery>;
+export type Find_CitiesQueryResult = Apollo.QueryResult<Find_CitiesQuery, Find_CitiesQueryVariables>;
+export const Add_CarDocument = gql`
+    mutation Add_Car($object: cars_insert_input!) {
+  insert_cars_one(object: $object) {
+    city_id
+    brand_id
+    color_id
+    condition
+    model_id
+    odometer
+    price
+    sale_date
+    state_id
+    vin
+    year
+  }
+}
+    `;
+export type Add_CarMutationFn = Apollo.MutationFunction<Add_CarMutation, Add_CarMutationVariables>;
+
+/**
+ * __useAdd_CarMutation__
+ *
+ * To run a mutation, you first call `useAdd_CarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAdd_CarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCarMutation, { data, loading, error }] = useAdd_CarMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useAdd_CarMutation(baseOptions?: Apollo.MutationHookOptions<Add_CarMutation, Add_CarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Add_CarMutation, Add_CarMutationVariables>(Add_CarDocument, options);
+      }
+export type Add_CarMutationHookResult = ReturnType<typeof useAdd_CarMutation>;
+export type Add_CarMutationResult = Apollo.MutationResult<Add_CarMutation>;
+export type Add_CarMutationOptions = Apollo.BaseMutationOptions<Add_CarMutation, Add_CarMutationVariables>;

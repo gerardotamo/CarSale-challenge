@@ -1,5 +1,6 @@
-import { useLazyQuery } from "@apollo/client";
-import { FIND_CARS } from "../query/carQuery";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import { IFormInput } from "../../../pages/ViewCreateCar/ViewCreateCar";
+import { ADD_CAR, FIND_CARS } from "../query/carQuery";
 
 export const useFindCar = () => {
   const [getCars, result] = useLazyQuery(FIND_CARS);
@@ -71,5 +72,35 @@ export const useFindCar = () => {
     errorRequest: result.error,
     data: result.data,
     loading: result.loading,
+  };
+};
+
+export const useAddCar = () => {
+  const [addCar, { data, loading, error }] = useMutation(ADD_CAR);
+  const addCarOne = async (value: IFormInput) => {
+    await addCar({
+      variables: {
+        object: {
+          brand_id: value.brand_id,
+          model_id: value.model_id,
+          state_id: value.state_id,
+          city_id: value.city_id,
+          color_id: value.color_id,
+          vin: value.vin,
+          year: value.year,
+          sale_date: value.sale_date,
+          odometer: value.odometer,
+          price: value.price,
+          condition: value.condition,
+          title: value.title,
+        },
+      },
+    });
+  };
+  return {
+    addCarOne,
+    errorRequest: error,
+    dataAdd: data,
+    loadingADdCar: loading,
   };
 };

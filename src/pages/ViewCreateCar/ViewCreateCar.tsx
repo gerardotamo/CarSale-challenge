@@ -8,6 +8,7 @@ import * as styled from "./styled";
 import SelectDateTime from "./SelectDateTime";
 import SelectOdometer from "./SelectOdometer";
 import SelectPrice from "./SelectPrice";
+import { useAddCar } from "../../shared/graphql/request/carRequest";
 
 export interface IFormInput {
   brand_id: number | string;
@@ -21,13 +22,33 @@ export interface IFormInput {
   odometer: number | number[];
   price: number | number[];
   year: number;
+  uuid: string;
+  title: string | null | undefined;
 }
 
 const ViewCreateCar = () => {
   const { data, loading, error } = useMultiple_QueryQuery();
+  const { addCarOne, dataAdd, loadingADdCar, errorRequest } = useAddCar();
   const { register, handleSubmit, setValue, getValues } = useForm<IFormInput>();
   const [odometer, setOdometer] = useState();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    const title = getValues("title")?.includes(getValues("year").toString())
+      ? getValues("title")
+      : getValues("title") + " " + getValues("year");
+
+    data = {
+      ...data,
+      title: title,
+    };
+    try {
+      const newCar = await addCarOne(data);
+      console.log("NEW CAR", newCar);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log("NEW DATAADD", dataAdd);
 
   return (
     <styled.Container>
@@ -69,7 +90,6 @@ const ViewCreateCar = () => {
                     type="number"
                     placeholder="year"
                     min="1940"
-                    value={new Date().getFullYear()}
                     max={new Date().getFullYear()}
                   />
                 </styled.EntryGroup>
