@@ -69,3 +69,7 @@ export const SelectOdo = styled("div")`
 export const GroupOptions = styled("div")`
   display: flex;
 `;
+
+export const ErrorMessage = styled("small")`
+  color: red;
+`;

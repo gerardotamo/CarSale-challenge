@@ -79,9 +79,9 @@ const SelectBrand = (props: PropsBrands) => {
           <>
             <div {...props.register("brand_id", registerOptions.brand_id)}>
               <SelectForm options={brands} onChange={handleChangeBrand} />
-              <small>
+              <styled.ErrorMessage>
                 {props.errors.brand_id && props.errors.brand_id.message}
-              </small>
+              </styled.ErrorMessage>
             </div>
             {/*<styled.Select
               {...props.register("brand_id")}
@@ -107,9 +107,9 @@ const SelectBrand = (props: PropsBrands) => {
             onChange={handleChangeModel}
             isLoading={loading}
           />
-          <small>
+          <styled.ErrorMessage>
             {props.errors.model_id && props.errors.model_id.message}
-          </small>
+          </styled.ErrorMessage>
         </div>
         {/*models && (
           <styled.Select {...props.register("model_id")}>
