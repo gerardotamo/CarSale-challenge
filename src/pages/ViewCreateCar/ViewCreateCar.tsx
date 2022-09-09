@@ -9,6 +9,7 @@ import SelectDateTime from "./SelectDateTime";
 import SelectOdometer from "./SelectOdometer";
 import SelectPrice from "./SelectPrice";
 import { useAddCar } from "../../shared/graphql/request/carRequest";
+import { InputYearVin } from "./InputYearVin";
 
 export interface IFormInput {
   brand_id: number | string;
@@ -88,23 +89,7 @@ const ViewCreateCar = () => {
                 errors={errors}
               />
 
-              <styled.GroupOptions>
-                <styled.EntryGroup>
-                  <styled.HeaderOption>VIN</styled.HeaderOption>
-                  <styled.TextInput {...register("vin")} type={"text"} />
-                </styled.EntryGroup>
-
-                <styled.EntryGroup>
-                  <styled.HeaderOption>Salect year for car</styled.HeaderOption>
-                  <styled.TextInput
-                    {...register("year")}
-                    type="number"
-                    placeholder="year"
-                    min="1940"
-                    max={new Date().getFullYear()}
-                  />
-                </styled.EntryGroup>
-              </styled.GroupOptions>
+              <InputYearVin register={register} errors={errors} />
 
               <SelectDateTime register={register} setValue={setValue} />
               <SelectOdometer register={register} setValue={setValue} />

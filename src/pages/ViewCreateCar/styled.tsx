@@ -26,6 +26,8 @@ export const Form = styled("form")`
 export const EntryGroup = styled("div")`
   width: 100%;
   margin-block: 15px;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const HeaderOption = styled("h6")`
