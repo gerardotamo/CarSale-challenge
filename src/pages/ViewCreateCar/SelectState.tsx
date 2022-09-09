@@ -3,6 +3,7 @@ import {
   UseFormRegister,
   UseFormSetValue,
   UseFormGetValues,
+  FieldErrorsImpl,
 } from "react-hook-form";
 import { Cities, States } from "../../shared/graphql/__generate__/generated";
 import { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ import { IFormInput } from "./ViewCreateCar";
 import SelectForm from "../../components/Select/Select";
 import { MyOption } from "../../shared/types/MyOptions";
 import { useFindCity } from "../../shared/graphql/request/cityRequest";
+import { registerOptions } from "../../shared/utils/validatios";
 
 type City = Pick<Cities, "id" | "name">;
 
@@ -18,6 +20,7 @@ interface PropsCities {
   register: UseFormRegister<IFormInput>;
   getValue: UseFormGetValues<IFormInput>;
   setValue: UseFormSetValue<IFormInput>;
+  errors: FieldErrorsImpl<IFormInput>;
 }
 
 const SelectState = (props: PropsCities) => {
@@ -56,42 +59,25 @@ const SelectState = (props: PropsCities) => {
     <>
       <styled.EntryGroup>
         <styled.HeaderOption>Select State</styled.HeaderOption>
-        <div {...props.register("state_id")}>
+        <div {...props.register("state_id", registerOptions.state_id)}>
           <SelectForm options={state} onChange={handleChangeState} />
+          <styled.ErrorMessage>
+            {props.errors.brand_id && props.errors.brand_id.message}
+          </styled.ErrorMessage>
         </div>
-        {/*cities && (
-          <styled.Select
-            {...props.register("city_id")}
-            onChange={handleChangeCity}
-          >
-            <styled.Option value={""}>Select Value</styled.Option>
-            {cities.map((item, id) => {
-              return (
-                <styled.Option value={item.id ? item.id : 0} key={id}>
-                  {item.name}
-                </styled.Option>
-              );
-            })}
-          </styled.Select>
-          )*/}
       </styled.EntryGroup>
       <styled.EntryGroup>
         <styled.HeaderOption>Select City</styled.HeaderOption>
-        <div {...props.register("city_id")}>
+        <div {...props.register("city_id", registerOptions.city_id)}>
           <SelectForm
             options={cities}
             onChange={handleChangeCity}
             isLoading={loading}
           />
+          <styled.ErrorMessage>
+            {props.errors.city_id && props.errors.city_id.message}
+          </styled.ErrorMessage>
         </div>
-        {/*
-          <styled.Select {...props.register("state_id")}>
-            <styled.Option value={""}>Select Value</styled.Option>
-            {state && (
-              <styled.Option value={state.id}>{state.name}</styled.Option>
-            )}
-          </styled.Select>
-            */}
       </styled.EntryGroup>
     </>
   );

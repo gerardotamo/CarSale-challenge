@@ -16,6 +16,7 @@ import SelectForm from "../../components/Select/Select";
 import { ActionMeta } from "react-select";
 import { useFindModel } from "../../shared/graphql/request/modelRequest";
 import { MyOption } from "../../shared/types/MyOptions";
+import { registerOptions } from "../../shared/utils/validatios";
 
 type Model = Pick<Models, "id" | "name">;
 type Brands = Pick<Brands_Insert_Input, "name"> & {
@@ -37,11 +38,6 @@ const SelectBrand = (props: PropsBrands) => {
   const { findModel, data, loading, errorRequest } = useFindModel();
 
   const [models, setModels] = useState<MyOption[]>([]);
-
-  const registerOptions = {
-    brand_id: { required: "Brand is required" },
-    model_id: { required: "Model is required" },
-  };
 
   const handleChangeBrand = async (option: MyOption | null) => {
     console.log(option?.value);
@@ -83,19 +79,6 @@ const SelectBrand = (props: PropsBrands) => {
                 {props.errors.brand_id && props.errors.brand_id.message}
               </styled.ErrorMessage>
             </div>
-            {/*<styled.Select
-              {...props.register("brand_id")}
-              onChange={handleChangeBrand}
-            >
-              <styled.Option value={""}> Select Value</styled.Option>
-              {brands.map((item, id) => {
-                return (
-                  <styled.Option value={item.id ? item.id : 0} key={id}>
-                    {item.name}
-                  </styled.Option>
-                );
-              })}
-            </styled.Select>*/}
           </>
         )}
       </styled.EntryGroup>
@@ -111,18 +94,6 @@ const SelectBrand = (props: PropsBrands) => {
             {props.errors.model_id && props.errors.model_id.message}
           </styled.ErrorMessage>
         </div>
-        {/*models && (
-          <styled.Select {...props.register("model_id")}>
-            <styled.Option value={""}> Select Value</styled.Option>
-            {models.map((item) => {
-              return (
-                <styled.Option value={item.id} key={item.id}>
-                  {item.name}
-                </styled.Option>
-              );
-            })}
-          </styled.Select>
-          )*/}
       </styled.EntryGroup>
     </>
   );

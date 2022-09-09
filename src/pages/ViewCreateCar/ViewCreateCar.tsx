@@ -78,6 +78,7 @@ const ViewCreateCar = () => {
                 getValue={getValues}
                 setValue={setValue}
                 register={register}
+                errors={errors}
               />
 
               <SelectColor
