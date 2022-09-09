@@ -1,22 +1,13 @@
-import { Colors } from "../../shared/graphql/__generate__/generated";
 import * as styled from "./styled";
-import {
-  FieldErrorsImpl,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
-import { IFormInput } from "./ViewCreateCar";
 import SelectForm from "../../components/Select/Select";
 import { MyOption } from "../../shared/types/MyOptions";
 import { registerOptions } from "../../shared/utils/validatios";
+import { SelectProps } from "../../shared/types/SelectProps";
 
-interface PropsCities {
-  colors: Pick<Colors, "id" | "name">[];
-  isDisable: boolean;
-  register: UseFormRegister<IFormInput>;
-  setValue: UseFormSetValue<IFormInput>;
-  errors: FieldErrorsImpl<IFormInput>;
-}
+type PropsCities = Omit<
+  SelectProps,
+  "brands" | "cities" | "getValue" | "state"
+>;
 
 const SelectColor = (props: PropsCities) => {
   const colors = props.colors.map((item) => {
@@ -26,6 +17,7 @@ const SelectColor = (props: PropsCities) => {
   const handleChangeColor = (option: MyOption | null) => {
     if (option) {
       props.setValue("color_id", option.value);
+      props.clearErrors("color_id");
     }
   };
 

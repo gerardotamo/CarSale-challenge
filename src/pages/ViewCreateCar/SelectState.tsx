@@ -1,28 +1,12 @@
 import * as styled from "./styled";
-import {
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormGetValues,
-  FieldErrorsImpl,
-} from "react-hook-form";
-import { Cities, States } from "../../shared/graphql/__generate__/generated";
 import { useEffect, useState } from "react";
-import { IFormInput } from "./ViewCreateCar";
 import SelectForm from "../../components/Select/Select";
 import { MyOption } from "../../shared/types/MyOptions";
 import { useFindCity } from "../../shared/graphql/request/cityRequest";
 import { registerOptions } from "../../shared/utils/validatios";
+import { SelectProps } from "../../shared/types/SelectProps";
 
-type City = Pick<Cities, "id" | "name">;
-
-interface PropsCities {
-  state: Pick<City, "id" | "name">[];
-  isDisable: boolean;
-  register: UseFormRegister<IFormInput>;
-  getValue: UseFormGetValues<IFormInput>;
-  setValue: UseFormSetValue<IFormInput>;
-  errors: FieldErrorsImpl<IFormInput>;
-}
+type PropsCities = Omit<SelectProps, "brands" | "colors">;
 
 const SelectState = (props: PropsCities) => {
   const state = props.state.map((item) => {
@@ -38,11 +22,13 @@ const SelectState = (props: PropsCities) => {
       setCities([]);
       findCity(option.value);
       props.setValue("city_id", "");
+      props.clearErrors("state_id");
     }
   };
   const handleChangeCity = (option: MyOption | null) => {
     if (option) {
       props.setValue("city_id", option.value);
+      props.clearErrors("city_id");
     }
   };
 
@@ -67,7 +53,7 @@ const SelectState = (props: PropsCities) => {
             isDisable={props.isDisable}
           />
           <styled.ErrorMessage>
-            {props.errors.brand_id && props.errors.brand_id.message}
+            {props.errors.state_id && props.errors.state_id.message}
           </styled.ErrorMessage>
         </div>
       </styled.EntryGroup>

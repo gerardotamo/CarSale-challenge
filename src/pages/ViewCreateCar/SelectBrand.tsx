@@ -1,39 +1,15 @@
 import * as styled from "./styled";
-import {
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormGetValues,
-  FieldErrorsImpl,
-} from "react-hook-form";
-import {
-  Brands_Insert_Input,
-  InputMaybe,
-  Models,
-} from "../../shared/graphql/__generate__/generated";
 import { useEffect, useState } from "react";
-import { IFormInput } from "./ViewCreateCar";
 import SelectForm from "../../components/Select/Select";
-import { ActionMeta } from "react-select";
 import { useFindModel } from "../../shared/graphql/request/modelRequest";
 import { MyOption } from "../../shared/types/MyOptions";
 import { registerOptions } from "../../shared/utils/validatios";
+import { SelectProps } from "../../shared/types/SelectProps";
 
-type Model = Pick<Models, "id" | "name">;
-type Brands = Pick<Brands_Insert_Input, "name"> & {
-  models: Model[];
-  id: number;
-};
-interface PropsBrands {
-  brands: Brands[];
-  isDisable: boolean;
-  register: UseFormRegister<IFormInput>;
-  getValue: UseFormGetValues<IFormInput>;
-  setValue: UseFormSetValue<IFormInput>;
-  errors: FieldErrorsImpl<IFormInput>;
-}
+type PropsBrands = Omit<SelectProps, "colors" | "state">;
 
 const SelectBrand = (props: PropsBrands) => {
-  const brands = props.brands.map((item) => {
+  const brands = props.brands?.map((item) => {
     return { value: item.id, label: item.name };
   });
   const { findModel, data, loading, errorRequest } = useFindModel();
@@ -47,13 +23,15 @@ const SelectBrand = (props: PropsBrands) => {
       props.setValue("title", option.label);
       setModels([]);
       props.setValue("model_id", "");
-      await findModel(option.value);
+      findModel(option.value);
+      props.clearErrors("brand_id");
     }
   };
   const handleChangeModel = async (option: MyOption | null) => {
     if (option) {
       props.setValue("model_id", option.value);
       props.setValue("title", props.getValue("title") + " " + option.label);
+      props.clearErrors("model_id");
     }
   };
 

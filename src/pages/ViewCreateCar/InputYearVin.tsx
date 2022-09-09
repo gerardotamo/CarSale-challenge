@@ -1,12 +1,8 @@
-import { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
+import { SelectProps } from "../../shared/types/SelectProps";
 import { registerOptions } from "../../shared/utils/validatios";
 import * as styled from "./styled";
-import { IFormInput } from "./ViewCreateCar";
 
-interface Props {
-  register: UseFormRegister<IFormInput>;
-  errors: FieldErrorsImpl<IFormInput>;
-}
+type Props = Pick<SelectProps, "errors" | "register">;
 
 export const InputYearVin = (props: Props) => {
   return (

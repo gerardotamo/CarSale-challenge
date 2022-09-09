@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import { UseFormRegister, UseFormSetValue } from "react-hook-form";
-import { MyOption } from "../../shared/types/MyOptions";
+import { SelectProps } from "../../shared/types/SelectProps";
 import * as styled from "./styled";
-import { IFormInput } from "./ViewCreateCar";
 
-interface PropsDatePicker {
-  isDisable: boolean;
-  register: UseFormRegister<IFormInput>;
-  setValue: UseFormSetValue<IFormInput>;
-}
+type PropsDatePicker = Pick<SelectProps, "setValue" | "register" | "isDisable">;
 
 const SelectDateTime = (props: PropsDatePicker) => {
   const date =

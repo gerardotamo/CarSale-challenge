@@ -10,7 +10,8 @@ import SelectOdometer from "./SelectOdometer";
 import SelectPrice from "./SelectPrice";
 import { useAddCar } from "../../shared/graphql/request/carRequest";
 import { InputYearVin } from "./InputYearVin";
-import { ApolloError } from "@apollo/client";
+import { Link } from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 export interface IFormInput {
   brand_id: number | string;
@@ -31,11 +32,13 @@ export interface IFormInput {
 const ViewCreateCar = () => {
   const { data, loading, error } = useMultiple_QueryQuery();
   const { addCarOne, dataAdd, loadingADdCar, errorRequest } = useAddCar();
+  const [isCarAdd, setIsCarAdd] = useState(false);
   const {
     register,
     handleSubmit,
     setValue,
     getValues,
+    clearErrors,
     formState: { errors },
   } = useForm<IFormInput>({
     mode: "onBlur",
@@ -50,15 +53,22 @@ const ViewCreateCar = () => {
       ...data,
       title: title,
     };
+
     console.log(data);
     try {
       const newCar = await addCarOne(data);
-      console.log("NEW CAR", newCar);
     } catch (error) {
       console.log(error);
       console.log(errorRequest);
     }
   };
+
+  useEffect(() => {
+    if (dataAdd) {
+      console.log("AGREGO");
+      setIsCarAdd(true);
+    }
+  }, [dataAdd]);
 
   if (errorRequest) {
     return (
@@ -80,6 +90,17 @@ const ViewCreateCar = () => {
     );
   }
 
+  if (isCarAdd) {
+    <styled.Container>
+      <styled.RegisterContainer>
+        <styled.Title>The car is Adding</styled.Title>
+        <Link to={"cars"}>
+          <Button>View Cars</Button>
+        </Link>
+      </styled.RegisterContainer>
+    </styled.Container>;
+  }
+
   return (
     <styled.Container>
       <styled.RegisterContainer>
@@ -94,6 +115,7 @@ const ViewCreateCar = () => {
                 setValue={setValue}
                 errors={errors}
                 isDisable={loadingADdCar}
+                clearErrors={clearErrors}
               />
 
               <SelectState
@@ -103,6 +125,7 @@ const ViewCreateCar = () => {
                 register={register}
                 errors={errors}
                 isDisable={loadingADdCar}
+                clearErrors={clearErrors}
               />
 
               <SelectColor
@@ -111,6 +134,7 @@ const ViewCreateCar = () => {
                 setValue={setValue}
                 errors={errors}
                 isDisable={loadingADdCar}
+                clearErrors={clearErrors}
               />
 
               <InputYearVin register={register} errors={errors} />
@@ -155,7 +179,9 @@ const ViewCreateCar = () => {
               </styled.EntryGroup>
             </>
           )}
-          <input type="submit" />
+          <styled.ButtonCreate disable={loadingADdCar}>
+            Send
+          </styled.ButtonCreate>
         </styled.Form>
       </styled.RegisterContainer>
     </styled.Container>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import MuiInput from "@mui/material/Input";
+import Button from "../../components/Button/Button";
 
 export const Container = styled("div")`
   margin-top: 65px;
@@ -74,4 +75,10 @@ export const GroupOptions = styled("div")`
 
 export const ErrorMessage = styled("small")`
   color: red;
+`;
+
+export const ButtonCreate = styled(Button)<{ disable: boolean }>`
+  cursor: ${(props) => (props.disable ? "wait" : "pointer")};
+
+  width: 100%;
 `;

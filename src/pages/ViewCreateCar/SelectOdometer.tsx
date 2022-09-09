@@ -3,13 +3,9 @@ import Slider from "@mui/material/Slider";
 
 import { useState } from "react";
 import { BaseColor } from "../../config/color";
-import { UseFormRegister, UseFormSetValue } from "react-hook-form";
-import { IFormInput } from "./ViewCreateCar";
-interface PropsOdometer {
-  isDisable: boolean;
-  register: UseFormRegister<IFormInput>;
-  setValue: UseFormSetValue<IFormInput>;
-}
+import { SelectProps } from "../../shared/types/SelectProps";
+
+type PropsOdometer = Pick<SelectProps, "setValue" | "register" | "isDisable">;
 
 const SelectOdometer = (props: PropsOdometer) => {
   const [odometerValue, setOdometerValue] = useState<

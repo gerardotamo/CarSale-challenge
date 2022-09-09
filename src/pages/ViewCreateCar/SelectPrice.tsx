@@ -3,13 +3,9 @@ import Slider from "@mui/material/Slider";
 
 import { useState } from "react";
 import { BaseColor } from "../../config/color";
-import { UseFormRegister, UseFormSetValue } from "react-hook-form";
-import { IFormInput } from "./ViewCreateCar";
-interface PropsPrice {
-  isDisable: boolean;
-  register: UseFormRegister<IFormInput>;
-  setValue: UseFormSetValue<IFormInput>;
-}
+import { SelectProps } from "../../shared/types/SelectProps";
+
+type PropsPrice = Pick<SelectProps, "isDisable" | "register" | "setValue">;
 
 const SelectPrice = (props: PropsPrice) => {
   const [priceValue, setPriceValue] = useState<
