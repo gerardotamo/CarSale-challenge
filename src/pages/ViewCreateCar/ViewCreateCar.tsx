@@ -20,6 +20,7 @@ export interface IFormInput {
   sale_date: string;
   odometer: number | number[];
   price: number | number[];
+  year: number;
 }
 
 const ViewCreateCar = () => {
@@ -54,16 +55,41 @@ const ViewCreateCar = () => {
                 register={register}
                 setValue={setValue}
               />
+
+              <styled.GroupOptions>
+                <styled.EntryGroup>
+                  <styled.HeaderOption>VIN</styled.HeaderOption>
+                  <styled.TextInput {...register("vin")} type={"text"} />
+                </styled.EntryGroup>
+
+                <styled.EntryGroup>
+                  <styled.HeaderOption>Salect year for car</styled.HeaderOption>
+                  <styled.TextInput
+                    {...register("year")}
+                    type="number"
+                    placeholder="year"
+                    min="1940"
+                    value={new Date().getFullYear()}
+                    max={new Date().getFullYear()}
+                  />
+                </styled.EntryGroup>
+              </styled.GroupOptions>
+
+              <SelectDateTime register={register} setValue={setValue} />
+              <SelectOdometer register={register} setValue={setValue} />
+              <SelectPrice register={register} setValue={setValue} />
+
               <styled.EntryGroup>
-                <styled.HeaderOption>Select </styled.HeaderOption>
-                <styled.RadioButtonGroup>
+                <styled.HeaderOption>Select Condition</styled.HeaderOption>
+                <styled.RadioButtonGroup {...register("condition")}>
                   <styled.RadioButton
                     {...register("condition")}
                     type={"radio"}
                     value={"A"}
                     name={"condition"}
+                    checked
                   />
-                  <styled.Label>A</styled.Label>
+                  <styled.Label>Salvage Title</styled.Label>
                   <styled.RadioButton
                     {...register("condition")}
                     type={"radio"}
@@ -73,15 +99,6 @@ const ViewCreateCar = () => {
                   <styled.Label>New</styled.Label>
                 </styled.RadioButtonGroup>
               </styled.EntryGroup>
-
-              <styled.EntryGroup>
-                <styled.HeaderOption>VIN</styled.HeaderOption>
-                <styled.TextInput {...register("vin")} type={"text"} />
-              </styled.EntryGroup>
-
-              <SelectDateTime register={register} setValue={setValue} />
-              <SelectOdometer register={register} setValue={setValue} />
-              <SelectPrice register={register} setValue={setValue} />
             </>
           )}
           <input type="submit" />

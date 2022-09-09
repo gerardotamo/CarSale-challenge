@@ -50,7 +50,7 @@ export const Label = styled("label")`
 `;
 
 export const TextInput = styled("input")`
-  width: 50%;
+  width: 80%;
 `;
 
 export const DatePicker = styled("input")`
@@ -63,5 +63,9 @@ export const Input = styled(MuiInput)`
 `;
 
 export const SelectOdo = styled("div")`
+  display: flex;
+`;
+
+export const GroupOptions = styled("div")`
   display: flex;
 `;
