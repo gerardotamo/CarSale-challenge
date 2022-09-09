@@ -1,14 +1,20 @@
 import { Colors } from "../../shared/graphql/__generate__/generated";
 import * as styled from "./styled";
-import { UseFormRegister, UseFormSetValue } from "react-hook-form";
+import {
+  FieldErrorsImpl,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import { IFormInput } from "./ViewCreateCar";
 import SelectForm from "../../components/Select/Select";
 import { MyOption } from "../../shared/types/MyOptions";
+import { registerOptions } from "../../shared/utils/validatios";
 
 interface PropsCities {
   colors: Pick<Colors, "id" | "name">[];
   register: UseFormRegister<IFormInput>;
   setValue: UseFormSetValue<IFormInput>;
+  errors: FieldErrorsImpl<IFormInput>;
 }
 
 const SelectColor = (props: PropsCities) => {
@@ -25,8 +31,11 @@ const SelectColor = (props: PropsCities) => {
   return (
     <styled.EntryGroup>
       <styled.HeaderOption>Select Color</styled.HeaderOption>
-      <div {...props.register("color_id")}>
+      <div {...props.register("color_id", registerOptions.color_id)}>
         <SelectForm options={colors} onChange={handleChangeColor} />
+        <styled.ErrorMessage>
+          {props.errors.color_id && props.errors.color_id.message}
+        </styled.ErrorMessage>
       </div>
     </styled.EntryGroup>
   );

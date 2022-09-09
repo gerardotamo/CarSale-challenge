@@ -85,6 +85,7 @@ const ViewCreateCar = () => {
                 colors={data.colors}
                 register={register}
                 setValue={setValue}
+                errors={errors}
               />
 
               <styled.GroupOptions>
