@@ -104,14 +104,11 @@ export const ADD_CAR = gql`
   }
 `;
 
-export const FIND_USER_CARS = gql`
-  query FIND_USER_CARS($where: user_cars_bool_exp) {
-    user_cars(where: $where) {
-      user_id
-      id
+export const ADD_FAVORITE_CAR = gql`
+  mutation ADD_FAVORITE_CAR($object: user_cars_insert_input!) {
+    insert_user_cars_one(object: $object) {
       car_id
+      user_id
     }
   }
 `;
-
-//export const FIND_FAVORITE = gql``;

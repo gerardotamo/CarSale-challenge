@@ -1,6 +1,6 @@
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { IFormInput } from "../../../pages/ViewCreateCar/ViewCreateCar";
-import { ADD_CAR, FIND_CARS, FIND_USER_CARS } from "../query/carQuery";
+import { ADD_CAR, ADD_FAVORITE_CAR, FIND_CARS } from "../query/carQuery";
 import { User_Cars } from "../__generate__/generated";
 
 export const useFindCar = () => {
@@ -118,26 +118,22 @@ export const useAddCar = () => {
   };
 };
 
-/*export const useFindUserCar = (user_id: number) => {
-  const variablesFindUserCar = {
-    variables: {
-      where: {
-        user_id: {
-          _eq: user_id,
+export const useAddFavoriteCar = () => {
+  const [addFavCar, { data, loading, error }] = useMutation(ADD_FAVORITE_CAR);
+  const addFavoriteCar = async (car_id: number, user_id: number) => {
+    await addFavCar({
+      variables: {
+        object: {
+          car_id: car_id,
+          user_id: user_id,
         },
       },
-    },
+    });
   };
-  const { data } = useQuery<User_Cars[]>(FIND_USER_CARS, variablesFindUserCar);
-  const _or = data?.map((item) => {
-    return {
-      id: {
-        _eq: item.car_id,
-      },
-    };
-  });
-
-  const {findCars} = useFindCar();
-
-  const 
-};*/
+  return {
+    addFavoriteCar,
+    data,
+    errorAddFavorite: error,
+    loadingAddFavorite: loading,
+  };
+};
