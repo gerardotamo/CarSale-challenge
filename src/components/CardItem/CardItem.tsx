@@ -3,19 +3,23 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Delorean from "../../shared/assets/images/delorean.jpg";
 import { BaseColor } from "../../config/color";
-import { Cars } from "../../shared/graphql/__generate__/generated";
+import { Cars, User_Cars } from "../../shared/graphql/__generate__/generated";
 import Button from "../Button/Button";
 interface Props {
-  data: Cars | undefined;
+  data: Cars;
+  favorite_cars: User_Cars[];
+  showFavorites?: boolean;
 }
 
-export const CardItem = ({ data }: Props) => {
-  const condition = { A: "Salvage title", N: "New" };
-  let cond: string = "Other";
-  if (data?.condition === "A") {
-    cond = condition.A;
-  } else if (data?.condition === "N") {
-    cond = condition.N;
+export const CardItem = ({
+  data,
+  favorite_cars,
+  showFavorites = false,
+}: Props) => {
+  const isFavoriteCar = favorite_cars.find((item) => item.car_id === data.id);
+
+  if (showFavorites && !isFavoriteCar) {
+    return null;
   }
 
   return (
@@ -31,7 +35,9 @@ export const CardItem = ({ data }: Props) => {
                 {data.batch}
               </SubInfoItem>
             </Section>
-            <AddFavoriteBUtton>Add Favorite</AddFavoriteBUtton>
+            <AddFavoriteBUtton>
+              {isFavoriteCar ? "Remove Favorite" : "Add Favorite"}
+            </AddFavoriteBUtton>
           </InfoContainer>
           <InfoContainer>
             <Section>
@@ -48,7 +54,13 @@ export const CardItem = ({ data }: Props) => {
             </Section>
           </InfoContainer>
           <InfoContainer>
-            <InfoItem>{cond}</InfoItem>
+            <InfoItem>
+              {data.condition === "A"
+                ? "Salvage title"
+                : data.condition === "N"
+                ? "New"
+                : "Other"}
+            </InfoItem>
           </InfoContainer>
           <InfoContainer>
             <Section>

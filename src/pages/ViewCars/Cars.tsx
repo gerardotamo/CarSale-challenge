@@ -44,7 +44,9 @@ export const ViewCars = () => {
       <HeaderListCar />
       {!loading ? (
         cars.map((item, index) => {
-          return <CardItem data={item} key={index} />;
+          return (
+            <CardItem data={item} key={index} favorite_cars={data.user_cars} />
+          );
         })
       ) : (
         <SkeletonCar quantity={3} />
