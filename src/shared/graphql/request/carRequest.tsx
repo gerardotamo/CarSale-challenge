@@ -1,6 +1,11 @@
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { IFormInput } from "../../../pages/ViewCreateCar/ViewCreateCar";
-import { ADD_CAR, ADD_FAVORITE_CAR, FIND_CARS } from "../query/carQuery";
+import {
+  ADD_CAR,
+  ADD_FAVORITE_CAR,
+  FIND_CARS,
+  REMOVE_FAVORITE_CAR,
+} from "../query/carQuery";
 import { User_Cars } from "../__generate__/generated";
 
 export const useFindCar = () => {
@@ -132,8 +137,26 @@ export const useAddFavoriteCar = () => {
   };
   return {
     addFavoriteCar,
-    data,
+    addData: data,
     errorAddFavorite: error,
     loadingAddFavorite: loading,
+  };
+};
+
+export const useRemoveFavoriteCar = () => {
+  const [removeFavCar, { data, loading, error }] =
+    useMutation(REMOVE_FAVORITE_CAR);
+  const removeFavoriteCar = async (id: number) => {
+    await removeFavCar({
+      variables: {
+        deleteUserCarsByPkId: id,
+      },
+    });
+  };
+  return {
+    removeFavoriteCar,
+    data,
+    errorRemoveFavorite: error,
+    loadingRemoveFavorite: loading,
   };
 };

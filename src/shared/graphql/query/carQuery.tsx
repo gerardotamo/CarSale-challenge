@@ -109,6 +109,17 @@ export const ADD_FAVORITE_CAR = gql`
     insert_user_cars_one(object: $object) {
       car_id
       user_id
+      id
+    }
+  }
+`;
+
+export const REMOVE_FAVORITE_CAR = gql`
+  mutation REMOVE_FAVORITE_CAR($deleteUserCarsByPkId: Int!) {
+    delete_user_cars_by_pk(id: $deleteUserCarsByPkId) {
+      car_id
+      id
+      user_id
     }
   }
 `;

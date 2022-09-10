@@ -7,8 +7,11 @@ import { Cars, User_Cars } from "../../shared/graphql/__generate__/generated";
 import Button from "../Button/Button";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useAddFavoriteCar } from "../../shared/graphql/request/carRequest";
+import { useEffect, useState } from "react";
+import {
+  useAddFavoriteCar,
+  useRemoveFavoriteCar,
+} from "../../shared/graphql/request/carRequest";
 interface Props {
   data: Cars;
   favorite_cars: User_Cars[];
@@ -20,13 +23,22 @@ export const CardItem = ({
   favorite_cars,
   showFavorites = false,
 }: Props) => {
-  const [isFavoriteCar, setIsFavoriteCar] = useState(
-    favorite_cars.find((item) => item.car_id === data.id) !== undefined
+  const [favoriteCar, setFavoriteCar] = useState(
+    favorite_cars.find((item) => item.car_id === data.id)
   );
-  const { addFavoriteCar, loadingAddFavorite, errorAddFavorite } =
+  const [isFavoriteCar, setIsFavoriteCar] = useState(favoriteCar !== undefined);
+  const { addFavoriteCar, loadingAddFavorite, errorAddFavorite, addData } =
     useAddFavoriteCar();
+  const { removeFavoriteCar, loadingRemoveFavorite, errorRemoveFavorite } =
+    useRemoveFavoriteCar();
   const navigate = useNavigate();
   const { state } = useGeneralContext();
+
+  useEffect(() => {
+    if (addData) {
+      setFavoriteCar(addData.insert_user_cars_one);
+    }
+  }, [addData]);
 
   if (showFavorites && !isFavoriteCar) {
     return null;
@@ -36,14 +48,18 @@ export const CardItem = ({
     if (!state.auth.admin.uuid) {
       return navigate("/login");
     }
+
     try {
-      if (isFavoriteCar) {
+      if (isFavoriteCar && favoriteCar) {
+        await removeFavoriteCar(favoriteCar.id);
+        setIsFavoriteCar(false);
       } else {
         await addFavoriteCar(data.id, state.auth.admin.id);
         setIsFavoriteCar(true);
-        console.log("Carro añadido");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -61,7 +77,7 @@ export const CardItem = ({
             </Section>
             <AddFavoriteBUtton
               onClick={handleFavoriteButton}
-              disable={loadingAddFavorite}
+              disable={loadingAddFavorite || loadingRemoveFavorite}
             >
               {isFavoriteCar ? "Remove Favorite" : "Add Favorite"}
             </AddFavoriteBUtton>
