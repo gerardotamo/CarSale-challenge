@@ -1,6 +1,7 @@
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { IFormInput } from "../../../pages/ViewCreateCar/ViewCreateCar";
-import { ADD_CAR, FIND_CARS } from "../query/carQuery";
+import { ADD_CAR, FIND_CARS, FIND_USER_CARS } from "../query/carQuery";
+import { User_Cars } from "../__generate__/generated";
 
 export const useFindCar = () => {
   const [getCars, result] = useLazyQuery(FIND_CARS);
@@ -8,7 +9,8 @@ export const useFindCar = () => {
   const findCars = async (
     search: string,
     orderByYear: string | null,
-    orderBySaleDate: string | null
+    orderBySaleDate: string | null,
+    user_id: number | undefined
   ) => {
     const filter = {
       orderBy: [
@@ -45,6 +47,14 @@ export const useFindCar = () => {
       ],
     };
 
+    const userCarsWhere = user_id
+      ? {
+          user_id: {
+            _eq: user_id,
+          },
+        }
+      : {};
+
     if (
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
         search
@@ -61,6 +71,9 @@ export const useFindCar = () => {
       variables: {
         where: {
           ...where,
+        },
+        userCarsWhere: {
+          ...userCarsWhere,
         },
         ...filter,
       },
@@ -104,3 +117,27 @@ export const useAddCar = () => {
     loadingADdCar: loading,
   };
 };
+
+/*export const useFindUserCar = (user_id: number) => {
+  const variablesFindUserCar = {
+    variables: {
+      where: {
+        user_id: {
+          _eq: user_id,
+        },
+      },
+    },
+  };
+  const { data } = useQuery<User_Cars[]>(FIND_USER_CARS, variablesFindUserCar);
+  const _or = data?.map((item) => {
+    return {
+      id: {
+        _eq: item.car_id,
+      },
+    };
+  });
+
+  const {findCars} = useFindCar();
+
+  const 
+};*/

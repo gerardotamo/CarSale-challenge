@@ -39,7 +39,11 @@ export const ALL_CARS = gql`
 `;
 
 export const FIND_CARS = gql`
-  query Find_Car($where: cars_bool_exp, $orderBy: [cars_order_by!]) {
+  query Find_Car(
+    $where: cars_bool_exp
+    $orderBy: [cars_order_by!]
+    $userCarsWhere: user_cars_bool_exp
+  ) {
     cars(where: $where, order_by: $orderBy) {
       batch
       city {
@@ -73,6 +77,11 @@ export const FIND_CARS = gql`
         }
       }
     }
+    user_cars(where: $userCarsWhere) {
+      user_id
+      id
+      car_id
+    }
   }
 `;
 
@@ -94,3 +103,15 @@ export const ADD_CAR = gql`
     }
   }
 `;
+
+export const FIND_USER_CARS = gql`
+  query FIND_USER_CARS($where: user_cars_bool_exp) {
+    user_cars(where: $where) {
+      user_id
+      id
+      car_id
+    }
+  }
+`;
+
+//export const FIND_FAVORITE = gql``;

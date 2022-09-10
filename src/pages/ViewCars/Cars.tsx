@@ -1,8 +1,9 @@
 import { useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CardItem } from "../../components/CardItem/CardItem";
 import { HeaderListCar } from "../../components/HeaderListCar/HeaderListCar";
+import { useGeneralContext } from "../../shared/contexts/StoreProvider";
 import { ALL_CARS } from "../../shared/graphql/query/carQuery";
 import { useFindCar } from "../../shared/graphql/request/carRequest";
 import {
@@ -15,11 +16,9 @@ import * as styled from "./styled";
 
 export const ViewCars = () => {
   const [cars, setCars] = useState<Cars[]>([]);
-  //const { data, loading, error } = useQuery(ALL_CARS);
   const { data, loading, errorRequest, findCars } = useFindCar();
   const [searchParams] = useSearchParams();
-
-  //const {} = useFind_CarLazyQuery();
+  const { state } = useGeneralContext();
 
   useEffect(() => {
     const search = searchParams.get("search");
@@ -27,12 +26,12 @@ export const ViewCars = () => {
     const orderBySaleDate = searchParams.get("orderBySaleDate");
     //const lazy = useCarLazyQuery();
     if (search !== null) {
-      findCars(search, orderByYear, orderBySaleDate);
+      findCars(search, orderByYear, orderBySaleDate, state.auth.admin.id);
     } else {
-      findCars("", orderByYear, orderBySaleDate);
+      findCars("", orderByYear, orderBySaleDate, state.auth.admin.id);
     }
   }, [searchParams]);
-
+  console.log(data);
   useEffect(() => {
     if (data) {
       console.log(data.cars);
