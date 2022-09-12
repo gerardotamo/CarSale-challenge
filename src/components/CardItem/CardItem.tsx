@@ -6,7 +6,7 @@ import { BaseColor } from "../../config/color";
 import { Cars, User_Cars } from "../../shared/graphql/__generate__/generated";
 import Button from "../Button/Button";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   useAddFavoriteCar,
@@ -68,7 +68,11 @@ export const CardItem = ({
         <>
           <Image src={Delorean} />
           <InfoContainer>
-            <Title color={BaseColor.lightBluePrimaryColor}>{data.title}</Title>
+            <Link to={"" + data.id}>
+              <Title color={BaseColor.lightBluePrimaryColor}>
+                {data.title}
+              </Title>
+            </Link>
             <Section>
               <InfoItem>Batch number</InfoItem>
               <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
