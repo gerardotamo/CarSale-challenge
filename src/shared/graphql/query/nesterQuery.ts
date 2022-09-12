@@ -6,10 +6,6 @@ export const multipleQuery = () => {
       brands {
         id
         name
-        models {
-          name
-          id
-        }
       }
       states {
         id

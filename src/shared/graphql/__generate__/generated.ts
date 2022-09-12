@@ -102,58 +102,10 @@ export type Bpchar_Comparison_Exp = {
 /** columns and relationships of "brands" */
 export type Brands = {
   __typename?: 'brands';
-  /** An array relationship */
-  cars: Array<Cars>;
-  /** An aggregate relationship */
-  cars_aggregate: Cars_Aggregate;
   cars_count: Scalars['smallint'];
   id: Scalars['Int'];
-  /** An array relationship */
-  models: Array<Models>;
-  /** An aggregate relationship */
-  models_aggregate: Models_Aggregate;
   name: Scalars['String'];
   uuid: Scalars['uuid'];
-};
-
-
-/** columns and relationships of "brands" */
-export type BrandsCarsArgs = {
-  distinct_on?: InputMaybe<Array<Cars_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Cars_Order_By>>;
-  where?: InputMaybe<Cars_Bool_Exp>;
-};
-
-
-/** columns and relationships of "brands" */
-export type BrandsCars_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Cars_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Cars_Order_By>>;
-  where?: InputMaybe<Cars_Bool_Exp>;
-};
-
-
-/** columns and relationships of "brands" */
-export type BrandsModelsArgs = {
-  distinct_on?: InputMaybe<Array<Models_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Models_Order_By>>;
-  where?: InputMaybe<Models_Bool_Exp>;
-};
-
-
-/** columns and relationships of "brands" */
-export type BrandsModels_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Models_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Models_Order_By>>;
-  where?: InputMaybe<Models_Bool_Exp>;
 };
 
 /** aggregated selection of "brands" */
@@ -198,10 +150,8 @@ export type Brands_Bool_Exp = {
   _and?: InputMaybe<Array<Brands_Bool_Exp>>;
   _not?: InputMaybe<Brands_Bool_Exp>;
   _or?: InputMaybe<Array<Brands_Bool_Exp>>;
-  cars?: InputMaybe<Cars_Bool_Exp>;
   cars_count?: InputMaybe<Smallint_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
-  models?: InputMaybe<Models_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -222,10 +172,8 @@ export type Brands_Inc_Input = {
 
 /** input type for inserting data into table "brands" */
 export type Brands_Insert_Input = {
-  cars?: InputMaybe<Cars_Arr_Rel_Insert_Input>;
   cars_count?: InputMaybe<Scalars['smallint']>;
   id?: InputMaybe<Scalars['Int']>;
-  models?: InputMaybe<Models_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']>;
   uuid?: InputMaybe<Scalars['uuid']>;
 };
@@ -273,10 +221,8 @@ export type Brands_On_Conflict = {
 
 /** Ordering options when selecting data from "brands". */
 export type Brands_Order_By = {
-  cars_aggregate?: InputMaybe<Cars_Aggregate_Order_By>;
   cars_count?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  models_aggregate?: InputMaybe<Models_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
   uuid?: InputMaybe<Order_By>;
 };
@@ -395,6 +341,8 @@ export type Brands_Variance_Fields = {
 export type Cars = {
   __typename?: 'cars';
   batch: Scalars['uuid'];
+  /** An object relationship */
+  brand: Brands;
   brand_id: Scalars['Int'];
   /** An object relationship */
   city: Cities;
@@ -413,6 +361,8 @@ export type Cars = {
   odometer?: Maybe<Scalars['Int']>;
   price: Scalars['money'];
   sale_date: Scalars['date'];
+  /** An object relationship */
+  state: States;
   state_id: Scalars['Int'];
   title?: Maybe<Scalars['String']>;
   update_date: Scalars['date'];
@@ -451,28 +401,6 @@ export type Cars_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "cars" */
-export type Cars_Aggregate_Order_By = {
-  avg?: InputMaybe<Cars_Avg_Order_By>;
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Cars_Max_Order_By>;
-  min?: InputMaybe<Cars_Min_Order_By>;
-  stddev?: InputMaybe<Cars_Stddev_Order_By>;
-  stddev_pop?: InputMaybe<Cars_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Cars_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Cars_Sum_Order_By>;
-  var_pop?: InputMaybe<Cars_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Cars_Var_Samp_Order_By>;
-  variance?: InputMaybe<Cars_Variance_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "cars" */
-export type Cars_Arr_Rel_Insert_Input = {
-  data: Array<Cars_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Cars_On_Conflict>;
-};
-
 /** aggregate avg on columns */
 export type Cars_Avg_Fields = {
   __typename?: 'cars_avg_fields';
@@ -487,25 +415,13 @@ export type Cars_Avg_Fields = {
   year?: Maybe<Scalars['Float']>;
 };
 
-/** order by avg() on columns of table "cars" */
-export type Cars_Avg_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  city_id?: InputMaybe<Order_By>;
-  color_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  model_id?: InputMaybe<Order_By>;
-  odometer?: InputMaybe<Order_By>;
-  price?: InputMaybe<Order_By>;
-  state_id?: InputMaybe<Order_By>;
-  year?: InputMaybe<Order_By>;
-};
-
 /** Boolean expression to filter rows from the table "cars". All fields are combined with a logical 'AND'. */
 export type Cars_Bool_Exp = {
   _and?: InputMaybe<Array<Cars_Bool_Exp>>;
   _not?: InputMaybe<Cars_Bool_Exp>;
   _or?: InputMaybe<Array<Cars_Bool_Exp>>;
   batch?: InputMaybe<Uuid_Comparison_Exp>;
+  brand?: InputMaybe<Brands_Bool_Exp>;
   brand_id?: InputMaybe<Int_Comparison_Exp>;
   city?: InputMaybe<Cities_Bool_Exp>;
   city_id?: InputMaybe<Int_Comparison_Exp>;
@@ -521,6 +437,7 @@ export type Cars_Bool_Exp = {
   odometer?: InputMaybe<Int_Comparison_Exp>;
   price?: InputMaybe<Money_Comparison_Exp>;
   sale_date?: InputMaybe<Date_Comparison_Exp>;
+  state?: InputMaybe<States_Bool_Exp>;
   state_id?: InputMaybe<Int_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   update_date?: InputMaybe<Date_Comparison_Exp>;
@@ -557,6 +474,7 @@ export type Cars_Inc_Input = {
 /** input type for inserting data into table "cars" */
 export type Cars_Insert_Input = {
   batch?: InputMaybe<Scalars['uuid']>;
+  brand?: InputMaybe<Brands_Obj_Rel_Insert_Input>;
   brand_id?: InputMaybe<Scalars['Int']>;
   city?: InputMaybe<Cities_Obj_Rel_Insert_Input>;
   city_id?: InputMaybe<Scalars['Int']>;
@@ -572,6 +490,7 @@ export type Cars_Insert_Input = {
   odometer?: InputMaybe<Scalars['Int']>;
   price?: InputMaybe<Scalars['money']>;
   sale_date?: InputMaybe<Scalars['date']>;
+  state?: InputMaybe<States_Obj_Rel_Insert_Input>;
   state_id?: InputMaybe<Scalars['Int']>;
   title?: InputMaybe<Scalars['String']>;
   update_date?: InputMaybe<Scalars['date']>;
@@ -604,29 +523,6 @@ export type Cars_Max_Fields = {
   year?: Maybe<Scalars['Int']>;
 };
 
-/** order by max() on columns of table "cars" */
-export type Cars_Max_Order_By = {
-  batch?: InputMaybe<Order_By>;
-  brand_id?: InputMaybe<Order_By>;
-  city_id?: InputMaybe<Order_By>;
-  color_id?: InputMaybe<Order_By>;
-  condition?: InputMaybe<Order_By>;
-  create_date?: InputMaybe<Order_By>;
-  damage_type?: InputMaybe<Order_By>;
-  description?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  model_id?: InputMaybe<Order_By>;
-  odometer?: InputMaybe<Order_By>;
-  price?: InputMaybe<Order_By>;
-  sale_date?: InputMaybe<Order_By>;
-  state_id?: InputMaybe<Order_By>;
-  title?: InputMaybe<Order_By>;
-  update_date?: InputMaybe<Order_By>;
-  uuid?: InputMaybe<Order_By>;
-  vin?: InputMaybe<Order_By>;
-  year?: InputMaybe<Order_By>;
-};
-
 /** aggregate min on columns */
 export type Cars_Min_Fields = {
   __typename?: 'cars_min_fields';
@@ -651,29 +547,6 @@ export type Cars_Min_Fields = {
   year?: Maybe<Scalars['Int']>;
 };
 
-/** order by min() on columns of table "cars" */
-export type Cars_Min_Order_By = {
-  batch?: InputMaybe<Order_By>;
-  brand_id?: InputMaybe<Order_By>;
-  city_id?: InputMaybe<Order_By>;
-  color_id?: InputMaybe<Order_By>;
-  condition?: InputMaybe<Order_By>;
-  create_date?: InputMaybe<Order_By>;
-  damage_type?: InputMaybe<Order_By>;
-  description?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  model_id?: InputMaybe<Order_By>;
-  odometer?: InputMaybe<Order_By>;
-  price?: InputMaybe<Order_By>;
-  sale_date?: InputMaybe<Order_By>;
-  state_id?: InputMaybe<Order_By>;
-  title?: InputMaybe<Order_By>;
-  update_date?: InputMaybe<Order_By>;
-  uuid?: InputMaybe<Order_By>;
-  vin?: InputMaybe<Order_By>;
-  year?: InputMaybe<Order_By>;
-};
-
 /** response of any mutation on the table "cars" */
 export type Cars_Mutation_Response = {
   __typename?: 'cars_mutation_response';
@@ -693,6 +566,7 @@ export type Cars_On_Conflict = {
 /** Ordering options when selecting data from "cars". */
 export type Cars_Order_By = {
   batch?: InputMaybe<Order_By>;
+  brand?: InputMaybe<Brands_Order_By>;
   brand_id?: InputMaybe<Order_By>;
   city?: InputMaybe<Cities_Order_By>;
   city_id?: InputMaybe<Order_By>;
@@ -708,6 +582,7 @@ export type Cars_Order_By = {
   odometer?: InputMaybe<Order_By>;
   price?: InputMaybe<Order_By>;
   sale_date?: InputMaybe<Order_By>;
+  state?: InputMaybe<States_Order_By>;
   state_id?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   update_date?: InputMaybe<Order_By>;
@@ -800,19 +675,6 @@ export type Cars_Stddev_Fields = {
   year?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev() on columns of table "cars" */
-export type Cars_Stddev_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  city_id?: InputMaybe<Order_By>;
-  color_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  model_id?: InputMaybe<Order_By>;
-  odometer?: InputMaybe<Order_By>;
-  price?: InputMaybe<Order_By>;
-  state_id?: InputMaybe<Order_By>;
-  year?: InputMaybe<Order_By>;
-};
-
 /** aggregate stddev_pop on columns */
 export type Cars_Stddev_Pop_Fields = {
   __typename?: 'cars_stddev_pop_fields';
@@ -827,19 +689,6 @@ export type Cars_Stddev_Pop_Fields = {
   year?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev_pop() on columns of table "cars" */
-export type Cars_Stddev_Pop_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  city_id?: InputMaybe<Order_By>;
-  color_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  model_id?: InputMaybe<Order_By>;
-  odometer?: InputMaybe<Order_By>;
-  price?: InputMaybe<Order_By>;
-  state_id?: InputMaybe<Order_By>;
-  year?: InputMaybe<Order_By>;
-};
-
 /** aggregate stddev_samp on columns */
 export type Cars_Stddev_Samp_Fields = {
   __typename?: 'cars_stddev_samp_fields';
@@ -852,19 +701,6 @@ export type Cars_Stddev_Samp_Fields = {
   price?: Maybe<Scalars['Float']>;
   state_id?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev_samp() on columns of table "cars" */
-export type Cars_Stddev_Samp_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  city_id?: InputMaybe<Order_By>;
-  color_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  model_id?: InputMaybe<Order_By>;
-  odometer?: InputMaybe<Order_By>;
-  price?: InputMaybe<Order_By>;
-  state_id?: InputMaybe<Order_By>;
-  year?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "cars" */
@@ -910,19 +746,6 @@ export type Cars_Sum_Fields = {
   price?: Maybe<Scalars['money']>;
   state_id?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
-};
-
-/** order by sum() on columns of table "cars" */
-export type Cars_Sum_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  city_id?: InputMaybe<Order_By>;
-  color_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  model_id?: InputMaybe<Order_By>;
-  odometer?: InputMaybe<Order_By>;
-  price?: InputMaybe<Order_By>;
-  state_id?: InputMaybe<Order_By>;
-  year?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "cars" */
@@ -989,19 +812,6 @@ export type Cars_Var_Pop_Fields = {
   year?: Maybe<Scalars['Float']>;
 };
 
-/** order by var_pop() on columns of table "cars" */
-export type Cars_Var_Pop_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  city_id?: InputMaybe<Order_By>;
-  color_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  model_id?: InputMaybe<Order_By>;
-  odometer?: InputMaybe<Order_By>;
-  price?: InputMaybe<Order_By>;
-  state_id?: InputMaybe<Order_By>;
-  year?: InputMaybe<Order_By>;
-};
-
 /** aggregate var_samp on columns */
 export type Cars_Var_Samp_Fields = {
   __typename?: 'cars_var_samp_fields';
@@ -1016,19 +826,6 @@ export type Cars_Var_Samp_Fields = {
   year?: Maybe<Scalars['Float']>;
 };
 
-/** order by var_samp() on columns of table "cars" */
-export type Cars_Var_Samp_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  city_id?: InputMaybe<Order_By>;
-  color_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  model_id?: InputMaybe<Order_By>;
-  odometer?: InputMaybe<Order_By>;
-  price?: InputMaybe<Order_By>;
-  state_id?: InputMaybe<Order_By>;
-  year?: InputMaybe<Order_By>;
-};
-
 /** aggregate variance on columns */
 export type Cars_Variance_Fields = {
   __typename?: 'cars_variance_fields';
@@ -1041,19 +838,6 @@ export type Cars_Variance_Fields = {
   price?: Maybe<Scalars['Float']>;
   state_id?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
-};
-
-/** order by variance() on columns of table "cars" */
-export type Cars_Variance_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  city_id?: InputMaybe<Order_By>;
-  color_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  model_id?: InputMaybe<Order_By>;
-  odometer?: InputMaybe<Order_By>;
-  price?: InputMaybe<Order_By>;
-  state_id?: InputMaybe<Order_By>;
-  year?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "cities" */
@@ -1664,39 +1448,11 @@ export type Models_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "models" */
-export type Models_Aggregate_Order_By = {
-  avg?: InputMaybe<Models_Avg_Order_By>;
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Models_Max_Order_By>;
-  min?: InputMaybe<Models_Min_Order_By>;
-  stddev?: InputMaybe<Models_Stddev_Order_By>;
-  stddev_pop?: InputMaybe<Models_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Models_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Models_Sum_Order_By>;
-  var_pop?: InputMaybe<Models_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Models_Var_Samp_Order_By>;
-  variance?: InputMaybe<Models_Variance_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "models" */
-export type Models_Arr_Rel_Insert_Input = {
-  data: Array<Models_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Models_On_Conflict>;
-};
-
 /** aggregate avg on columns */
 export type Models_Avg_Fields = {
   __typename?: 'models_avg_fields';
   brand_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
-};
-
-/** order by avg() on columns of table "models" */
-export type Models_Avg_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "models". All fields are combined with a logical 'AND'. */
@@ -1743,14 +1499,6 @@ export type Models_Max_Fields = {
   uuid?: Maybe<Scalars['uuid']>;
 };
 
-/** order by max() on columns of table "models" */
-export type Models_Max_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  name?: InputMaybe<Order_By>;
-  uuid?: InputMaybe<Order_By>;
-};
-
 /** aggregate min on columns */
 export type Models_Min_Fields = {
   __typename?: 'models_min_fields';
@@ -1758,14 +1506,6 @@ export type Models_Min_Fields = {
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   uuid?: Maybe<Scalars['uuid']>;
-};
-
-/** order by min() on columns of table "models" */
-export type Models_Min_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  name?: InputMaybe<Order_By>;
-  uuid?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "models" */
@@ -1832,12 +1572,6 @@ export type Models_Stddev_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev() on columns of table "models" */
-export type Models_Stddev_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-};
-
 /** aggregate stddev_pop on columns */
 export type Models_Stddev_Pop_Fields = {
   __typename?: 'models_stddev_pop_fields';
@@ -1845,23 +1579,11 @@ export type Models_Stddev_Pop_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev_pop() on columns of table "models" */
-export type Models_Stddev_Pop_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-};
-
 /** aggregate stddev_samp on columns */
 export type Models_Stddev_Samp_Fields = {
   __typename?: 'models_stddev_samp_fields';
   brand_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev_samp() on columns of table "models" */
-export type Models_Stddev_Samp_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "models" */
@@ -1885,12 +1607,6 @@ export type Models_Sum_Fields = {
   __typename?: 'models_sum_fields';
   brand_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
-};
-
-/** order by sum() on columns of table "models" */
-export type Models_Sum_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "models" */
@@ -1920,12 +1636,6 @@ export type Models_Var_Pop_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
-/** order by var_pop() on columns of table "models" */
-export type Models_Var_Pop_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-};
-
 /** aggregate var_samp on columns */
 export type Models_Var_Samp_Fields = {
   __typename?: 'models_var_samp_fields';
@@ -1933,23 +1643,11 @@ export type Models_Var_Samp_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
-/** order by var_samp() on columns of table "models" */
-export type Models_Var_Samp_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-};
-
 /** aggregate variance on columns */
 export type Models_Variance_Fields = {
   __typename?: 'models_variance_fields';
   brand_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
-};
-
-/** order by variance() on columns of table "models" */
-export type Models_Variance_Order_By = {
-  brand_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to compare columns of type "money". All fields are combined with logical 'AND'. */
@@ -2490,9 +2188,9 @@ export type Query_Root = {
   brands_aggregate: Brands_Aggregate;
   /** fetch data from the table: "brands" using primary key columns */
   brands_by_pk?: Maybe<Brands>;
-  /** An array relationship */
+  /** fetch data from the table: "cars" */
   cars: Array<Cars>;
-  /** An aggregate relationship */
+  /** fetch aggregated fields from the table: "cars" */
   cars_aggregate: Cars_Aggregate;
   /** fetch data from the table: "cars" using primary key columns */
   cars_by_pk?: Maybe<Cars>;
@@ -2508,9 +2206,9 @@ export type Query_Root = {
   colors_aggregate: Colors_Aggregate;
   /** fetch data from the table: "colors" using primary key columns */
   colors_by_pk?: Maybe<Colors>;
-  /** An array relationship */
+  /** fetch data from the table: "models" */
   models: Array<Models>;
-  /** An aggregate relationship */
+  /** fetch aggregated fields from the table: "models" */
   models_aggregate: Models_Aggregate;
   /** fetch data from the table: "models" using primary key columns */
   models_by_pk?: Maybe<Models>;
@@ -2985,9 +2683,9 @@ export type Subscription_Root = {
   brands_by_pk?: Maybe<Brands>;
   /** fetch data from the table in a streaming manner : "brands" */
   brands_stream: Array<Brands>;
-  /** An array relationship */
+  /** fetch data from the table: "cars" */
   cars: Array<Cars>;
-  /** An aggregate relationship */
+  /** fetch aggregated fields from the table: "cars" */
   cars_aggregate: Cars_Aggregate;
   /** fetch data from the table: "cars" using primary key columns */
   cars_by_pk?: Maybe<Cars>;
@@ -3009,9 +2707,9 @@ export type Subscription_Root = {
   colors_by_pk?: Maybe<Colors>;
   /** fetch data from the table in a streaming manner : "colors" */
   colors_stream: Array<Colors>;
-  /** An array relationship */
+  /** fetch data from the table: "models" */
   models: Array<Models>;
-  /** An aggregate relationship */
+  /** fetch aggregated fields from the table: "models" */
   models_aggregate: Models_Aggregate;
   /** fetch data from the table: "models" using primary key columns */
   models_by_pk?: Maybe<Models>;
@@ -3780,10 +3478,39 @@ export type CarQuery = { __typename?: 'query_root', cars: Array<{ __typename?: '
 export type Find_CarQueryVariables = Exact<{
   where?: InputMaybe<Cars_Bool_Exp>;
   orderBy?: InputMaybe<Array<Cars_Order_By> | Cars_Order_By>;
+  userCarsWhere?: InputMaybe<User_Cars_Bool_Exp>;
 }>;
 
 
-export type Find_CarQuery = { __typename?: 'query_root', cars: Array<{ __typename?: 'cars', batch: any, condition: any, damage_type?: string | null, description?: string | null, id: number, odometer?: number | null, price: any, sale_date: any, title?: string | null, vin: string, year?: number | null, city: { __typename?: 'cities', name: string, id: number, state: { __typename?: 'states', id: number, name: string } }, color: { __typename?: 'colors', id: number, name: string }, model: { __typename?: 'models', id: number, name: string, brand: { __typename?: 'brands', id: number, name: string } } }> };
+export type Find_CarQuery = { __typename?: 'query_root', cars: Array<{ __typename?: 'cars', batch: any, condition: any, damage_type?: string | null, description?: string | null, id: number, odometer?: number | null, price: any, sale_date: any, title?: string | null, vin: string, year?: number | null, city: { __typename?: 'cities', name: string, id: number, state: { __typename?: 'states', id: number, name: string } }, color: { __typename?: 'colors', id: number, name: string }, model: { __typename?: 'models', id: number, name: string, brand: { __typename?: 'brands', id: number, name: string } } }>, user_cars: Array<{ __typename?: 'user_cars', user_id: number, id: number, car_id: number }> };
+
+export type Add_CarMutationVariables = Exact<{
+  object: Cars_Insert_Input;
+}>;
+
+
+export type Add_CarMutation = { __typename?: 'mutation_root', insert_cars_one?: { __typename?: 'cars', city_id: number, brand_id: number, color_id: number, condition: any, model_id: number, odometer?: number | null, price: any, sale_date: any, state_id: number, vin: string, year?: number | null, title?: string | null } | null };
+
+export type Add_Favorite_CarMutationVariables = Exact<{
+  object: User_Cars_Insert_Input;
+}>;
+
+
+export type Add_Favorite_CarMutation = { __typename?: 'mutation_root', insert_user_cars_one?: { __typename?: 'user_cars', car_id: number, user_id: number, id: number } | null };
+
+export type Remove_Favorite_CarMutationVariables = Exact<{
+  deleteUserCarsByPkId: Scalars['Int'];
+}>;
+
+
+export type Remove_Favorite_CarMutation = { __typename?: 'mutation_root', delete_user_cars_by_pk?: { __typename?: 'user_cars', car_id: number, id: number, user_id: number } | null };
+
+export type Find_CitiesQueryVariables = Exact<{
+  where?: InputMaybe<Cities_Bool_Exp>;
+}>;
+
+
+export type Find_CitiesQuery = { __typename?: 'query_root', cities: Array<{ __typename?: 'cities', name: string, id: number }> };
 
 export type Find_ModelQueryVariables = Exact<{
   where?: InputMaybe<Models_Bool_Exp>;
@@ -3795,7 +3522,7 @@ export type Find_ModelQuery = { __typename?: 'query_root', models: Array<{ __typ
 export type Multiple_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Multiple_QueryQuery = { __typename?: 'query_root', brands: Array<{ __typename?: 'brands', id: number, name: string, models: Array<{ __typename?: 'models', name: string, id: number }> }>, states: Array<{ __typename?: 'states', id: number, name: string }>, colors: Array<{ __typename?: 'colors', id: number, name: string }> };
+export type Multiple_QueryQuery = { __typename?: 'query_root', brands: Array<{ __typename?: 'brands', id: number, name: string }>, states: Array<{ __typename?: 'states', id: number, name: string }>, colors: Array<{ __typename?: 'colors', id: number, name: string }> };
 
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3808,27 +3535,6 @@ export type Find_UserQueryVariables = Exact<{
 
 
 export type Find_UserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: number, email: string, first_name: string, last_name: string, uuid: any }> };
-
-export type Mutation_RootMutationVariables = Exact<{
-  object: Cars_Insert_Input;
-}>;
-
-
-export type Mutation_RootMutation = { __typename?: 'mutation_root', insert_cars_one?: { __typename?: 'cars', city_id: number, brand_id: number, color_id: number, condition: any, model_id: number, odometer?: number | null, price: any, sale_date: any, state_id: number, vin: string, year?: number | null } | null };
-
-export type Find_CitiesQueryVariables = Exact<{
-  where?: InputMaybe<Cities_Bool_Exp>;
-}>;
-
-
-export type Find_CitiesQuery = { __typename?: 'query_root', cities: Array<{ __typename?: 'cities', name: string, id: number }> };
-
-export type Add_CarMutationVariables = Exact<{
-  object: Cars_Insert_Input;
-}>;
-
-
-export type Add_CarMutation = { __typename?: 'mutation_root', insert_cars_one?: { __typename?: 'cars', city_id: number, brand_id: number, color_id: number, condition: any, model_id: number, odometer?: number | null, price: any, sale_date: any, state_id: number, vin: string, year?: number | null } | null };
 
 
 export const CarDocument = gql`
@@ -3896,7 +3602,7 @@ export type CarQueryHookResult = ReturnType<typeof useCarQuery>;
 export type CarLazyQueryHookResult = ReturnType<typeof useCarLazyQuery>;
 export type CarQueryResult = Apollo.QueryResult<CarQuery, CarQueryVariables>;
 export const Find_CarDocument = gql`
-    query Find_Car($where: cars_bool_exp, $orderBy: [cars_order_by!]) {
+    query Find_Car($where: cars_bool_exp, $orderBy: [cars_order_by!], $userCarsWhere: user_cars_bool_exp) {
   cars(where: $where, order_by: $orderBy) {
     batch
     city {
@@ -3930,6 +3636,11 @@ export const Find_CarDocument = gql`
       }
     }
   }
+  user_cars(where: $userCarsWhere) {
+    user_id
+    id
+    car_id
+  }
 }
     `;
 
@@ -3947,6 +3658,7 @@ export const Find_CarDocument = gql`
  *   variables: {
  *      where: // value for 'where'
  *      orderBy: // value for 'orderBy'
+ *      userCarsWhere: // value for 'userCarsWhere'
  *   },
  * });
  */
@@ -3961,6 +3673,156 @@ export function useFind_CarLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<F
 export type Find_CarQueryHookResult = ReturnType<typeof useFind_CarQuery>;
 export type Find_CarLazyQueryHookResult = ReturnType<typeof useFind_CarLazyQuery>;
 export type Find_CarQueryResult = Apollo.QueryResult<Find_CarQuery, Find_CarQueryVariables>;
+export const Add_CarDocument = gql`
+    mutation Add_Car($object: cars_insert_input!) {
+  insert_cars_one(object: $object) {
+    city_id
+    brand_id
+    color_id
+    condition
+    model_id
+    odometer
+    price
+    sale_date
+    state_id
+    vin
+    year
+    title
+  }
+}
+    `;
+export type Add_CarMutationFn = Apollo.MutationFunction<Add_CarMutation, Add_CarMutationVariables>;
+
+/**
+ * __useAdd_CarMutation__
+ *
+ * To run a mutation, you first call `useAdd_CarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAdd_CarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCarMutation, { data, loading, error }] = useAdd_CarMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useAdd_CarMutation(baseOptions?: Apollo.MutationHookOptions<Add_CarMutation, Add_CarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Add_CarMutation, Add_CarMutationVariables>(Add_CarDocument, options);
+      }
+export type Add_CarMutationHookResult = ReturnType<typeof useAdd_CarMutation>;
+export type Add_CarMutationResult = Apollo.MutationResult<Add_CarMutation>;
+export type Add_CarMutationOptions = Apollo.BaseMutationOptions<Add_CarMutation, Add_CarMutationVariables>;
+export const Add_Favorite_CarDocument = gql`
+    mutation ADD_FAVORITE_CAR($object: user_cars_insert_input!) {
+  insert_user_cars_one(object: $object) {
+    car_id
+    user_id
+    id
+  }
+}
+    `;
+export type Add_Favorite_CarMutationFn = Apollo.MutationFunction<Add_Favorite_CarMutation, Add_Favorite_CarMutationVariables>;
+
+/**
+ * __useAdd_Favorite_CarMutation__
+ *
+ * To run a mutation, you first call `useAdd_Favorite_CarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAdd_Favorite_CarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addFavoriteCarMutation, { data, loading, error }] = useAdd_Favorite_CarMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useAdd_Favorite_CarMutation(baseOptions?: Apollo.MutationHookOptions<Add_Favorite_CarMutation, Add_Favorite_CarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Add_Favorite_CarMutation, Add_Favorite_CarMutationVariables>(Add_Favorite_CarDocument, options);
+      }
+export type Add_Favorite_CarMutationHookResult = ReturnType<typeof useAdd_Favorite_CarMutation>;
+export type Add_Favorite_CarMutationResult = Apollo.MutationResult<Add_Favorite_CarMutation>;
+export type Add_Favorite_CarMutationOptions = Apollo.BaseMutationOptions<Add_Favorite_CarMutation, Add_Favorite_CarMutationVariables>;
+export const Remove_Favorite_CarDocument = gql`
+    mutation REMOVE_FAVORITE_CAR($deleteUserCarsByPkId: Int!) {
+  delete_user_cars_by_pk(id: $deleteUserCarsByPkId) {
+    car_id
+    id
+    user_id
+  }
+}
+    `;
+export type Remove_Favorite_CarMutationFn = Apollo.MutationFunction<Remove_Favorite_CarMutation, Remove_Favorite_CarMutationVariables>;
+
+/**
+ * __useRemove_Favorite_CarMutation__
+ *
+ * To run a mutation, you first call `useRemove_Favorite_CarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemove_Favorite_CarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeFavoriteCarMutation, { data, loading, error }] = useRemove_Favorite_CarMutation({
+ *   variables: {
+ *      deleteUserCarsByPkId: // value for 'deleteUserCarsByPkId'
+ *   },
+ * });
+ */
+export function useRemove_Favorite_CarMutation(baseOptions?: Apollo.MutationHookOptions<Remove_Favorite_CarMutation, Remove_Favorite_CarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Remove_Favorite_CarMutation, Remove_Favorite_CarMutationVariables>(Remove_Favorite_CarDocument, options);
+      }
+export type Remove_Favorite_CarMutationHookResult = ReturnType<typeof useRemove_Favorite_CarMutation>;
+export type Remove_Favorite_CarMutationResult = Apollo.MutationResult<Remove_Favorite_CarMutation>;
+export type Remove_Favorite_CarMutationOptions = Apollo.BaseMutationOptions<Remove_Favorite_CarMutation, Remove_Favorite_CarMutationVariables>;
+export const Find_CitiesDocument = gql`
+    query Find_Cities($where: cities_bool_exp) {
+  cities(where: $where) {
+    name
+    id
+  }
+}
+    `;
+
+/**
+ * __useFind_CitiesQuery__
+ *
+ * To run a query within a React component, call `useFind_CitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFind_CitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFind_CitiesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useFind_CitiesQuery(baseOptions?: Apollo.QueryHookOptions<Find_CitiesQuery, Find_CitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Find_CitiesQuery, Find_CitiesQueryVariables>(Find_CitiesDocument, options);
+      }
+export function useFind_CitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Find_CitiesQuery, Find_CitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Find_CitiesQuery, Find_CitiesQueryVariables>(Find_CitiesDocument, options);
+        }
+export type Find_CitiesQueryHookResult = ReturnType<typeof useFind_CitiesQuery>;
+export type Find_CitiesLazyQueryHookResult = ReturnType<typeof useFind_CitiesLazyQuery>;
+export type Find_CitiesQueryResult = Apollo.QueryResult<Find_CitiesQuery, Find_CitiesQueryVariables>;
 export const Find_ModelDocument = gql`
     query Find_Model($where: models_bool_exp) {
   models(where: $where) {
@@ -4002,10 +3864,6 @@ export const Multiple_QueryDocument = gql`
   brands {
     id
     name
-    models {
-      name
-      id
-    }
   }
   states {
     id
@@ -4121,125 +3979,3 @@ export function useFind_UserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type Find_UserQueryHookResult = ReturnType<typeof useFind_UserQuery>;
 export type Find_UserLazyQueryHookResult = ReturnType<typeof useFind_UserLazyQuery>;
 export type Find_UserQueryResult = Apollo.QueryResult<Find_UserQuery, Find_UserQueryVariables>;
-export const Mutation_RootDocument = gql`
-    mutation Mutation_root($object: cars_insert_input!) {
-  insert_cars_one(object: $object) {
-    city_id
-    brand_id
-    color_id
-    condition
-    model_id
-    odometer
-    price
-    sale_date
-    state_id
-    vin
-    year
-  }
-}
-    `;
-export type Mutation_RootMutationFn = Apollo.MutationFunction<Mutation_RootMutation, Mutation_RootMutationVariables>;
-
-/**
- * __useMutation_RootMutation__
- *
- * To run a mutation, you first call `useMutation_RootMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMutation_RootMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [mutationRootMutation, { data, loading, error }] = useMutation_RootMutation({
- *   variables: {
- *      object: // value for 'object'
- *   },
- * });
- */
-export function useMutation_RootMutation(baseOptions?: Apollo.MutationHookOptions<Mutation_RootMutation, Mutation_RootMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<Mutation_RootMutation, Mutation_RootMutationVariables>(Mutation_RootDocument, options);
-      }
-export type Mutation_RootMutationHookResult = ReturnType<typeof useMutation_RootMutation>;
-export type Mutation_RootMutationResult = Apollo.MutationResult<Mutation_RootMutation>;
-export type Mutation_RootMutationOptions = Apollo.BaseMutationOptions<Mutation_RootMutation, Mutation_RootMutationVariables>;
-export const Find_CitiesDocument = gql`
-    query Find_Cities($where: cities_bool_exp) {
-  cities(where: $where) {
-    name
-    id
-  }
-}
-    `;
-
-/**
- * __useFind_CitiesQuery__
- *
- * To run a query within a React component, call `useFind_CitiesQuery` and pass it any options that fit your needs.
- * When your component renders, `useFind_CitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFind_CitiesQuery({
- *   variables: {
- *      where: // value for 'where'
- *   },
- * });
- */
-export function useFind_CitiesQuery(baseOptions?: Apollo.QueryHookOptions<Find_CitiesQuery, Find_CitiesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<Find_CitiesQuery, Find_CitiesQueryVariables>(Find_CitiesDocument, options);
-      }
-export function useFind_CitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Find_CitiesQuery, Find_CitiesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<Find_CitiesQuery, Find_CitiesQueryVariables>(Find_CitiesDocument, options);
-        }
-export type Find_CitiesQueryHookResult = ReturnType<typeof useFind_CitiesQuery>;
-export type Find_CitiesLazyQueryHookResult = ReturnType<typeof useFind_CitiesLazyQuery>;
-export type Find_CitiesQueryResult = Apollo.QueryResult<Find_CitiesQuery, Find_CitiesQueryVariables>;
-export const Add_CarDocument = gql`
-    mutation Add_Car($object: cars_insert_input!) {
-  insert_cars_one(object: $object) {
-    city_id
-    brand_id
-    color_id
-    condition
-    model_id
-    odometer
-    price
-    sale_date
-    state_id
-    vin
-    year
-  }
-}
-    `;
-export type Add_CarMutationFn = Apollo.MutationFunction<Add_CarMutation, Add_CarMutationVariables>;
-
-/**
- * __useAdd_CarMutation__
- *
- * To run a mutation, you first call `useAdd_CarMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAdd_CarMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addCarMutation, { data, loading, error }] = useAdd_CarMutation({
- *   variables: {
- *      object: // value for 'object'
- *   },
- * });
- */
-export function useAdd_CarMutation(baseOptions?: Apollo.MutationHookOptions<Add_CarMutation, Add_CarMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<Add_CarMutation, Add_CarMutationVariables>(Add_CarDocument, options);
-      }
-export type Add_CarMutationHookResult = ReturnType<typeof useAdd_CarMutation>;
-export type Add_CarMutationResult = Apollo.MutationResult<Add_CarMutation>;
-export type Add_CarMutationOptions = Apollo.BaseMutationOptions<Add_CarMutation, Add_CarMutationVariables>;

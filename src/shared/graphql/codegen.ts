@@ -7,10 +7,10 @@ const config: CodegenConfig = {
     "src/shared/graphql/__generate__/generated.ts": {
       schema: [
         {
-          "https://new-anchovy-87.hasura.app/v1/graphql": {
+          "https://working-swan-45.hasura.app/v1/graphql": {
             headers: {
               "x-hasura-admin-secret":
-                "rTisquXVdS2Ffxe5nK92OnNQjK72OpuKTPWUpM4kbr33bUF5zVHj63tET1N8jhez",
+                "6G6GeneaqR7WrQDlRdLzs7NxY0r8I480LFFT3OXGmA4Ijg8xqhIguIZkQLx5oWTl",
             },
           },
         },

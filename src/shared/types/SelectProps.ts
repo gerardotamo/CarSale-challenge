@@ -7,20 +7,14 @@ import {
 } from "react-hook-form";
 import { IFormInput } from "../../pages/ViewCreateCar/ViewCreateCar";
 import {
-  Brands_Insert_Input,
+  Brands,
   Cities,
   Colors,
   Models,
 } from "../graphql/__generate__/generated";
 
-type Model = Pick<Models, "id" | "name">;
-type Brands = Pick<Brands_Insert_Input, "name"> & {
-  models: Model[];
-  id: number;
-};
-
 export interface SelectProps {
-  brands: Brands[];
+  brands: Omit<Brands, "uuid" | "cars_count">[];
   colors: Pick<Colors, "id" | "name">[];
   state: Pick<Cities, "id" | "name">[];
   isDisable: boolean;
