@@ -79,12 +79,23 @@ export const CardItem = ({
                 {data.batch}
               </SubInfoItem>
             </Section>
-            <AddFavoriteBUtton
-              onClick={handleFavoriteButton}
-              disable={loadingAddFavorite || loadingRemoveFavorite}
-            >
-              {isFavoriteCar ? "Remove Favorite" : "Add Favorite"}
-            </AddFavoriteBUtton>
+            <Section>
+              <AddFavoriteBUtton
+                onClick={handleFavoriteButton}
+                disable={loadingAddFavorite || loadingRemoveFavorite}
+              >
+                {isFavoriteCar ? "Remove Favorite" : "Add Favorite"}
+              </AddFavoriteBUtton>
+              {(errorAddFavorite || errorRemoveFavorite) && (
+                <ErrorMessage>
+                  {errorAddFavorite
+                    ? errorAddFavorite.message
+                    : errorRemoveFavorite
+                    ? errorRemoveFavorite.message
+                    : "Error"}
+                </ErrorMessage>
+              )}
+            </Section>
           </InfoContainer>
           <InfoContainer>
             <Section>
@@ -183,3 +194,7 @@ const AddFavoriteBUtton = styled(Button)<{ disable: boolean }>`
 `;
 
 const Section = styled("div")``;
+
+const ErrorMessage = styled("small")`
+  color: red;
+`;
