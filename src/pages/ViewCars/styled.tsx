@@ -23,3 +23,8 @@ export const Title = styled("h1")<{ color?: string }>`
   font-size: 18px;
   color: ${(props) => (props.color ? props.color : "white")};
 `;
+
+export const Image = styled("img")`
+  height: 116px;
+  width: 155px;
+`;

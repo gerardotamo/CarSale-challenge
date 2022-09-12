@@ -23,6 +23,14 @@ export const FavoritesCars = () => {
     }
   }, [searchParams]);
 
+  if (errorRequest) {
+    return (
+      <styled.Container>
+        <styled.Title color="red">{errorRequest.message}</styled.Title>
+      </styled.Container>
+    );
+  }
+
   return (
     <styled.Container>
       <HeaderListCar />

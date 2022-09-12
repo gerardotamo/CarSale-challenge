@@ -9,6 +9,7 @@ import { useFindCar } from "../../shared/graphql/request/carRequest";
 import { Cars } from "../../shared/graphql/__generate__/generated";
 import { SkeletonCar } from "./SkeletonCar";
 import * as styled from "./styled";
+import NoResultsFound from "../../shared/assets/images/no_results_found.png";
 
 export const ViewCars = () => {
   const { data, loading, errorRequest, findCars } = useFindCar();
@@ -26,15 +27,31 @@ export const ViewCars = () => {
     }
   }, [searchParams]);
 
+  if (errorRequest) {
+    return (
+      <styled.Container>
+        <styled.Title color="red">{errorRequest.message}</styled.Title>
+      </styled.Container>
+    );
+  }
+
   return (
     <styled.Container>
       <HeaderListCar />
       {!loading ? (
-        data?.cars.map((item: Cars, index: number) => {
-          return (
-            <CardItem data={item} key={index} favorite_cars={data.user_cars} />
-          );
-        })
+        data?.length === 0 ? (
+          <styled.Image src={NoResultsFound} />
+        ) : (
+          data?.cars.map((item: Cars, index: number) => {
+            return (
+              <CardItem
+                data={item}
+                key={index}
+                favorite_cars={data.user_cars}
+              />
+            );
+          })
+        )
       ) : (
         <SkeletonCar quantity={3} />
       )}

@@ -69,6 +69,16 @@ const ViewCreateCar = () => {
     }
   }, [dataAdd]);
 
+  if (error) {
+    return (
+      <styled.Container>
+        <styled.RegisterContainer>
+          <styled.Title>{`Error! ${error.message}`}</styled.Title>
+        </styled.RegisterContainer>
+      </styled.Container>
+    );
+  }
+
   if (errorRequest) {
     return (
       <styled.Container>
