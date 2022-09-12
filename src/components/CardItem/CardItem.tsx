@@ -12,6 +12,7 @@ import {
   useAddFavoriteCar,
   useRemoveFavoriteCar,
 } from "../../shared/graphql/request/carRequest";
+import { addOneDay } from "../../shared/types/Date";
 interface Props {
   data: Cars;
   favorite_cars: User_Cars[];
@@ -61,6 +62,16 @@ export const CardItem = ({
       console.log(error);
     }
   };
+
+  const date = new Date();
+  const saleDate = new Date(data.sale_date);
+
+  const ColorDate =
+    saleDate > date
+      ? BaseColor.lightBluePrimaryColor
+      : addOneDay(data.sale_date) > date
+      ? BaseColor.warningColor
+      : BaseColor.redPrimaryColor;
 
   return (
     <Container>
@@ -135,9 +146,7 @@ export const CardItem = ({
             </Section>
             <Section>
               <InfoItem>Sale Date</InfoItem>
-              <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
-                {data.sale_date}
-              </SubInfoItem>
+              <SubInfoItem color={ColorDate}>{data.sale_date}</SubInfoItem>
             </Section>
           </InfoContainer>
         </>
