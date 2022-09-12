@@ -16,4 +16,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+## The Welcome Page
 
+<p align="center">
+ <a href="https://git-scm.com/" rel="noopener">
+ <img src="./src/screenPicture/welcomePage.png" alt="Git Logo" width="150px"></a>
+</p>
+<br>
