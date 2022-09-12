@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import MuiInput from "@mui/material/Input";
 import Button from "../../components/Button/Button";
+import { BaseColor } from "../../config/color";
 
 export const Container = styled("div")`
   margin-top: 65px;
@@ -18,6 +19,8 @@ export const RegisterContainer = styled("div")`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  z-index: -1px;
+  position: static;
 `;
 export const Title = styled("h1")``;
 export const Form = styled("form")`
@@ -29,6 +32,11 @@ export const EntryGroup = styled("div")`
   margin-block: 15px;
   display: flex;
   flex-direction: column;
+`;
+export const Group = styled("div")`
+  width: 100%;
+  margin-block: 15px;
+  display: flex;
 `;
 
 export const HeaderOption = styled("h6")`
@@ -81,4 +89,10 @@ export const ButtonCreate = styled(Button)<{ disable: boolean }>`
   cursor: ${(props) => (props.disable ? "wait" : "pointer")};
 
   width: 100%;
+`;
+
+export const Divider = styled("div")`
+  border: 1px solid ${BaseColor.fieldColor};
+  opacity: 0.5;
+  width: 90%;
 `;

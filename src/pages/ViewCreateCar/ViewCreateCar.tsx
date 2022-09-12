@@ -147,14 +147,14 @@ const ViewCreateCar = () => {
                 isDisable={loadingADdCar}
                 clearErrors={clearErrors}
               />
-
-              <InputYearVin register={register} errors={errors} />
-
               <SelectDateTime
                 register={register}
                 setValue={setValue}
                 isDisable={loadingADdCar}
               />
+
+              <InputYearVin register={register} errors={errors} />
+
               <SelectOdometer
                 register={register}
                 setValue={setValue}
