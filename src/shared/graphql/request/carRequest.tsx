@@ -7,7 +7,7 @@ import {
   GET_CAR,
   REMOVE_FAVORITE_CAR,
 } from "../query/carQuery";
-import { User_Cars } from "../__generate__/generated";
+import { Cars } from "../__generate__/generated";
 
 export const useGetCar = (carId: number) => {
   const variables = {
@@ -17,7 +17,7 @@ export const useGetCar = (carId: number) => {
       },
     },
   };
-  return useQuery(GET_CAR, {
+  return useQuery<{ cars: Cars[] }>(GET_CAR, {
     variables: {
       ...variables,
     },

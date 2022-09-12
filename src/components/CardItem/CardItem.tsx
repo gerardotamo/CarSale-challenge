@@ -122,6 +122,12 @@ export const CardItem = ({
                 {data.city.state.name}
               </SubInfoItem>
             </Section>
+            <Section>
+              <InfoItem>Sale Date</InfoItem>
+              <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
+                {data.sale_date}
+              </SubInfoItem>
+            </Section>
           </InfoContainer>
         </>
       )}
