@@ -1,5 +1,37 @@
 import { gql } from "@apollo/client";
 
+export const GET_CAR = gql`
+  query GET_CAR($where: cars_bool_exp) {
+    cars(where: $where) {
+      batch
+      model {
+        name
+      }
+      odometer
+      price
+      sale_date
+      state {
+        name
+      }
+      brand {
+        name
+      }
+      city {
+        name
+      }
+      color {
+        name
+      }
+      condition
+      damage_type
+      description
+      title
+      year
+      vin
+    }
+  }
+`;
+
 export const ALL_CARS = gql`
   query Car {
     cars {

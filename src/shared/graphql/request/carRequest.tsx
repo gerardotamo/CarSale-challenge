@@ -4,9 +4,25 @@ import {
   ADD_CAR,
   ADD_FAVORITE_CAR,
   FIND_CARS,
+  GET_CAR,
   REMOVE_FAVORITE_CAR,
 } from "../query/carQuery";
 import { User_Cars } from "../__generate__/generated";
+
+export const useGetCar = (carId: number) => {
+  const variables = {
+    where: {
+      id: {
+        _eq: carId,
+      },
+    },
+  };
+  return useQuery(GET_CAR, {
+    variables: {
+      ...variables,
+    },
+  });
+};
 
 export const useFindCar = () => {
   const [getCars, result] = useLazyQuery(FIND_CARS);
