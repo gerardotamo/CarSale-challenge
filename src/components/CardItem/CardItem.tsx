@@ -116,6 +116,12 @@ export const CardItem = ({
               </SubInfoItem>
             </Section>
             <Section>
+              <InfoItem>Year</InfoItem>
+              <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
+                {data.year}
+              </SubInfoItem>
+            </Section>
+            <Section>
               <InfoItem>Price</InfoItem>
               <SubInfoItem color={BaseColor.lightBluePrimaryColor}>
                 {data.price}

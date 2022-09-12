@@ -3,13 +3,13 @@ import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CardItem } from "../../components/CardItem/CardItem";
 import { HeaderListCar } from "../../components/HeaderListCar/HeaderListCar";
+import { NotFoundItem } from "../../components/NotFoundItem/NotFoundItem";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
 import { ALL_CARS } from "../../shared/graphql/query/carQuery";
 import { useFindCar } from "../../shared/graphql/request/carRequest";
 import { Cars } from "../../shared/graphql/__generate__/generated";
 import { SkeletonCar } from "./SkeletonCar";
 import * as styled from "./styled";
-import NoResultsFound from "../../shared/assets/images/no_results_found.png";
 
 export const ViewCars = () => {
   const { data, loading, errorRequest, findCars } = useFindCar();
@@ -39,8 +39,8 @@ export const ViewCars = () => {
     <styled.Container>
       <HeaderListCar />
       {!loading ? (
-        data?.length === 0 ? (
-          <styled.Image src={NoResultsFound} />
+        data?.cars?.length === 0 ? (
+          <NotFoundItem />
         ) : (
           data?.cars.map((item: Cars, index: number) => {
             return (
