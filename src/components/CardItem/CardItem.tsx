@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Delorean from "../../shared/assets/images/delorean.jpg";
 import { BaseColor } from "../../config/color";
@@ -13,6 +12,8 @@ import {
   useRemoveFavoriteCar,
 } from "../../shared/graphql/request/carRequest";
 import { addOneDay } from "../../shared/types/Date";
+import ModalLoginVIew from "../Modal/Modal";
+
 interface Props {
   data: Cars;
   favorite_cars: User_Cars[];
@@ -24,6 +25,10 @@ export const CardItem = ({
   favorite_cars,
   showFavorites = false,
 }: Props) => {
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+
   const [favoriteCar, setFavoriteCar] = useState(
     favorite_cars.find((item) => item.car_id === data.id)
   );
@@ -45,6 +50,9 @@ export const CardItem = ({
 
   useEffect(() => {
     setIsFavoriteCar(favoriteCar !== undefined && state.auth.admin.uuid);
+    if (state.auth.admin.uuid) {
+      setOpenModal(false);
+    }
   }, [state]);
 
   if (showFavorites && !isFavoriteCar) {
@@ -53,7 +61,8 @@ export const CardItem = ({
 
   const handleFavoriteButton = async () => {
     if (!state.auth.admin.uuid) {
-      return navigate("/login");
+      return handleOpenModal();
+      //return navigate("/login");
     }
 
     try {
@@ -163,6 +172,7 @@ export const CardItem = ({
           </InfoContainer>
         </>
       )}
+      <ModalLoginVIew open={openModal} modalClose={handleCloseModal} />
     </Container>
   );
 };

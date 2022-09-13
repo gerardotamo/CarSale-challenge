@@ -24,7 +24,7 @@ const LoginComponent = () => {
 
     if (data !== undefined && data?.users.length !== 0) {
       dispatch({ type: Type.LOGIN, payload: data?.users[0] });
-      return navigate("/");
+      //return navigate("/");
     }
     if (data?.users.length === 0) {
       setError("Email not register");
@@ -42,7 +42,7 @@ const LoginComponent = () => {
       await findUser(email);
       console.log(errorRequest?.cause);
     } catch (e) {
-      console.log("ERROR CARCH", e);
+      console.log("ERROR CAtCH", e);
     }
   };
 
