@@ -20,10 +20,10 @@ export const ViewCars = () => {
     const search = searchParams.get("search");
     const orderByYear = searchParams.get("orderByYear");
     const orderBySaleDate = searchParams.get("orderBySaleDate");
-    if (search !== null) {
+    try {
       findCars(search, orderByYear, orderBySaleDate, state.auth.admin.id);
-    } else {
-      findCars("", orderByYear, orderBySaleDate, state.auth.admin.id);
+    } catch (error) {
+      console.log(error);
     }
   }, [searchParams]);
 

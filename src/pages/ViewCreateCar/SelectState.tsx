@@ -20,7 +20,11 @@ const SelectState = (props: PropsCities) => {
     if (option) {
       props.setValue("state_id", option.value);
       setCities([]);
-      findCity(option.value);
+      try {
+        findCity(option.value);
+      } catch (error) {
+        console.log(error);
+      }
       props.setValue("city_id", "");
       props.clearErrors("state_id");
     }
@@ -68,6 +72,9 @@ const SelectState = (props: PropsCities) => {
           />
           <styled.ErrorMessage>
             {props.errors.city_id && props.errors.city_id.message}
+          </styled.ErrorMessage>
+          <styled.ErrorMessage>
+            {errorRequest && errorRequest.message}
           </styled.ErrorMessage>
         </div>
       </styled.EntryGroup>

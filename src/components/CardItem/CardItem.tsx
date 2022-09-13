@@ -27,19 +27,25 @@ export const CardItem = ({
   const [favoriteCar, setFavoriteCar] = useState(
     favorite_cars.find((item) => item.car_id === data.id)
   );
-  const [isFavoriteCar, setIsFavoriteCar] = useState(favoriteCar !== undefined);
+  const { state } = useGeneralContext();
+  const [isFavoriteCar, setIsFavoriteCar] = useState(
+    favoriteCar !== undefined && state.auth.admin.uuid
+  );
   const { addFavoriteCar, loadingAddFavorite, errorAddFavorite, addData } =
     useAddFavoriteCar();
   const { removeFavoriteCar, loadingRemoveFavorite, errorRemoveFavorite } =
     useRemoveFavoriteCar();
   const navigate = useNavigate();
-  const { state } = useGeneralContext();
 
   useEffect(() => {
     if (addData) {
       setFavoriteCar(addData.insert_user_cars_one);
     }
   }, [addData]);
+
+  useEffect(() => {
+    setIsFavoriteCar(favoriteCar !== undefined && state.auth.admin.uuid);
+  }, [state]);
 
   if (showFavorites && !isFavoriteCar) {
     return null;

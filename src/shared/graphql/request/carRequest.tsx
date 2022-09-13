@@ -28,11 +28,12 @@ export const useFindCar = () => {
   const [getCars, result] = useLazyQuery(FIND_CARS);
 
   const findCars = async (
-    search: string,
+    search: string | null,
     orderByYear: string | null,
     orderBySaleDate: string | null,
     user_id: number | undefined
   ) => {
+    const searchFilter = search === null ? "" : search;
     const filter = {
       orderBy: [
         {
@@ -47,7 +48,7 @@ export const useFindCar = () => {
         {
           model: {
             name: {
-              _iregex: search,
+              _iregex: searchFilter,
             },
           },
         },
@@ -55,14 +56,14 @@ export const useFindCar = () => {
           model: {
             brand: {
               name: {
-                _iregex: search,
+                _iregex: searchFilter,
               },
             },
           },
         },
         {
           vin: {
-            _iregex: search,
+            _iregex: searchFilter,
           },
         },
       ],
@@ -78,12 +79,12 @@ export const useFindCar = () => {
 
     if (
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-        search
+        searchFilter
       )
     ) {
       where = {
         batch: {
-          _eq: search,
+          _eq: searchFilter,
         },
       };
     }

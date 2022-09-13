@@ -17,13 +17,16 @@ const SelectBrand = (props: PropsBrands) => {
   const [models, setModels] = useState<MyOption[]>([]);
 
   const handleChangeBrand = async (option: MyOption | null) => {
-    console.log(option?.value);
     if (option) {
       props.setValue("brand_id", option.value);
       props.setValue("title", option.label);
       setModels([]);
       props.setValue("model_id", "");
-      findModel(option.value);
+      try {
+        await findModel(option.value);
+      } catch (error) {
+        console.log(error);
+      }
       props.clearErrors("brand_id");
     }
   };
@@ -76,6 +79,9 @@ const SelectBrand = (props: PropsBrands) => {
           />
           <styled.ErrorMessage>
             {props.errors.model_id && props.errors.model_id.message}
+          </styled.ErrorMessage>
+          <styled.ErrorMessage>
+            {errorRequest && errorRequest.message}
           </styled.ErrorMessage>
         </div>
       </styled.EntryGroup>
