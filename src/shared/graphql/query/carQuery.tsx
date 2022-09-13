@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_CAR = gql`
-  query GET_CAR($where: cars_bool_exp) {
+  query GET_CAR($where: cars_bool_exp, $userCarsWhere: user_cars_bool_exp) {
     cars(where: $where) {
       batch
       model {
@@ -28,6 +28,11 @@ export const GET_CAR = gql`
       title
       year
       vin
+    }
+    user_cars(where: $userCarsWhere) {
+      id
+      car_id
+      user_id
     }
   }
 `;

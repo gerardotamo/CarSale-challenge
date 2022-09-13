@@ -2,17 +2,37 @@ import { useParams } from "react-router-dom";
 import { useGetCar } from "../../shared/graphql/request/carRequest";
 import * as styled from "./styled";
 import Delorean from "../../shared/assets/images/delorean.jpg";
+import { useGeneralContext } from "../../shared/contexts/StoreProvider";
+import { stat } from "fs";
+import { useEffect, useState } from "react";
 
 export const ViewCarDetail = () => {
   const { carId } = useParams();
-  const { data, loading, error } = useGetCar(parseInt(carId ? carId : "0"));
+  const { state } = useGeneralContext();
+  const { data, loading, error } = useGetCar(
+    parseInt(carId ? carId : "0"),
+    state.auth.admin.id
+  );
   const car = data?.cars[0];
+  const [isCarFavorite, setIsCarFavorite] = useState<boolean>(
+    data?.user_cars.length === 0 && state.auth.admin.id
+  );
 
+  useEffect(() => {
+    setIsCarFavorite(data?.user_cars.length === 0 && state.auth.admin.id);
+  }, [state]);
+
+  console.log(data);
   return (
     <styled.Container>
       {car ? (
         <>
-          <styled.Title>{car.title}</styled.Title>
+          <styled.Header>
+            <styled.Title>{car.title}</styled.Title>
+            <styled.AddFavoriteBUtton disable={false}>
+              {isCarFavorite ? "Add Favorite" : "Remove Favorite"}
+            </styled.AddFavoriteBUtton>
+          </styled.Header>
           <styled.Column>
             <styled.Section>
               <styled.Image src={Delorean} />

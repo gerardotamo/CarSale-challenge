@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "../../components/Button/Button";
 import { BaseColor } from "../../config/color";
 
 export const Container = styled("div")`
@@ -19,6 +20,13 @@ export const Column = styled("div")`
   justify-content: space-between;
 `;
 
+export const Header = styled("div")`
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const DataContainer = styled("div")`
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
   margin-left: 15px;
@@ -35,7 +43,6 @@ export const Section = styled("div")`
 `;
 
 export const Title = styled("h1")`
-  margin-inline: 50px;
   font-size: calc(15px + 2vmin);
   text-align: left;
   width: 70%;
@@ -62,4 +69,9 @@ export const Divider = styled("div")`
   border: 1px solid ${BaseColor.fieldColor};
   opacity: 0.5;
   width: 95%;
+`;
+
+export const AddFavoriteBUtton = styled(Button)<{ disable: boolean }>`
+  cursor: ${(props) => (props.disable ? "wait" : "pointer")};
+  height: 25px;
 `;

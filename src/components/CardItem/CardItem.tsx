@@ -40,7 +40,7 @@ export const CardItem = ({
     useAddFavoriteCar();
   const { removeFavoriteCar, loadingRemoveFavorite, errorRemoveFavorite } =
     useRemoveFavoriteCar();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   useEffect(() => {
     if (addData) {
@@ -94,7 +94,7 @@ export const CardItem = ({
         <>
           <Image src={Delorean} />
           <InfoContainer>
-            <Link to={"" + data.id}>
+            <Link to={"/cars/" + data.id}>
               <Title color={BaseColor.lightBluePrimaryColor}>
                 {data.title}
               </Title>

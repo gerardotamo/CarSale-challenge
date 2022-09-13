@@ -7,17 +7,29 @@ import {
   GET_CAR,
   REMOVE_FAVORITE_CAR,
 } from "../query/carQuery";
-import { Cars } from "../__generate__/generated";
+import { Cars, User_Cars } from "../__generate__/generated";
 
-export const useGetCar = (carId: number) => {
+export const useGetCar = (carId: number, userId: number | undefined) => {
   const variables = {
     where: {
       id: {
         _eq: carId,
       },
     },
+    userCarsWhere: {
+      _and: [
+        {
+          car_id: {
+            _eq: carId,
+          },
+          user_id: {
+            _eq: userId,
+          },
+        },
+      ],
+    },
   };
-  return useQuery<{ cars: Cars[] }>(GET_CAR, {
+  return useQuery<{ cars: Cars[]; user_cars: User_Cars[] }>(GET_CAR, {
     variables: {
       ...variables,
     },
