@@ -8,7 +8,7 @@ import { useGeneralContext } from "../../shared/contexts/StoreProvider";
 import { ALL_CARS } from "../../shared/graphql/query/carQuery";
 import { useFindCar } from "../../shared/graphql/request/carRequest";
 import { Cars } from "../../shared/graphql/__generate__/generated";
-import { SkeletonCar } from "./SkeletonCar";
+import { SkeletonCar } from "../../components/Skeleton/SkeletonCar";
 import * as styled from "./styled";
 
 export const ViewCars = () => {

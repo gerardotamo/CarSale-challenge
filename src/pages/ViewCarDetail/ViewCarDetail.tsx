@@ -1,10 +1,15 @@
 import { useParams } from "react-router-dom";
-import { useGetCar } from "../../shared/graphql/request/carRequest";
+import {
+  useAddFavoriteCar,
+  useGetCar,
+  useRemoveFavoriteCar,
+} from "../../shared/graphql/request/carRequest";
 import * as styled from "./styled";
 import Delorean from "../../shared/assets/images/delorean.jpg";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
-import { stat } from "fs";
 import { useEffect, useState } from "react";
+import ModalLoginVIew from "../../components/Modal/Modal";
+import FavoriteButton from "./FavoriteButton";
 
 export const ViewCarDetail = () => {
   const { carId } = useParams();
@@ -14,24 +19,14 @@ export const ViewCarDetail = () => {
     state.auth.admin.id
   );
   const car = data?.cars[0];
-  const [isCarFavorite, setIsCarFavorite] = useState<boolean>(
-    data?.user_cars.length === 0 && state.auth.admin.id
-  );
 
-  useEffect(() => {
-    setIsCarFavorite(data?.user_cars.length === 0 && state.auth.admin.id);
-  }, [state]);
-
-  console.log(data);
   return (
     <styled.Container>
       {car ? (
         <>
           <styled.Header>
             <styled.Title>{car.title}</styled.Title>
-            <styled.AddFavoriteBUtton disable={false}>
-              {isCarFavorite ? "Add Favorite" : "Remove Favorite"}
-            </styled.AddFavoriteBUtton>
+            <FavoriteButton carData={data.cars} userCar={data.user_cars} />
           </styled.Header>
           <styled.Column>
             <styled.Section>

@@ -6,7 +6,7 @@ import { NotFoundItem } from "../../components/NotFoundItem/NotFoundItem";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
 import { useFindCar } from "../../shared/graphql/request/carRequest";
 import { Cars } from "../../shared/graphql/__generate__/generated";
-import { SkeletonCar } from "../ViewCars/SkeletonCar";
+import { SkeletonCar } from "../../components/Skeleton/SkeletonCar";
 import * as styled from "./styled";
 
 export const FavoritesCars = () => {

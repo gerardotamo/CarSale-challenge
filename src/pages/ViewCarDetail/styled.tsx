@@ -75,3 +75,7 @@ export const AddFavoriteBUtton = styled(Button)<{ disable: boolean }>`
   cursor: ${(props) => (props.disable ? "wait" : "pointer")};
   height: 25px;
 `;
+
+export const ErrorMessage = styled("small")`
+  color: red;
+`;

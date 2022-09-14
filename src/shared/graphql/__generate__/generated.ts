@@ -3536,6 +3536,14 @@ export type Find_UserQueryVariables = Exact<{
 
 export type Find_UserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: number, email: string, first_name: string, last_name: string, uuid: any }> };
 
+export type Get_CarQueryVariables = Exact<{
+  where?: InputMaybe<Cars_Bool_Exp>;
+  userCarsWhere?: InputMaybe<User_Cars_Bool_Exp>;
+}>;
+
+
+export type Get_CarQuery = { __typename?: 'query_root', cars: Array<{ __typename?: 'cars', id: number, batch: any, odometer?: number | null, price: any, sale_date: any, condition: any, damage_type?: string | null, description?: string | null, title?: string | null, year?: number | null, vin: string, model: { __typename?: 'models', name: string }, state: { __typename?: 'states', name: string }, brand: { __typename?: 'brands', name: string }, city: { __typename?: 'cities', name: string }, color: { __typename?: 'colors', name: string } }>, user_cars: Array<{ __typename?: 'user_cars', id: number, car_id: number, user_id: number }> };
+
 
 export const CarDocument = gql`
     query Car {
@@ -3979,3 +3987,69 @@ export function useFind_UserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type Find_UserQueryHookResult = ReturnType<typeof useFind_UserQuery>;
 export type Find_UserLazyQueryHookResult = ReturnType<typeof useFind_UserLazyQuery>;
 export type Find_UserQueryResult = Apollo.QueryResult<Find_UserQuery, Find_UserQueryVariables>;
+export const Get_CarDocument = gql`
+    query GET_CAR($where: cars_bool_exp, $userCarsWhere: user_cars_bool_exp) {
+  cars(where: $where) {
+    id
+    batch
+    model {
+      name
+    }
+    odometer
+    price
+    sale_date
+    state {
+      name
+    }
+    brand {
+      name
+    }
+    city {
+      name
+    }
+    color {
+      name
+    }
+    condition
+    damage_type
+    description
+    title
+    year
+    vin
+  }
+  user_cars(where: $userCarsWhere) {
+    id
+    car_id
+    user_id
+  }
+}
+    `;
+
+/**
+ * __useGet_CarQuery__
+ *
+ * To run a query within a React component, call `useGet_CarQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_CarQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_CarQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      userCarsWhere: // value for 'userCarsWhere'
+ *   },
+ * });
+ */
+export function useGet_CarQuery(baseOptions?: Apollo.QueryHookOptions<Get_CarQuery, Get_CarQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Get_CarQuery, Get_CarQueryVariables>(Get_CarDocument, options);
+      }
+export function useGet_CarLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Get_CarQuery, Get_CarQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Get_CarQuery, Get_CarQueryVariables>(Get_CarDocument, options);
+        }
+export type Get_CarQueryHookResult = ReturnType<typeof useGet_CarQuery>;
+export type Get_CarLazyQueryHookResult = ReturnType<typeof useGet_CarLazyQuery>;
+export type Get_CarQueryResult = Apollo.QueryResult<Get_CarQuery, Get_CarQueryVariables>;
