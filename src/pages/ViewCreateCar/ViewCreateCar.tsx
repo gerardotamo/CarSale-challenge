@@ -54,7 +54,6 @@ const ViewCreateCar = () => {
       title: title,
     };
 
-    console.log(data);
     try {
       await addCarOne(data);
     } catch (error) {
@@ -64,7 +63,6 @@ const ViewCreateCar = () => {
 
   useEffect(() => {
     if (dataAdd) {
-      console.log("AGREGO");
       setIsCarAdd(true);
     }
   }, [dataAdd]);

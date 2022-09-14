@@ -20,8 +20,7 @@ const FavoriteButton = ({ userCar, carData }: PropsFavoriteButton) => {
   const [isCarFavorite, setIsCarFavorite] = useState<boolean>(
     userCar.length !== 0 && state.auth.admin.id !== undefined
   );
-  console.log(userCar);
-  console.log(isCarFavorite);
+
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -37,13 +36,10 @@ const FavoriteButton = ({ userCar, carData }: PropsFavoriteButton) => {
     }
     try {
       if (isCarFavorite && favoriteCar !== undefined) {
-        console.log("ENTRA");
         await removeFavoriteCar(favoriteCar.id);
         setIsCarFavorite(false);
       } else {
-        console.log("ENTRA2");
         if (car) {
-          console.log(car);
           await addFavoriteCar(car.id, state.auth.admin.id);
           setIsCarFavorite(true);
         } else {

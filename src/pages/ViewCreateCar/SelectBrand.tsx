@@ -40,7 +40,6 @@ const SelectBrand = (props: PropsBrands) => {
 
   useEffect(() => {
     if (data) {
-      console.log(data.models);
       setModels(
         data.models.map((item) => {
           return { value: item.id, label: item.name };

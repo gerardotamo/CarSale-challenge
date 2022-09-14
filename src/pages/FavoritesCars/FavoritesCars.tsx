@@ -32,7 +32,6 @@ export const FavoritesCars = () => {
       </styled.Container>
     );
   }
-  console.log(data);
   return (
     <styled.Container>
       <HeaderListCar />

@@ -15,8 +15,6 @@ export const ViewCarDetail = () => {
   );
   const car = data?.cars[0];
 
-  //console.log(loading);
-
   return (
     <styled.Container>
       {loading ? (
