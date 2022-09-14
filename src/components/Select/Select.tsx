@@ -5,7 +5,6 @@ import Select, {
   StylesConfig,
 } from "react-select";
 import { BaseColor } from "../../config/color";
-import { InputMaybe } from "../../shared/graphql/__generate__/generated";
 import { MyOption } from "../../shared/types/MyOptions";
 
 interface PropsSelect {

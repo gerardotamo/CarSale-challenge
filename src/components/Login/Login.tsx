@@ -1,6 +1,4 @@
-import { ApolloError } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BaseColor } from "../../config/color";
 import { Type } from "../../shared/contexts/actions";
@@ -13,8 +11,6 @@ const LoginComponent = () => {
   const [error, setError] = useState("");
   const { findUser, errorRequest, data, loading } = useFindUser();
 
-  const navigate = useNavigate();
-
   const { dispatch } = useGeneralContext();
 
   useEffect(() => {
@@ -24,7 +20,6 @@ const LoginComponent = () => {
 
     if (data !== undefined && data?.users.length !== 0) {
       dispatch({ type: Type.LOGIN, payload: data?.users[0] });
-      //return navigate("/");
     }
     if (data?.users.length === 0) {
       setError("Email not register");

@@ -80,17 +80,6 @@ const SkeletonDetailCar = () => {
 
 export default SkeletonDetailCar;
 
-const Container = styled("div")`
-  color: white;
-  height: 100%;
-  padding-top: 80px;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-`;
-
 const Column = styled("div")`
   display: flex;
   margin-inline: 50px;

@@ -5,7 +5,7 @@ import { BaseColor } from "../../config/color";
 import { Cars, User_Cars } from "../../shared/graphql/__generate__/generated";
 import Button from "../Button/Button";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   useAddFavoriteCar,
@@ -62,7 +62,6 @@ export const CardItem = ({
   const handleFavoriteButton = async () => {
     if (!state.auth.admin.uuid) {
       return handleOpenModal();
-      //return navigate("/login");
     }
 
     try {

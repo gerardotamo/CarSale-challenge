@@ -12,8 +12,7 @@ import {
   ApolloLink,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import { GraphQLError } from "graphql";
-import { NetworkError } from "@apollo/client/errors";
+
 export const link = new HttpLink({
   uri: "https://working-swan-45.hasura.app/v1/graphql",
   headers: {

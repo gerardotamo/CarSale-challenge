@@ -1,21 +1,15 @@
 import { useParams } from "react-router-dom";
-import {
-  useAddFavoriteCar,
-  useGetCar,
-  useRemoveFavoriteCar,
-} from "../../shared/graphql/request/carRequest";
+import { useGetCar } from "../../shared/graphql/request/carRequest";
 import * as styled from "./styled";
 import Delorean from "../../shared/assets/images/delorean.jpg";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
-import { useEffect, useState } from "react";
-import ModalLoginVIew from "../../components/Modal/Modal";
 import FavoriteButton from "./FavoriteButton";
 import SkeletonDetailCar from "../../components/Skeleton/SkeletonDetailCar";
 
 export const ViewCarDetail = () => {
   const { carId } = useParams();
   const { state } = useGeneralContext();
-  const { data, loading, error } = useGetCar(
+  const { data, loading } = useGetCar(
     parseInt(carId ? carId : "0"),
     state.auth.admin.id
   );

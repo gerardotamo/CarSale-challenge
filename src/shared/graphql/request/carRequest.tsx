@@ -123,7 +123,9 @@ export const useFindCar = () => {
 };
 
 export const useAddCar = () => {
-  const [addCar, { data, loading, error }] = useMutation(ADD_CAR);
+  const [addCar, { data, loading, error }] = useMutation(ADD_CAR, {
+    refetchQueries: [{ query: FIND_CARS }],
+  });
   const addCarOne = async (value: IFormInput) => {
     await addCar({
       variables: {

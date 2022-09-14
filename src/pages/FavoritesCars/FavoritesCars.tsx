@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CardItem } from "../../components/CardItem/CardItem";
 import { HeaderListCar } from "../../components/HeaderListCar/HeaderListCar";

@@ -1,8 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter } from 'react-router-dom';
-import AppRouter from './shared/routes/AppRouter/AppRouter';
+import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./shared/routes/AppRouter/AppRouter";
 function App() {
   return (
     <BrowserRouter>

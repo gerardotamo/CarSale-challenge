@@ -1,11 +1,9 @@
-import { useQuery } from "@apollo/client";
-import { useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CardItem } from "../../components/CardItem/CardItem";
 import { HeaderListCar } from "../../components/HeaderListCar/HeaderListCar";
 import { NotFoundItem } from "../../components/NotFoundItem/NotFoundItem";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
-import { ALL_CARS } from "../../shared/graphql/query/carQuery";
 import { useFindCar } from "../../shared/graphql/request/carRequest";
 import { Cars } from "../../shared/graphql/__generate__/generated";
 import { SkeletonCar } from "../../components/Skeleton/SkeletonCar";
