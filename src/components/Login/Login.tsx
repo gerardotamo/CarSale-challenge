@@ -24,7 +24,7 @@ const LoginComponent = () => {
     if (data?.users.length === 0) {
       setError("Email not register");
     }
-  }, [data, errorRequest]);
+  }, [data, errorRequest, dispatch]);
 
   const handleClickLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ModalLoginVIew from "../../components/Modal/Modal";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
 import {
@@ -66,7 +66,7 @@ const FavoriteButton = ({ userCar, carData }: PropsFavoriteButton) => {
     if (state.auth.admin.uuid) {
       setOpenModal(false);
     }
-  }, [state]);
+  }, [state, userCar.length, setIsCarFavorite]);
 
   return (
     <div>

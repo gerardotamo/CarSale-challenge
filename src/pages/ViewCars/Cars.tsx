@@ -23,7 +23,7 @@ export const ViewCars = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [searchParams]);
+  }, [searchParams, state.auth.admin.id, findCars]);
 
   if (errorRequest) {
     return (

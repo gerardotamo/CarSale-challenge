@@ -53,7 +53,7 @@ export const CardItem = ({
     if (state.auth.admin.uuid) {
       setOpenModal(false);
     }
-  }, [state]);
+  }, [state, favoriteCar]);
 
   if (showFavorites && !isFavoriteCar) {
     return null;

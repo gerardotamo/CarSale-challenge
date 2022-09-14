@@ -21,13 +21,14 @@ export const link = new HttpLink({
   },
 });
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    graphQLErrors.map(({ message, locations, path }) => {
+  /*if (graphQLErrors) {
+    const error = graphQLErrors.map(({ message, locations, path }) => {
       console.log(
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
       );
     });
-  }
+    console.log(error);
+  }*/
 
   if (networkError) {
     // handle network error
