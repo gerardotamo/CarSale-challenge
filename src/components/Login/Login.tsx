@@ -33,9 +33,7 @@ const LoginComponent = () => {
         return setError("Email not valid");
       }
       setError("");
-      console.log(errorRequest?.graphQLErrors);
       await findUser(email);
-      console.log(errorRequest?.cause);
     } catch (e) {
       console.log("ERROR CAtCH", e);
     }

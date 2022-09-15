@@ -33,7 +33,7 @@ export const CardItem = ({
     favorite_cars.find((item) => item.car_id === data.id)
   );
   const { state } = useGeneralContext();
-  const [isFavoriteCar, setIsFavoriteCar] = useState(
+  const [isFavoriteCar, setIsFavoriteCar] = useState<boolean>(
     favoriteCar !== undefined && state.auth.admin.uuid
   );
   const { addFavoriteCar, loadingAddFavorite, errorAddFavorite, addData } =
@@ -49,11 +49,15 @@ export const CardItem = ({
   }, [addData]);
 
   useEffect(() => {
-    setIsFavoriteCar(favoriteCar !== undefined && state.auth.admin.uuid);
     if (state.auth.admin.uuid) {
       setOpenModal(false);
+      const fav = favorite_cars.find((item) => item.car_id === data.id);
+      setFavoriteCar(fav);
+      setIsFavoriteCar(fav !== undefined);
+    } else {
+      setIsFavoriteCar(false);
     }
-  }, [state, favoriteCar]);
+  }, [state]);
 
   if (showFavorites && !isFavoriteCar) {
     return null;

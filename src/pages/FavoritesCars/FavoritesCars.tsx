@@ -23,7 +23,7 @@ export const FavoritesCars = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [searchParams, state.auth.admin.id, findCars]);
+  }, [searchParams]);
 
   if (errorRequest) {
     return (
