@@ -10,11 +10,11 @@ import * as styled from "./styled";
 
 interface PropsFavoriteButton {
   userCar: User_Cars[];
-  carData: Cars[];
+  carData: Cars;
 }
 
 const FavoriteButton = ({ userCar, carData }: PropsFavoriteButton) => {
-  const car = carData[0];
+  const car = carData;
   const { state } = useGeneralContext();
   const [favoriteCar, setFavoriteCar] = useState(userCar[0]);
   const [isCarFavorite, setIsCarFavorite] = useState<boolean>(

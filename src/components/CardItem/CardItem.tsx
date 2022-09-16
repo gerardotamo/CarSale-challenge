@@ -50,9 +50,7 @@ export const CardItem = ({
 
   useEffect(() => {
     if (state.auth.admin.uuid) {
-      //console.log("FAVORITE CAR", favoriteCar);
       setOpenModal(false);
-
       const fav = favorite_cars.find((item) => item.car_id === data.id);
       setFavoriteCar(fav);
       setIsFavoriteCar(fav !== undefined);

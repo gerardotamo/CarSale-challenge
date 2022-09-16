@@ -151,7 +151,10 @@ export const useAddCar = () => {
 
 export const useGetCarFavorite = () => {
   const [getFavoritesCars, result] = useLazyQuery<{ user_cars: User_Cars[] }>(
-    GET_FAVORITE_CAR
+    GET_FAVORITE_CAR,
+    {
+      notifyOnNetworkStatusChange: true,
+    }
   );
   const findFavoritesCars = async (user_id: number | undefined) => {
     const userCarsWhere = user_id
@@ -172,7 +175,7 @@ export const useGetCarFavorite = () => {
           ...userCarsWhere,
         },
       },
-      //fetchPolicy: "network-only",
+      fetchPolicy: "cache-and-network",
     });
   };
   return {
@@ -190,6 +193,14 @@ export const useAddFavoriteCar = () => {
       car_id: car_id,
       user_id: user_id,
     };
+    const where = {
+      where: {
+        user_id: {
+          _eq: user_id,
+        },
+      },
+    };
+
     await addFavCar({
       variables: {
         object: {
@@ -207,59 +218,26 @@ export const useAddFavoriteCar = () => {
         const previousData = proxy.readQuery<{ user_cars: User_Cars[] }>({
           query: GET_FAVORITE_CAR,
           variables: {
-            where: {
-              user_id: {
-                _eq: user_id,
-              },
-            },
+            ...where,
           },
         });
-
-        console.log("PREVIOUS", previousData);
-        if (previousData !== null) {
-          proxy.writeQuery({
-            query: GET_FAVORITE_CAR,
-            variables: {
-              where: {
-                user_id: {
-                  _eq: user_id,
-                },
-              },
-            },
-            data: {
-              ...previousData,
-              user_cars: [
-                response.data.insert_user_cars_one,
-                ...previousData.user_cars,
-              ],
-            },
-          });
-        } else {
-          proxy.writeQuery({
-            query: GET_FAVORITE_CAR,
-            variables: {
-              where: {
-                user_id: {
-                  _eq: user_id,
-                },
-              },
-            },
-            data: {
-              user_cars: [response.data.insert_user_cars_one],
-            },
-          });
-        }
+        const previous =
+          previousData !== null ? [...previousData.user_cars] : [];
+        proxy.writeQuery({
+          query: GET_FAVORITE_CAR,
+          variables: {
+            ...where,
+          },
+          data: {
+            ...previousData,
+            user_cars: [response.data.insert_user_cars_one, ...previous],
+          },
+        });
       },
       refetchQueries: [
         {
           query: GET_FAVORITE_CAR,
-          variables: {
-            where: {
-              user_id: {
-                _eq: user_id,
-              },
-            },
-          },
+          ...where,
         },
       ],
       awaitRefetchQueries: true,

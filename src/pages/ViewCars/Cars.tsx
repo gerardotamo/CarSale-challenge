@@ -11,6 +11,7 @@ import {
 import { Cars } from "../../shared/graphql/__generate__/generated";
 import { SkeletonCar } from "../../components/Skeleton/SkeletonCar";
 import * as styled from "./styled";
+import { stat } from "fs";
 
 export const ViewCars = () => {
   const { data, loading, errorRequest, findCars } = useFindCar();
@@ -38,10 +39,12 @@ export const ViewCars = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    try {
-      findFavoritesCars(state.auth.admin.id);
-    } catch (error) {
-      console.log(error);
+    if (state.auth.admin.uuid) {
+      try {
+        findFavoritesCars(state.auth.admin.id);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, [state]);
 
@@ -53,6 +56,14 @@ export const ViewCars = () => {
     );
   }
 
+  if (errorFavoriteCars) {
+    return (
+      <styled.Container>
+        <styled.Title color="red">{errorFavoriteCars.message}</styled.Title>
+      </styled.Container>
+    );
+  }
+
   return (
     <styled.Container>
       <HeaderListCar />
@@ -60,13 +71,12 @@ export const ViewCars = () => {
         data?.cars?.length === 0 ? (
           <NotFoundItem />
         ) : (
-          favoriteCar &&
           data?.cars.map((item: Cars, index: number) => {
             return (
               <CardItem
                 data={item}
                 key={index}
-                favorite_cars={favoriteCar.user_cars}
+                favorite_cars={favoriteCar ? favoriteCar.user_cars : []}
               />
             );
           })

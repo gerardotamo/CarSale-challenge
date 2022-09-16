@@ -24,7 +24,7 @@ export const ViewCarDetail = () => {
           <>
             <styled.Header>
               <styled.Title>{car.title}</styled.Title>
-              <FavoriteButton carData={data.cars} userCar={data.user_cars} />
+              <FavoriteButton carData={car} userCar={data.user_cars} />
             </styled.Header>
             <styled.Column>
               <styled.Section>
