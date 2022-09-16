@@ -1,10 +1,15 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useGetCar } from "../../shared/graphql/request/carRequest";
 import * as styled from "./styled";
 import Delorean from "../../shared/assets/images/delorean.jpg";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
 import FavoriteButton from "./FavoriteButton";
 import SkeletonDetailCar from "../../components/Skeleton/SkeletonDetailCar";
+import { User_Cars } from "../../shared/graphql/__generate__/generated";
+
+interface LocationState {
+  favoritesCars: User_Cars[];
+}
 
 export const ViewCarDetail = () => {
   const { carId } = useParams();
@@ -15,6 +20,10 @@ export const ViewCarDetail = () => {
   );
   const car = data?.cars[0];
 
+  const location = useLocation();
+  const { favoritesCars } = location.state as LocationState;
+
+  console.log(favoritesCars);
   return (
     <styled.Container>
       {loading ? (
@@ -24,7 +33,7 @@ export const ViewCarDetail = () => {
           <>
             <styled.Header>
               <styled.Title>{car.title}</styled.Title>
-              <FavoriteButton carData={car} userCar={data.user_cars} />
+              <FavoriteButton carData={car} userCar={favoritesCars} />
             </styled.Header>
             <styled.Column>
               <styled.Section>

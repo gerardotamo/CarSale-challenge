@@ -170,7 +170,7 @@ export const useGetCarFavorite = () => {
           ...userCarsWhere,
         },
       },
-      fetchPolicy: "cache-and-network",
+      fetchPolicy: "network-only",
     });
   };
   return {

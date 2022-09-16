@@ -13,57 +13,59 @@ import {
 } from "../../shared/graphql/request/carRequest";
 import { addOneDay } from "../../shared/types/Date";
 import ModalLoginVIew from "../Modal/Modal";
+import FavoriteButton from "../../pages/ViewCarDetail/FavoriteButton";
 
 interface Props {
   data: Cars;
   favorite_cars: User_Cars[];
   showFavorites?: boolean;
+  loadingFavoriteCar?: boolean;
 }
 
 export const CardItem = ({
   data,
   favorite_cars,
   showFavorites = false,
+  loadingFavoriteCar = false,
 }: Props) => {
-  const [openModal, setOpenModal] = useState(false);
+  /*const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
+  const handleCloseModal = () => setOpenModal(false);*/
 
   const { state } = useGeneralContext();
 
-  const [favoriteCar, setFavoriteCar] = useState(
-    favorite_cars.find((item) => item.car_id === data.id)
-  );
+  const favoriteCar = favorite_cars.find((item) => item.car_id === data.id);
 
   const [isFavoriteCar, setIsFavoriteCar] = useState<boolean>(
-    favoriteCar !== undefined && state.auth.admin.uuid
+    favoriteCar ? true : false
   );
-  const { addFavoriteCar, errorAddFavorite, addData } = useAddFavoriteCar();
-  const { removeFavoriteCar, errorRemoveFavorite } = useRemoveFavoriteCar();
+  /*const { addFavoriteCar,  addData } = useAddFavoriteCar();
+  const { removeFavoriteCar,  } = useRemoveFavoriteCar();*/
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (addData) {
       setFavoriteCar(addData.insert_user_cars_one);
     }
-  }, [addData]);
+  }, [addData]);*/
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (state.auth.admin.uuid) {
       setOpenModal(false);
       const fav = favorite_cars.find((item) => item.car_id === data.id);
+      console.log(fav);
       setFavoriteCar(fav);
       setIsFavoriteCar(fav !== undefined);
     } else {
       setIsFavoriteCar(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state]);
+  }, [state]);*/
 
   if (showFavorites && !isFavoriteCar) {
     return null;
   }
 
-  const handleFavoriteButton = async () => {
+  /*const handleFavoriteButton = async () => {
     if (!state.auth.admin.uuid) {
       return handleOpenModal();
     }
@@ -79,6 +81,10 @@ export const CardItem = ({
     } catch (error) {
       console.log(error);
     }
+  };*/
+
+  const removeCar = () => {
+    setIsFavoriteCar(false);
   };
 
   const date = new Date();
@@ -97,7 +103,10 @@ export const CardItem = ({
         <>
           <Image src={Delorean} />
           <InfoContainer>
-            <Link to={"/cars/" + data.id}>
+            <Link
+              to={"/cars/" + data.id}
+              state={{ favoritesCars: favorite_cars }}
+            >
               <Title color={BaseColor.lightBluePrimaryColor}>
                 {data.title}
               </Title>
@@ -109,7 +118,13 @@ export const CardItem = ({
               </SubInfoItem>
             </Section>
             <Section>
-              <AddFavoriteBUtton onClick={handleFavoriteButton} disable={false}>
+              <FavoriteButton
+                carData={data}
+                userCar={favorite_cars}
+                loading={loadingFavoriteCar}
+                removeCar={removeCar}
+              />
+              {/*<AddFavoriteBUtton onClick={handleFavoriteButton} disable={false}>
                 {isFavoriteCar ? "Remove Favorite" : "Add Favorite"}
               </AddFavoriteBUtton>
               {(errorAddFavorite || errorRemoveFavorite) && (
@@ -120,7 +135,7 @@ export const CardItem = ({
                     ? errorRemoveFavorite.message
                     : "Error"}
                 </ErrorMessage>
-              )}
+                  )}*/}
             </Section>
           </InfoContainer>
           <InfoContainer>
@@ -172,7 +187,6 @@ export const CardItem = ({
           </InfoContainer>
         </>
       )}
-      <ModalLoginVIew open={openModal} modalClose={handleCloseModal} />
     </Container>
   );
 };

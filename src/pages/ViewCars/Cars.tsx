@@ -68,7 +68,7 @@ export const ViewCars = () => {
   return (
     <styled.Container>
       <HeaderListCar />
-      {!loading && !loadingFavoriteCar ? (
+      {!loading ? (
         data?.cars?.length === 0 ? (
           <NotFoundItem />
         ) : (
@@ -78,6 +78,7 @@ export const ViewCars = () => {
                 data={item}
                 key={index}
                 favorite_cars={favoriteCar ? favoriteCar.user_cars : []}
+                loadingFavoriteCar={loadingFavoriteCar}
               />
             );
           })
