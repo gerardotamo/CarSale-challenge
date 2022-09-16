@@ -11,7 +11,6 @@ import {
 import { Cars } from "../../shared/graphql/__generate__/generated";
 import { SkeletonCar } from "../../components/Skeleton/SkeletonCar";
 import * as styled from "./styled";
-import { stat } from "fs";
 
 export const ViewCars = () => {
   const { data, loading, errorRequest, findCars } = useFindCar();
@@ -36,6 +35,7 @@ export const ViewCars = () => {
     } catch (error) {
       console.log(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   useEffect(() => {
@@ -46,6 +46,7 @@ export const ViewCars = () => {
         console.log(error);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   if (errorRequest) {

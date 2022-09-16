@@ -18,14 +18,12 @@ interface PropsSelect {
 const customStyles: StylesConfig<MyOption, false, GroupBase<MyOption>> = {
   menu: (provided, state: any) => ({
     ...provided,
-    //width: 200,
     borderBottom: "1px dotted pink",
     color: BaseColor.whiteColor,
     background: BaseColor.blueDarkColor,
   }),
 
   control: (_) => ({
-    //width: 200,
     color: BaseColor.whiteColor,
     background: BaseColor.whiteColor,
     display: "flex",

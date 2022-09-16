@@ -1,9 +1,4 @@
-import {
-  InMemoryCache,
-  useLazyQuery,
-  useMutation,
-  useQuery,
-} from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { IFormInput } from "../../../pages/ViewCreateCar/ViewCreateCar";
 import {
   ADD_CAR,

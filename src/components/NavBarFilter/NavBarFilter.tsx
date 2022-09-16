@@ -56,21 +56,6 @@ const NavBarFilter = () => {
               name={"orderBySaleDate"}
               text={"Sale Date"}
             />
-            {/*<OrderText>Order by</OrderText>
-            <OrderButton
-              name="orderByYear"
-              value={order === null ? "" : order}
-              onClick={handleChangeOrder}
-            >
-              {orderByValue === null ? (
-                <TbArrowsDownUp />
-              ) : order === "asc" ? (
-                <HiArrowUp />
-              ) : (
-                <HiArrowDown />
-              )}
-              Year
-              </OrderButton>*/}
           </Section>
         </SearchForm>
       </Container>

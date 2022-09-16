@@ -29,18 +29,17 @@ export const CardItem = ({
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
+  const { state } = useGeneralContext();
+
   const [favoriteCar, setFavoriteCar] = useState(
     favorite_cars.find((item) => item.car_id === data.id)
   );
-  const { state } = useGeneralContext();
+
   const [isFavoriteCar, setIsFavoriteCar] = useState<boolean>(
     favoriteCar !== undefined && state.auth.admin.uuid
   );
-  const { addFavoriteCar, loadingAddFavorite, errorAddFavorite, addData } =
-    useAddFavoriteCar();
-  const { removeFavoriteCar, loadingRemoveFavorite, errorRemoveFavorite } =
-    useRemoveFavoriteCar();
-  //const navigate = useNavigate();
+  const { addFavoriteCar, errorAddFavorite, addData } = useAddFavoriteCar();
+  const { removeFavoriteCar, errorRemoveFavorite } = useRemoveFavoriteCar();
 
   useEffect(() => {
     if (addData) {
@@ -57,6 +56,7 @@ export const CardItem = ({
     } else {
       setIsFavoriteCar(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   if (showFavorites && !isFavoriteCar) {
@@ -70,7 +70,6 @@ export const CardItem = ({
 
     try {
       if (isFavoriteCar && favoriteCar) {
-        //setIsFavoriteCar(false);
         removeFavoriteCar(favoriteCar.id, state.auth.admin.id);
         setIsFavoriteCar(false);
       } else {
@@ -110,11 +109,7 @@ export const CardItem = ({
               </SubInfoItem>
             </Section>
             <Section>
-              <AddFavoriteBUtton
-                onClick={handleFavoriteButton}
-                disable={false}
-                //disable={loadingAddFavorite || loadingRemoveFavorite}
-              >
+              <AddFavoriteBUtton onClick={handleFavoriteButton} disable={false}>
                 {isFavoriteCar ? "Remove Favorite" : "Add Favorite"}
               </AddFavoriteBUtton>
               {(errorAddFavorite || errorRemoveFavorite) && (

@@ -12,12 +12,12 @@ import { Cars } from "../../shared/graphql/__generate__/generated";
 import { SkeletonCar } from "../../components/Skeleton/SkeletonCar";
 import * as styled from "./styled";
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
 export const FavoritesCars = () => {
   const { data, loading, errorRequest, findCars } = useFindCar();
   const {
     data: favoriteCar,
     loading: loadingFavoriteCar,
-    errorFavoriteCars,
     findFavoritesCars,
   } = useGetCarFavorite();
   const [searchParams] = useSearchParams();
@@ -32,6 +32,7 @@ export const FavoritesCars = () => {
     } catch (error) {
       console.log(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   useEffect(() => {
@@ -40,6 +41,7 @@ export const FavoritesCars = () => {
     } catch (error) {
       console.log(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (errorRequest) {
