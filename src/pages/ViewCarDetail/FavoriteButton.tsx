@@ -36,7 +36,7 @@ const FavoriteButton = ({ userCar, carData }: PropsFavoriteButton) => {
     }
     try {
       if (isCarFavorite && favoriteCar !== undefined) {
-        await removeFavoriteCar(favoriteCar.id);
+        await removeFavoriteCar(favoriteCar.id, state.auth.admin.id);
         setIsCarFavorite(false);
       } else {
         if (car) {

@@ -50,7 +50,9 @@ export const CardItem = ({
 
   useEffect(() => {
     if (state.auth.admin.uuid) {
+      //console.log("FAVORITE CAR", favoriteCar);
       setOpenModal(false);
+
       const fav = favorite_cars.find((item) => item.car_id === data.id);
       setFavoriteCar(fav);
       setIsFavoriteCar(fav !== undefined);
@@ -70,10 +72,11 @@ export const CardItem = ({
 
     try {
       if (isFavoriteCar && favoriteCar) {
-        await removeFavoriteCar(favoriteCar.id);
+        //setIsFavoriteCar(false);
+        removeFavoriteCar(favoriteCar.id, state.auth.admin.id);
         setIsFavoriteCar(false);
       } else {
-        await addFavoriteCar(data.id, state.auth.admin.id);
+        addFavoriteCar(data.id, state.auth.admin.id);
         setIsFavoriteCar(true);
       }
     } catch (error) {
@@ -111,7 +114,8 @@ export const CardItem = ({
             <Section>
               <AddFavoriteBUtton
                 onClick={handleFavoriteButton}
-                disable={loadingAddFavorite || loadingRemoveFavorite}
+                disable={false}
+                //disable={loadingAddFavorite || loadingRemoveFavorite}
               >
                 {isFavoriteCar ? "Remove Favorite" : "Add Favorite"}
               </AddFavoriteBUtton>

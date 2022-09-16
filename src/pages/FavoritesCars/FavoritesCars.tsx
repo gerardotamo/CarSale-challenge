@@ -4,13 +4,22 @@ import { CardItem } from "../../components/CardItem/CardItem";
 import { HeaderListCar } from "../../components/HeaderListCar/HeaderListCar";
 import { NotFoundItem } from "../../components/NotFoundItem/NotFoundItem";
 import { useGeneralContext } from "../../shared/contexts/StoreProvider";
-import { useFindCar } from "../../shared/graphql/request/carRequest";
+import {
+  useFindCar,
+  useGetCarFavorite,
+} from "../../shared/graphql/request/carRequest";
 import { Cars } from "../../shared/graphql/__generate__/generated";
 import { SkeletonCar } from "../../components/Skeleton/SkeletonCar";
 import * as styled from "./styled";
 
 export const FavoritesCars = () => {
   const { data, loading, errorRequest, findCars } = useFindCar();
+  const {
+    data: favoriteCar,
+    loading: loadingFavoriteCar,
+    errorFavoriteCars,
+    findFavoritesCars,
+  } = useGetCarFavorite();
   const [searchParams] = useSearchParams();
   const { state } = useGeneralContext();
 
@@ -19,11 +28,19 @@ export const FavoritesCars = () => {
     const orderByYear = searchParams.get("orderByYear");
     const orderBySaleDate = searchParams.get("orderBySaleDate");
     try {
-      findCars(search, orderByYear, orderBySaleDate, state.auth.admin.id);
+      findCars(search, orderByYear, orderBySaleDate);
     } catch (error) {
       console.log(error);
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    try {
+      findFavoritesCars(state.auth.admin.id);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   if (errorRequest) {
     return (
@@ -35,16 +52,17 @@ export const FavoritesCars = () => {
   return (
     <styled.Container>
       <HeaderListCar />
-      {!loading ? (
-        data?.user_cars.length === 0 ? (
+      {!loading && !loadingFavoriteCar ? (
+        favoriteCar && favoriteCar.user_cars.length === 0 ? (
           <NotFoundItem />
         ) : (
+          favoriteCar &&
           data?.cars.map((item: Cars, index: number) => {
             return (
               <CardItem
                 data={item}
                 key={index}
-                favorite_cars={data.user_cars}
+                favorite_cars={favoriteCar.user_cars}
                 showFavorites={true}
               />
             );

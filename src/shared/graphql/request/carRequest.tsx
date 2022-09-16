@@ -1,10 +1,16 @@
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import {
+  InMemoryCache,
+  useLazyQuery,
+  useMutation,
+  useQuery,
+} from "@apollo/client";
 import { IFormInput } from "../../../pages/ViewCreateCar/ViewCreateCar";
 import {
   ADD_CAR,
   ADD_FAVORITE_CAR,
   FIND_CARS,
   GET_CAR,
+  GET_FAVORITE_CAR,
   REMOVE_FAVORITE_CAR,
 } from "../query/carQuery";
 import { Cars, User_Cars } from "../__generate__/generated";
@@ -42,8 +48,7 @@ export const useFindCar = () => {
   const findCars = async (
     search: string | null,
     orderByYear: string | null,
-    orderBySaleDate: string | null,
-    user_id: number | undefined
+    orderBySaleDate: string | null
   ) => {
     const searchFilter = search === null ? "" : search;
     const filter = {
@@ -81,14 +86,6 @@ export const useFindCar = () => {
       ],
     };
 
-    const userCarsWhere = user_id
-      ? {
-          user_id: {
-            _eq: user_id,
-          },
-        }
-      : {};
-
     if (
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
         searchFilter
@@ -106,9 +103,7 @@ export const useFindCar = () => {
         where: {
           ...where,
         },
-        userCarsWhere: {
-          ...userCarsWhere,
-        },
+
         ...filter,
       },
     });
@@ -154,16 +149,120 @@ export const useAddCar = () => {
   };
 };
 
+export const useGetCarFavorite = () => {
+  const [getFavoritesCars, result] = useLazyQuery<{ user_cars: User_Cars[] }>(
+    GET_FAVORITE_CAR
+  );
+  const findFavoritesCars = async (user_id: number | undefined) => {
+    const userCarsWhere = user_id
+      ? {
+          user_id: {
+            _eq: user_id,
+          },
+        }
+      : {
+          user_id: {
+            _is_null: true,
+          },
+        };
+
+    await getFavoritesCars({
+      variables: {
+        where: {
+          ...userCarsWhere,
+        },
+      },
+      //fetchPolicy: "network-only",
+    });
+  };
+  return {
+    findFavoritesCars,
+    errorFavoriteCars: result.error,
+    data: result.data,
+    loading: result.loading,
+  };
+};
+
 export const useAddFavoriteCar = () => {
   const [addFavCar, { data, loading, error }] = useMutation(ADD_FAVORITE_CAR);
   const addFavoriteCar = async (car_id: number, user_id: number) => {
+    const todo = {
+      car_id: car_id,
+      user_id: user_id,
+    };
     await addFavCar({
       variables: {
         object: {
-          car_id: car_id,
-          user_id: user_id,
+          ...todo,
         },
       },
+      optimisticResponse: {
+        insert_user_cars_one: {
+          __typename: "user_cars",
+          ...todo,
+          id: Math.random() * 100,
+        },
+      },
+      update: (proxy, response) => {
+        const previousData = proxy.readQuery<{ user_cars: User_Cars[] }>({
+          query: GET_FAVORITE_CAR,
+          variables: {
+            where: {
+              user_id: {
+                _eq: user_id,
+              },
+            },
+          },
+        });
+
+        console.log("PREVIOUS", previousData);
+        if (previousData !== null) {
+          proxy.writeQuery({
+            query: GET_FAVORITE_CAR,
+            variables: {
+              where: {
+                user_id: {
+                  _eq: user_id,
+                },
+              },
+            },
+            data: {
+              ...previousData,
+              user_cars: [
+                response.data.insert_user_cars_one,
+                ...previousData.user_cars,
+              ],
+            },
+          });
+        } else {
+          proxy.writeQuery({
+            query: GET_FAVORITE_CAR,
+            variables: {
+              where: {
+                user_id: {
+                  _eq: user_id,
+                },
+              },
+            },
+            data: {
+              user_cars: [response.data.insert_user_cars_one],
+            },
+          });
+        }
+      },
+      refetchQueries: [
+        {
+          query: GET_FAVORITE_CAR,
+          variables: {
+            where: {
+              user_id: {
+                _eq: user_id,
+              },
+            },
+          },
+        },
+      ],
+      awaitRefetchQueries: true,
     });
   };
   return {
@@ -177,10 +276,38 @@ export const useAddFavoriteCar = () => {
 export const useRemoveFavoriteCar = () => {
   const [removeFavCar, { data, loading, error }] =
     useMutation(REMOVE_FAVORITE_CAR);
-  const removeFavoriteCar = async (id: number) => {
+  const removeFavoriteCar = async (id: number, user_id: number) => {
+    const variables = {
+      variables: {
+        where: {
+          user_id: {
+            _eq: user_id,
+          },
+        },
+      },
+    };
     await removeFavCar({
       variables: {
         deleteUserCarsByPkId: id,
+      },
+      optimisticResponse: {
+        delete_user_cars_by_pk: {
+          id: Math.random() * 100,
+        },
+      },
+      update: (proxy, response, cache) => {
+        const previousData = proxy.readQuery<{ user_cars: User_Cars[] }>({
+          query: GET_FAVORITE_CAR,
+          ...variables,
+        });
+        console.log(previousData);
+        proxy.writeQuery({
+          query: GET_FAVORITE_CAR,
+          ...variables,
+          data: {
+            user_cars: previousData?.user_cars.filter((car) => car.id !== id),
+          },
+        });
       },
     });
   };

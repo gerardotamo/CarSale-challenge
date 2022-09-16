@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql, InMemoryCache } from "@apollo/client";
 
 export const GET_CAR = gql`
   query GET_CAR($where: cars_bool_exp, $userCarsWhere: user_cars_bool_exp) {
@@ -77,11 +77,7 @@ export const ALL_CARS = gql`
 `;
 
 export const FIND_CARS = gql`
-  query Find_Car(
-    $where: cars_bool_exp
-    $orderBy: [cars_order_by!]
-    $userCarsWhere: user_cars_bool_exp
-  ) {
+  query Find_Car($where: cars_bool_exp, $orderBy: [cars_order_by!]) {
     cars(where: $where, order_by: $orderBy) {
       batch
       city {
@@ -115,9 +111,14 @@ export const FIND_CARS = gql`
         }
       }
     }
-    user_cars(where: $userCarsWhere) {
-      user_id
+  }
+`;
+
+export const GET_FAVORITE_CAR = gql`
+  query GET_FAVORITE_CAR($where: user_cars_bool_exp) {
+    user_cars(where: $where) {
       id
+      user_id
       car_id
     }
   }
@@ -155,9 +156,7 @@ export const ADD_FAVORITE_CAR = gql`
 export const REMOVE_FAVORITE_CAR = gql`
   mutation REMOVE_FAVORITE_CAR($deleteUserCarsByPkId: Int!) {
     delete_user_cars_by_pk(id: $deleteUserCarsByPkId) {
-      car_id
       id
-      user_id
     }
   }
 `;
