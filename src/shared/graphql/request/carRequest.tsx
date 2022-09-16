@@ -34,6 +34,7 @@ export const useGetCar = (carId: number, userId: number | undefined) => {
     variables: {
       ...variables,
     },
+    fetchPolicy: "network-only",
   });
 };
 

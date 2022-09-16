@@ -28,22 +28,16 @@ const FavoriteButton = ({
   const [favoriteCar, setFavoriteCar] = useState(
     userCar.find((item) => item.car_id === carData.id)
   );
-  //const [favoriteCar, setFavoriteCar] = useState(userCar[0]);
   const [isFavoriteCar, setIsFavoriteCar] = useState<boolean>(
     favoriteCar !== undefined && state.auth.admin.uuid
   );
-  /*const [isCarFavorite, setIsCarFavorite] = useState<boolean>(
-    userCar.length !== 0 && state.auth.admin.id !== undefined
-  );*/
 
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
-  const { addFavoriteCar, loadingAddFavorite, errorAddFavorite, addData } =
-    useAddFavoriteCar();
-  const { removeFavoriteCar, loadingRemoveFavorite, errorRemoveFavorite } =
-    useRemoveFavoriteCar();
+  const { addFavoriteCar, errorAddFavorite, addData } = useAddFavoriteCar();
+  const { removeFavoriteCar, errorRemoveFavorite } = useRemoveFavoriteCar();
 
   const handleFavoriteButton = async () => {
     if (!state.auth.admin.uuid) {
