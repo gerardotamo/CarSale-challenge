@@ -3,9 +3,10 @@ import Select, {
   GroupBase,
   OptionsOrGroups,
   StylesConfig,
-} from "react-select";
-import { BaseColor } from "../../config/color";
-import { MyOption } from "../../shared/types/MyOptions";
+} from 'react-select';
+
+import { BaseColor } from '../../config/color';
+import { MyOption } from '../../shared/types/MyOptions';
 
 interface PropsSelect {
   options: OptionsOrGroups<MyOption, GroupBase<MyOption>>;
@@ -18,22 +19,22 @@ interface PropsSelect {
 const customStyles: StylesConfig<MyOption, false, GroupBase<MyOption>> = {
   menu: (provided, state: any) => ({
     ...provided,
-    borderBottom: "1px dotted pink",
+    borderBottom: '1px dotted pink',
     color: BaseColor.whiteColor,
     background: BaseColor.blueDarkColor,
   }),
 
-  control: (_) => ({
+  control: _ => ({
     color: BaseColor.whiteColor,
     background: BaseColor.whiteColor,
-    display: "flex",
+    display: 'flex',
     height: 30,
     padding: 0,
   }),
 
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.2 : 1;
-    const transition = "opacity 100s";
+    const transition = 'opacity 100s';
 
     return { ...provided, opacity, transition };
   },
@@ -46,9 +47,9 @@ const customStyles: StylesConfig<MyOption, false, GroupBase<MyOption>> = {
         : isFocused
         ? BaseColor.bluePrimaryColor
         : undefined,
-      cursor: isDisabled ? "not-allowed" : "default",
-      ":active": {
-        ...styles[":active"],
+      cursor: isDisabled ? 'not-allowed' : 'default',
+      ':active': {
+        ...styles[':active'],
         backgroundColor: !isDisabled
           ? isSelected
             ? BaseColor.primaryColor
@@ -73,7 +74,7 @@ const SelectForm = ({
       aria-labelledby="aria-label"
       onChange={onChange}
       isLoading={isLoading}
-      noOptionsMessage={() => "No Categories Found"}
+      noOptionsMessage={() => 'No Categories Found'}
       isDisabled={isDisable}
     />
   );

@@ -1,13 +1,14 @@
-import { Route, Routes } from "react-router-dom";
-import Navbar from "../../../components/NavBar/Navbar";
-import NavBarFilter from "../../../components/NavBarFilter/NavBarFilter";
-import { FavoritesCars } from "../../../pages/FavoritesCars/FavoritesCars";
-import { Login } from "../../../pages/Login/Login";
-import { ViewCarDetail } from "../../../pages/ViewCarDetail/ViewCarDetail";
-import { ViewCars } from "../../../pages/ViewCars/Cars";
-import ViewCreateCar from "../../../pages/ViewCreateCar/ViewCreateCar";
-import Welcome from "../../../pages/Welcome/Welcome";
-import ProtectedRoutes from "../ProtectedRoutes/ProtectedRoutes";
+import { Route, Routes } from 'react-router-dom';
+
+import { FavoritesCars } from '../../../pages/FavoritesCars/FavoritesCars';
+import { Login } from '../../../pages/Login/Login';
+import NavBarFilter from '../../../components/NavBarFilter/NavBarFilter';
+import Navbar from '../../../components/NavBar/Navbar';
+import ProtectedRoutes from '../ProtectedRoutes/ProtectedRoutes';
+import { ViewCarDetail } from '../../../pages/ViewCarDetail/ViewCarDetail';
+import { ViewCars } from '../../../pages/ViewCars/Cars';
+import ViewCreateCar from '../../../pages/ViewCreateCar/ViewCreateCar';
+import Welcome from '../../../pages/Welcome/Welcome';
 
 const AppRouter = () => {
   return (

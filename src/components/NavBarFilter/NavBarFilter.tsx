@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
-import { Link, Outlet, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
-import { BaseColor } from "../../config/color";
-import Button from "../Button/Button";
-import { useLocation } from "react-router-dom";
-import { HiArrowDown, HiArrowUp } from "react-icons/hi";
-import { TbArrowsDownUp } from "react-icons/tb";
+import { HiArrowDown, HiArrowUp } from 'react-icons/hi';
+import { Link, Outlet, useLocation, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+import { BaseColor } from '../../config/color';
+import Button from '../Button/Button';
+import { TbArrowsDownUp } from 'react-icons/tb';
+import styled from 'styled-components';
 
 const NavBarFilter = () => {
   const [searchParams] = useSearchParams();
-  const searchValue = searchParams.get("search");
-  const orderByYearValue = searchParams.get("orderByYear");
-  const orderBySaleDateValue = searchParams.get("orderBySaleDate");
+  const searchValue = searchParams.get('search');
+  const orderByYearValue = searchParams.get('orderByYear');
+  const orderBySaleDateValue = searchParams.get('orderBySaleDate');
   const [search, setSearch] = useState<string>(
-    searchValue === null ? "" : searchValue.toString()
+    searchValue === null ? '' : searchValue.toString()
   );
-  const flag: boolean = useLocation().pathname.includes("favorites");
+  const flag: boolean = useLocation().pathname.includes('favorites');
 
   useEffect(() => {
-    if (searchParams.get("search") === null) {
-      setSearch("");
+    if (searchParams.get('search') === null) {
+      setSearch('');
     }
   }, [searchParams]);
 
@@ -28,7 +28,7 @@ const NavBarFilter = () => {
       <Container>
         <Section>
           {!flag ? (
-            <Link to={"cars/create"}>
+            <Link to={'cars/create'}>
               <Button>Create</Button>
             </Link>
           ) : null}
@@ -40,21 +40,21 @@ const NavBarFilter = () => {
               type="text"
               value={search}
               name="search"
-              onChange={(text) => setSearch(text.target.value)}
+              onChange={text => setSearch(text.target.value)}
             />
             <Button>Search</Button>
           </Section>
-          <Section style={{ justifyContent: "flex-end" }}>
+          <Section style={{ justifyContent: 'flex-end' }}>
             <OrderText>Order by</OrderText>
             <OrderBy
               orderValue={orderByYearValue}
-              name={"orderByYear"}
-              text={"Year"}
+              name={'orderByYear'}
+              text={'Year'}
             />
             <OrderBy
               orderValue={orderBySaleDateValue}
-              name={"orderBySaleDate"}
-              text={"Sale Date"}
+              name={'orderBySaleDate'}
+              text={'Sale Date'}
             />
           </Section>
         </SearchForm>
@@ -75,11 +75,11 @@ const OrderBy = (props: Props) => {
 
   const handleChangeOrder = () => {
     if (props.orderValue === null) {
-      setOrder("asc");
-    } else if (order === "asc") {
-      setOrder("desc");
+      setOrder('asc');
+    } else if (order === 'asc') {
+      setOrder('desc');
     } else {
-      setOrder("asc");
+      setOrder('asc');
     }
   };
 
@@ -87,12 +87,12 @@ const OrderBy = (props: Props) => {
     <>
       <OrderButton
         name={props.name}
-        value={order === null ? "" : order}
+        value={order === null ? '' : order}
         onClick={handleChangeOrder}
       >
         {props.orderValue === null ? (
           <TbArrowsDownUp />
-        ) : order === "asc" ? (
+        ) : order === 'asc' ? (
           <HiArrowUp />
         ) : (
           <HiArrowDown />
@@ -105,7 +105,7 @@ const OrderBy = (props: Props) => {
 
 export default NavBarFilter;
 
-const Container = styled("div")`
+const Container = styled('div')`
   display: grid;
   grid-template-columns: 2fr 4fr;
   grid-gap: 20px;
@@ -117,16 +117,16 @@ const Container = styled("div")`
   height: 45px;
 `;
 
-const Section = styled("div")`
+const Section = styled('div')`
   display: flex;
   align-items: center;
 `;
-const SearchForm = styled("form")`
+const SearchForm = styled('form')`
   display: grid;
   grid-template-columns: 2fr 4fr;
 `;
 
-const SearchBar = styled("input")`
+const SearchBar = styled('input')`
   height: 25px;
 `;
 
@@ -135,7 +135,7 @@ const OrderButton = styled(Button)`
   height: 25px;
 `;
 
-const OrderText = styled("p")`
+const OrderText = styled('p')`
   margin: 0;
   font-size: 12px;
   color: ${BaseColor.lightBluePrimaryColor};

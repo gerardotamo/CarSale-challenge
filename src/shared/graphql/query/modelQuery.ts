@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const FIND_MODEL = gql`
   query Find_Model($where: models_bool_exp) {

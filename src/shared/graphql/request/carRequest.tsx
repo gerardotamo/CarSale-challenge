@@ -1,5 +1,3 @@
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { IFormInput } from "../../../pages/ViewCreateCar/ViewCreateCar";
 import {
   ADD_CAR,
   ADD_FAVORITE_CAR,
@@ -7,8 +5,11 @@ import {
   GET_CAR,
   GET_FAVORITE_CAR,
   REMOVE_FAVORITE_CAR,
-} from "../query/carQuery";
-import { Cars, User_Cars } from "../__generate__/generated";
+} from '../query/carQuery';
+import { Cars, User_Cars } from '../__generate__/generated';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+
+import { IFormInput } from '../../../pages/ViewCreateCar/ViewCreateCar';
 
 export const useGetCar = (carId: number, userId: number | undefined) => {
   const variables = {
@@ -34,7 +35,7 @@ export const useGetCar = (carId: number, userId: number | undefined) => {
     variables: {
       ...variables,
     },
-    fetchPolicy: "network-only",
+    fetchPolicy: 'network-only',
   });
 };
 
@@ -46,7 +47,7 @@ export const useFindCar = () => {
     orderByYear: string | null,
     orderBySaleDate: string | null
   ) => {
-    const searchFilter = search === null ? "" : search;
+    const searchFilter = search === null ? '' : search;
     const filter = {
       orderBy: [
         {
@@ -171,7 +172,7 @@ export const useGetCarFavorite = () => {
           ...userCarsWhere,
         },
       },
-      fetchPolicy: "network-only",
+      fetchPolicy: 'network-only',
     });
   };
   return {
@@ -186,8 +187,8 @@ export const useAddFavoriteCar = () => {
   const [addFavCar, { data, loading, error }] = useMutation(ADD_FAVORITE_CAR);
   const addFavoriteCar = async (car_id: number, user_id: number) => {
     const todo = {
-      car_id: car_id,
-      user_id: user_id,
+      car_id,
+      user_id,
     };
     const where = {
       where: {
@@ -205,7 +206,7 @@ export const useAddFavoriteCar = () => {
       },
       optimisticResponse: {
         insert_user_cars_one: {
-          __typename: "user_cars",
+          __typename: 'user_cars',
           ...todo,
           id: Math.random() * 100,
         },
@@ -279,7 +280,7 @@ export const useRemoveFavoriteCar = () => {
           query: GET_FAVORITE_CAR,
           ...variables,
           data: {
-            user_cars: previousData?.user_cars.filter((car) => car.id !== id),
+            user_cars: previousData?.user_cars.filter(car => car.id !== id),
           },
         });
       },

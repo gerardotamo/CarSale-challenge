@@ -1,6 +1,7 @@
-import "./App.css";
-import { BrowserRouter } from "react-router-dom";
-import AppRouter from "./shared/routes/AppRouter/AppRouter";
+import './App.css';
+import AppRouter from './shared/routes/AppRouter/AppRouter';
+import { BrowserRouter } from 'react-router-dom';
+
 function App() {
   return (
     <BrowserRouter>

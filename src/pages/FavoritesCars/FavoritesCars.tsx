@@ -1,18 +1,19 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { CardItem } from "../../components/CardItem/CardItem";
-import { HeaderListCar } from "../../components/HeaderListCar/HeaderListCar";
-import { NotFoundItem } from "../../components/NotFoundItem/NotFoundItem";
-import { useGeneralContext } from "../../shared/contexts/StoreProvider";
+import * as styled from './styled';
+
 import {
   useFindCar,
   useGetCarFavorite,
-} from "../../shared/graphql/request/carRequest";
-import { Cars } from "../../shared/graphql/__generate__/generated";
-import { SkeletonCar } from "../../components/Skeleton/SkeletonCar";
-import * as styled from "./styled";
+} from '../../shared/graphql/request/carRequest';
 
-// eslint-disable-next-line react-hooks/exhaustive-deps
+import { CardItem } from '../../components/CardItem/CardItem';
+import { Cars } from '../../shared/graphql/__generate__/generated';
+import { HeaderListCar } from '../../components/HeaderListCar/HeaderListCar';
+import { NotFoundItem } from '../../components/NotFoundItem/NotFoundItem';
+import { SkeletonCar } from '../../components/Skeleton/SkeletonCar';
+import { useEffect } from 'react';
+import { useGeneralContext } from '../../shared/contexts/StoreProvider';
+import { useSearchParams } from 'react-router-dom';
+
 export const FavoritesCars = () => {
   const { data, loading, errorRequest, findCars } = useFindCar();
   const {
@@ -24,15 +25,14 @@ export const FavoritesCars = () => {
   const { state } = useGeneralContext();
 
   useEffect(() => {
-    const search = searchParams.get("search");
-    const orderByYear = searchParams.get("orderByYear");
-    const orderBySaleDate = searchParams.get("orderBySaleDate");
+    const search = searchParams.get('search');
+    const orderByYear = searchParams.get('orderByYear');
+    const orderBySaleDate = searchParams.get('orderBySaleDate');
     try {
       findCars(search, orderByYear, orderBySaleDate);
     } catch (error) {
       console.log(error);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   useEffect(() => {
@@ -41,7 +41,6 @@ export const FavoritesCars = () => {
     } catch (error) {
       console.log(error);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (errorRequest) {

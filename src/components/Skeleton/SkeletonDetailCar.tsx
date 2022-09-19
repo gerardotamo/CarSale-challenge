@@ -1,6 +1,7 @@
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import styled from "styled-components";
-import { BaseColor } from "../../config/color";
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+
+import { BaseColor } from '../../config/color';
+import styled from 'styled-components';
 
 const SkeletonDetailCar = () => {
   return (
@@ -14,7 +15,7 @@ const SkeletonDetailCar = () => {
         </Header>
         <Column>
           <Section>
-            <Skeleton width={"75vmin"} height={"60vmin"} />
+            <Skeleton width={'75vmin'} height={'60vmin'} />
           </Section>
           <DataContainer>
             <InfoItem>
@@ -80,28 +81,28 @@ const SkeletonDetailCar = () => {
 
 export default SkeletonDetailCar;
 
-const Column = styled("div")`
+const Column = styled('div')`
   display: flex;
   margin-inline: 50px;
   width: 70%;
   justify-content: space-between;
 `;
 
-const Header = styled("div")`
+const Header = styled('div')`
   display: flex;
   width: 70%;
   justify-content: space-between;
   align-items: center;
 `;
 
-const InfoItem = styled("div")`
+const InfoItem = styled('div')`
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-block: 5px;
 `;
 
-const DataContainer = styled("div")`
+const DataContainer = styled('div')`
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
   margin-left: 15px;
   width: 70%;
@@ -111,7 +112,7 @@ const DataContainer = styled("div")`
   padding: 10px;
 `;
 
-const Section = styled("div")`
+const Section = styled('div')`
   width: 100%;
   display: flex;
 `;

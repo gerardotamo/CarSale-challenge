@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import ModalLoginVIew from "../../components/Modal/Modal";
-import { BaseColor } from "../../config/color";
-import { useGeneralContext } from "../../shared/contexts/StoreProvider";
+import * as styled from './styled';
+
+import { Cars, User_Cars } from '../../shared/graphql/__generate__/generated';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import {
   useAddFavoriteCar,
   useRemoveFavoriteCar,
-} from "../../shared/graphql/request/carRequest";
-import { Cars, User_Cars } from "../../shared/graphql/__generate__/generated";
-import * as styled from "./styled";
+} from '../../shared/graphql/request/carRequest';
+import { useEffect, useState } from 'react';
+
+import { BaseColor } from '../../config/color';
+import ModalLoginVIew from '../../components/Modal/Modal';
+import { useGeneralContext } from '../../shared/contexts/StoreProvider';
 
 interface PropsFavoriteButton {
   userCar: User_Cars[];
@@ -26,7 +28,7 @@ const FavoriteButton = ({
   const car = carData;
   const { state } = useGeneralContext();
   const [favoriteCar, setFavoriteCar] = useState(
-    userCar.find((item) => item.car_id === carData.id)
+    userCar.find(item => item.car_id === carData.id)
   );
   const [isFavoriteCar, setIsFavoriteCar] = useState<boolean>(
     favoriteCar !== undefined && state.auth.admin.uuid
@@ -53,7 +55,7 @@ const FavoriteButton = ({
           addFavoriteCar(car.id, state.auth.admin.id);
           setIsFavoriteCar(true);
         } else {
-          alert("This car not found");
+          alert('This car not found');
         }
       }
     } catch (error) {
@@ -70,13 +72,12 @@ const FavoriteButton = ({
   useEffect(() => {
     if (state.auth.admin.uuid) {
       setOpenModal(false);
-      const fav = userCar.find((item) => item.car_id === carData.id);
+      const fav = userCar.find(item => item.car_id === carData.id);
       setFavoriteCar(fav);
       setIsFavoriteCar(fav !== undefined);
     } else {
       setIsFavoriteCar(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userCar, state]);
 
   return (
@@ -87,15 +88,15 @@ const FavoriteButton = ({
             disable={false}
             onClick={handleFavoriteButton}
           >
-            {isFavoriteCar ? "Remove Favorite" : "Add Favorite"}
+            {isFavoriteCar ? 'Remove Favorite' : 'Add Favorite'}
           </styled.AddFavoriteBUtton>
-          {(errorAddFavorite || errorRemoveFavorite) && (
+          {(errorAddFavorite ?? errorRemoveFavorite) && (
             <styled.ErrorMessage>
               {errorAddFavorite
                 ? errorAddFavorite.message
                 : errorRemoveFavorite
                 ? errorRemoveFavorite.message
-                : "Error"}
+                : 'Error'}
             </styled.ErrorMessage>
           )}
           <ModalLoginVIew open={openModal} modalClose={handleCloseModal} />

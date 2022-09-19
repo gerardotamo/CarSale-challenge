@@ -1,12 +1,14 @@
-import styled from "styled-components";
-import "react-loading-skeleton/dist/skeleton.css";
-import Delorean from "../../shared/assets/images/delorean.jpg";
-import { BaseColor } from "../../config/color";
-import { Cars, User_Cars } from "../../shared/graphql/__generate__/generated";
-import { Link } from "react-router-dom";
-import { addOneDay } from "../../shared/types/Date";
-import FavoriteButton from "../../pages/ViewCarDetail/FavoriteButton";
-import { useState } from "react";
+import 'react-loading-skeleton/dist/skeleton.css';
+
+import { Cars, User_Cars } from '../../shared/graphql/__generate__/generated';
+
+import { BaseColor } from '../../config/color';
+import Delorean from '../../shared/assets/images/delorean.jpg';
+import FavoriteButton from '../../pages/ViewCarDetail/FavoriteButton';
+import { Link } from 'react-router-dom';
+import { addOneDay } from '../../shared/types/Date';
+import styled from 'styled-components';
+import { useState } from 'react';
 
 interface Props {
   data: Cars;
@@ -21,11 +23,9 @@ export const CardItem = ({
   showFavorites = false,
   loadingFavoriteCar = false,
 }: Props) => {
-  const favoriteCar = favorite_cars.find((item) => item.car_id === data.id);
+  const favoriteCar = favorite_cars.find(item => item.car_id === data.id);
 
-  const [isFavoriteCar, setIsFavoriteCar] = useState<boolean>(
-    favoriteCar ? true : false
-  );
+  const [isFavoriteCar, setIsFavoriteCar] = useState<boolean>(!!favoriteCar);
 
   if (showFavorites && !isFavoriteCar) {
     return null;
@@ -52,7 +52,7 @@ export const CardItem = ({
           <Image src={Delorean} />
           <InfoContainer>
             <Link
-              to={"/cars/" + data.id}
+              to={'/cars/' + data.id}
               state={{ favoritesCars: favorite_cars }}
             >
               <Title color={BaseColor.lightBluePrimaryColor}>
@@ -96,11 +96,11 @@ export const CardItem = ({
           </InfoContainer>
           <InfoContainer>
             <InfoItem>
-              {data.condition === "A"
-                ? "Salvage title"
-                : data.condition === "N"
-                ? "New"
-                : "Other"}
+              {data.condition === 'A'
+                ? 'Salvage title'
+                : data.condition === 'N'
+                ? 'New'
+                : 'Other'}
             </InfoItem>
           </InfoContainer>
           <InfoContainer>
@@ -127,7 +127,7 @@ export const CardItem = ({
   );
 };
 
-const Container = styled("div")`
+const Container = styled('div')`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
   margin-top: 20px;
@@ -141,32 +141,32 @@ const Container = styled("div")`
   }
 `;
 
-const Image = styled("img")`
+const Image = styled('img')`
   height: 116px;
   width: 155px;
 `;
 
-const Title = styled("h1")<{ color: string }>`
+const Title = styled('h1')<{ color: string }>`
   margin: 0;
   font-size: 18px;
-  color: ${(props) => props.color};
+  color: ${props => props.color};
 `;
-const InfoItem = styled("h2")<{ color?: string }>`
+const InfoItem = styled('h2')<{ color?: string }>`
   margin: 0;
-  color: ${(props) => props.color};
+  color: ${props => props.color};
   font-size: 15px;
 `;
-const SubInfoItem = styled("h3")<{ color?: string }>`
+const SubInfoItem = styled('h3')<{ color?: string }>`
   margin: 0;
-  color: ${(props) => props.color && props.color};
+  color: ${props => props.color && props.color};
   font-size: 10px;
 `;
 
-const InfoContainer = styled("div")`
+const InfoContainer = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   height: 100%;
 `;
 
-const Section = styled("div")``;
+const Section = styled('div')``;

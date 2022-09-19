@@ -1,6 +1,7 @@
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import styled from "styled-components";
-import { BaseColor } from "../../config/color";
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+
+import { BaseColor } from '../../config/color';
+import styled from 'styled-components';
 
 export const SkeletonCar = ({ quantity }: { quantity: number }) => {
   const quant = Array.from(Array(quantity));
@@ -51,7 +52,7 @@ export const SkeletonCar = ({ quantity }: { quantity: number }) => {
   );
 };
 
-const Container = styled("div")`
+const Container = styled('div')`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
   margin-top: 20px;
@@ -65,11 +66,11 @@ const Container = styled("div")`
   }
 `;
 
-const InfoContainer = styled("div")`
+const InfoContainer = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   height: 100%;
 `;
 
-const Section = styled("div")``;
+const Section = styled('div')``;

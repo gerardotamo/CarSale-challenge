@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { BaseColor } from "../../config/color";
-import { Type } from "../../shared/contexts/actions";
-import { useGeneralContext } from "../../shared/contexts/StoreProvider";
-import { useFindUser } from "../../shared/graphql/request/userRequest";
-import Button from "../Button/Button";
+import React, { useEffect, useState } from 'react';
+
+import { BaseColor } from '../../config/color';
+import Button from '../Button/Button';
+import { Type } from '../../shared/contexts/actions';
+import styled from 'styled-components';
+import { useFindUser } from '../../shared/graphql/request/userRequest';
+import { useGeneralContext } from '../../shared/contexts/StoreProvider';
 
 const LoginComponent = () => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
   const { findUser, errorRequest, data, loading } = useFindUser();
 
   const { dispatch } = useGeneralContext();
 
   useEffect(() => {
     if (errorRequest?.message) {
-      return setError(errorRequest?.clientErrors + "");
+      return setError(errorRequest?.clientErrors + '');
     }
 
     if (data !== undefined && data?.users.length !== 0) {
       dispatch({ type: Type.LOGIN, payload: data?.users[0] });
     }
     if (data?.users.length === 0) {
-      setError("Email not register");
+      setError('Email not register');
     }
   }, [data, errorRequest, dispatch]);
 
@@ -30,12 +31,12 @@ const LoginComponent = () => {
     e.preventDefault();
     try {
       if (!isValidEmail(email)) {
-        return setError("Email not valid");
+        return setError('Email not valid');
       }
-      setError("");
+      setError('');
       await findUser(email);
     } catch (e) {
-      console.log("ERROR CAtCH", e);
+      console.log('ERROR CAtCH', e);
     }
   };
 
@@ -49,7 +50,7 @@ const LoginComponent = () => {
         <TextInput
           placeholder="Email"
           value={email}
-          onChange={(text) => setEmail(text.target.value)}
+          onChange={text => setEmail(text.target.value)}
         />
         <ErrorText> {error} </ErrorText>
       </Section>
@@ -60,7 +61,7 @@ const LoginComponent = () => {
         borderColor={BaseColor.lightBluePrimaryColor}
         disable={loading}
       >
-        {loading ? "Loading..." : "Login"}
+        {loading ? 'Loading...' : 'Login'}
       </ButtonLogin>
     </Form>
   );
@@ -68,7 +69,7 @@ const LoginComponent = () => {
 
 export default LoginComponent;
 
-const Form = styled("form")`
+const Form = styled('form')`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,7 +79,7 @@ const Form = styled("form")`
   border-radius: 15px;
 `;
 
-const TextInput = styled("input")`
+const TextInput = styled('input')`
   height: 30px;
   border: 0px solid;
   border-bottom-width: 2px;
@@ -89,15 +90,15 @@ const TextInput = styled("input")`
   margin-bottom: 15px;
 `;
 
-const ErrorText = styled("p")`
+const ErrorText = styled('p')`
   color: red;
   margin: 0;
   font-size: 12px;
   align-content: flex-start;
 `;
-const Section = styled("div")``;
+const Section = styled('div')``;
 const ButtonLogin = styled(Button)<{ disable: boolean }>`
-  cursor: ${(props) => (props.disable ? "wait" : "pointer")};
+  cursor: ${props => (props.disable ? 'wait' : 'pointer')};
 
   width: 100%;
 `;

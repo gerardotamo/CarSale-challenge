@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { BaseColor } from "../../config/color";
+import { BaseColor } from '../../config/color';
+import styled from 'styled-components';
 
-export const Section = styled("div")`
+export const Section = styled('div')`
   right: 0;
   top: 0;
   display: flex;
@@ -12,14 +12,14 @@ export const Section = styled("div")`
   height: 65px;
   z-index: 9;
 `;
-export const SectionLogin = styled("div")`
+export const SectionLogin = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
-export const EmailText = styled("p")<{ color?: string }>`
+export const EmailText = styled('p')<{ color?: string }>`
   margin: 0;
   font-size: 15px;
   margin-right: 5px;
-  color: ${(props) => (props.color ? props.color : "white")};
+  color: ${props => (props.color ? props.color : 'white')};
 `;

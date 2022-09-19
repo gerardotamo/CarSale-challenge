@@ -1,10 +1,12 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import { BaseColor } from "../../config/color";
-import { Type } from "../../shared/contexts/actions";
-import { User } from "../../shared/contexts/provider.types";
-import { useGeneralContext } from "../../shared/contexts/StoreProvider";
-import Button from "../Button/Button";
-import * as styled from "./styled";
+import * as styled from './styled';
+
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+
+import { BaseColor } from '../../config/color';
+import Button from '../Button/Button';
+import { Type } from '../../shared/contexts/actions';
+import { User } from '../../shared/contexts/provider.types';
+import { useGeneralContext } from '../../shared/contexts/StoreProvider';
 
 const Navbar = () => {
   const { state, dispatch } = useGeneralContext();
@@ -13,7 +15,7 @@ const Navbar = () => {
 
   const handleAuthentication = () => {
     if (admin.uuid === undefined) {
-      return navigate("login");
+      return navigate('login');
     }
 
     dispatch({ type: Type.LOGOUT, payload: undefined });
@@ -22,19 +24,19 @@ const Navbar = () => {
     <>
       <styled.Section>
         {admin.uuid !== undefined && (
-          <Link to={"cars/favorites"}>
+          <Link to={'cars/favorites'}>
             <Button>Favorites</Button>
           </Link>
         )}
-        <Link to={"cars"}>
+        <Link to={'cars'}>
           <Button>Cars</Button>
         </Link>
         <styled.SectionLogin>
           <Button onClick={handleAuthentication}>
-            {admin.uuid === undefined ? "Login" : "Logout"}
+            {admin.uuid === undefined ? 'Login' : 'Logout'}
           </Button>
           {admin.uuid === undefined ? (
-            ""
+            ''
           ) : (
             <styled.EmailText color={BaseColor.lightBluePrimaryColor}>
               {admin.email}

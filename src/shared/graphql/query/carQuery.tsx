@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_CAR = gql`
   query GET_CAR($where: cars_bool_exp, $userCarsWhere: user_cars_bool_exp) {

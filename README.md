@@ -32,7 +32,6 @@ You will also see any lint errors in the console.
 </p>
 <br>
 
-
 ## Loading Cars Page
 
 <p align="center">
@@ -40,7 +39,6 @@ You will also see any lint errors in the console.
  <img src="./src/screenPicture/LoadingCarsView.png" alt="Welcome Page" width="900px"></a>
 </p>
 <br>
-
 
 ## Cars View
 
@@ -50,7 +48,6 @@ You will also see any lint errors in the console.
 </p>
 <br>
 
-
 ## Create Car Page
 
 <p align="center">
@@ -59,7 +56,6 @@ You will also see any lint errors in the console.
 </p>
 <br>
 
-
 ## Not Found Item
 
 <p align="center">
@@ -67,7 +63,6 @@ You will also see any lint errors in the console.
  <img src="./src/screenPicture/NotFoundItem.png" alt="Welcome Page" width="900px"></a>
 </p>
 <br>
-
 
 ## Favorites Cars Page
 

@@ -1,6 +1,7 @@
-import { Modal, Box } from "@mui/material";
-import { BaseColor } from "../../config/color";
-import LoginComponent from "../Login/Login";
+import { Box, Modal } from '@mui/material';
+
+import { BaseColor } from '../../config/color';
+import LoginComponent from '../Login/Login';
 
 interface ModalProps {
   open: boolean;
@@ -8,13 +9,13 @@ interface ModalProps {
 }
 
 const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 300,
   bgcolor: BaseColor.blueDarkColor,
-  border: "2px solid #000",
+  border: '2px solid #000',
 
   p: 4,
 };

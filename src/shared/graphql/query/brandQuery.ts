@@ -7,4 +7,4 @@ export const ALL_BRANDS = `
             id
         }
     }
-`
+`;

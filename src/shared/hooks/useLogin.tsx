@@ -1,6 +1,3 @@
-
-const useLogin = () => {
-    
-}
+const useLogin = () => {};
 
 export default useLogin;

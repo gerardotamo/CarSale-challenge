@@ -1,10 +1,10 @@
-import React, { useContext, useReducer, createContext } from "react";
 import {
   Appstate,
-  initialAppState,
-  appReducer,
   ReducerActions,
-} from "./appReducer";
+  appReducer,
+  initialAppState,
+} from './appReducer';
+import React, { createContext, useContext, useReducer } from 'react';
 
 const GeneralContext = createContext<
   { state: Appstate; dispatch: React.Dispatch<ReducerActions> } | undefined
@@ -23,7 +23,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 export const useGeneralContext = () => {
   const context = useContext(GeneralContext);
   if (!context) {
-    throw new Error("useGeneralContext must be used within a StoreProvider");
+    throw new Error('useGeneralContext must be used within a StoreProvider');
   }
   return context;
 };

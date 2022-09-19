@@ -1,7 +1,7 @@
-import { useLazyQuery } from "@apollo/client";
-import { FIND_CITIES } from "../query/cityQuery";
-import { Cities } from "../__generate__/generated";
-type City = Pick<Cities, "id" | "name">;
+import { Cities } from '../__generate__/generated';
+import { FIND_CITIES } from '../query/cityQuery';
+import { useLazyQuery } from '@apollo/client';
+type City = Pick<Cities, 'id' | 'name'>;
 export const useFindCity = () => {
   const [getCities, result] = useLazyQuery<{ cities: City[] }>(FIND_CITIES);
 

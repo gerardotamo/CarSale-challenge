@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const HeaderListCar = () => {
   return (
@@ -12,12 +12,12 @@ export const HeaderListCar = () => {
   );
 };
 
-const Title = styled("h1")<{ color?: string }>`
+const Title = styled('h1')<{ color?: string }>`
   margin: 0;
   font-size: 18px;
-  color: ${(props) => (props.color ? props.color : "white")};
+  color: ${props => (props.color ? props.color : 'white')};
 `;
-export const TableContainer = styled("div")`
+export const TableContainer = styled('div')`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
   margin-top: 20px;

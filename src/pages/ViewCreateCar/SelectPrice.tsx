@@ -1,11 +1,11 @@
-import * as styled from "./styled";
-import Slider from "@mui/material/Slider";
+import * as styled from './styled';
 
-import { useState } from "react";
-import { BaseColor } from "../../config/color";
-import { SelectProps } from "../../shared/types/SelectProps";
+import { BaseColor } from '../../config/color';
+import { SelectProps } from '../../shared/types/SelectProps';
+import Slider from '@mui/material/Slider';
+import { useState } from 'react';
 
-type PropsPrice = Pick<SelectProps, "isDisable" | "register" | "setValue">;
+type PropsPrice = Pick<SelectProps, 'isDisable' | 'register' | 'setValue'>;
 
 const SelectPrice = (props: PropsPrice) => {
   const [priceValue, setPriceValue] = useState<
@@ -14,22 +14,22 @@ const SelectPrice = (props: PropsPrice) => {
   const valueMax = 100000;
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    props.setValue("price", newValue);
+    props.setValue('price', newValue);
     setPriceValue(newValue);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.setValue("price", Number(event.target.value));
-    setPriceValue(event.target.value === "" ? "" : Number(event.target.value));
+    props.setValue('price', Number(event.target.value));
+    setPriceValue(event.target.value === '' ? '' : Number(event.target.value));
   };
 
   const handleBlur = () => {
     if (priceValue < 0) {
       setPriceValue(0);
-      props.setValue("price", 0);
+      props.setValue('price', 0);
     } else if (priceValue > valueMax) {
       setPriceValue(valueMax);
-      props.setValue("price", valueMax);
+      props.setValue('price', valueMax);
     }
   };
 
@@ -39,14 +39,14 @@ const SelectPrice = (props: PropsPrice) => {
       <styled.SelectOdo>
         <Slider
           size="small"
-          value={typeof priceValue === "number" ? priceValue : 0}
+          value={typeof priceValue === 'number' ? priceValue : 0}
           aria-label="Default"
           max={valueMax}
           onChange={handleSliderChange}
           disabled={props.isDisable}
         />
         <styled.Input
-          {...props.register("price")}
+          {...props.register('price')}
           value={priceValue}
           size="small"
           onChange={handleInputChange}
@@ -55,8 +55,8 @@ const SelectPrice = (props: PropsPrice) => {
             step: 1,
             min: 0,
             max: valueMax,
-            type: "number",
-            "aria-labelledby": "input-slider",
+            type: 'number',
+            'aria-labelledby': 'input-slider',
           }}
           style={{
             borderBottomColor: BaseColor.whiteColor,

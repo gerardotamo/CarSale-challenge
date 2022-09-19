@@ -1,7 +1,7 @@
-import { useLazyQuery } from "@apollo/client";
-import { FIND_MODEL } from "../query/modelQuery";
-import { Models } from "../__generate__/generated";
-type Model = Pick<Models, "id" | "name">;
+import { FIND_MODEL } from '../query/modelQuery';
+import { Models } from '../__generate__/generated';
+import { useLazyQuery } from '@apollo/client';
+type Model = Pick<Models, 'id' | 'name'>;
 export const useFindModel = () => {
   const [getModels, result] = useLazyQuery<{ models: Model[] }>(FIND_MODEL);
 

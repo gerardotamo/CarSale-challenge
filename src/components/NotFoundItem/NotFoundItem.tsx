@@ -1,5 +1,5 @@
-import NoResultsFound from "../../shared/assets/images/sorry-item-not-found.webp";
-import styled from "styled-components";
+import NoResultsFound from '../../shared/assets/images/sorry-item-not-found.webp';
+import styled from 'styled-components';
 
 export const NotFoundItem = () => {
   return (
@@ -9,7 +9,7 @@ export const NotFoundItem = () => {
     </Container>
   );
 };
-const Container = styled("div")`
+const Container = styled('div')`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -17,9 +17,9 @@ const Container = styled("div")`
   align-items: center;
 `;
 
-const Image = styled("img")`
+const Image = styled('img')`
   height: 50vh;
   width: 80vh;
 `;
 
-const Title = styled("h2")``;
+const Title = styled('h2')``;

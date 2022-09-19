@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useMultiple_QueryQuery } from "../../shared/graphql/__generate__/generated";
-import SelectBrand from "./SelectBrand";
-import SelectState from "./SelectState";
-import SelectColor from "./SelectColor";
-import * as styled from "./styled";
-import SelectDateTime from "./SelectDateTime";
-import SelectOdometer from "./SelectOdometer";
-import SelectPrice from "./SelectPrice";
-import { useAddCar } from "../../shared/graphql/request/carRequest";
-import { InputYearVin } from "./InputYearVin";
-import { Link } from "react-router-dom";
-import Button from "../../components/Button/Button";
+import * as styled from './styled';
+
+import React, { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
+import Button from '../../components/Button/Button';
+import { InputYearVin } from './InputYearVin';
+import { Link } from 'react-router-dom';
+import SelectBrand from './SelectBrand';
+import SelectColor from './SelectColor';
+import SelectDateTime from './SelectDateTime';
+import SelectOdometer from './SelectOdometer';
+import SelectPrice from './SelectPrice';
+import SelectState from './SelectState';
+import { useAddCar } from '../../shared/graphql/request/carRequest';
+import { useMultiple_QueryQuery } from '../../shared/graphql/__generate__/generated';
 
 export interface IFormInput {
   brand_id: number | string;
@@ -41,17 +43,17 @@ const ViewCreateCar = () => {
     clearErrors,
     formState: { errors },
   } = useForm<IFormInput>({
-    mode: "onBlur",
+    mode: 'onBlur',
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    const title = getValues("title")?.includes(getValues("year").toString())
-      ? getValues("title")
-      : getValues("title") + " " + getValues("year");
+  const onSubmit: SubmitHandler<IFormInput> = async data => {
+    const title = getValues('title')?.includes(getValues('year').toString())
+      ? getValues('title')
+      : getValues('title') + ' ' + getValues('year');
 
     data = {
       ...data,
-      title: title,
+      title,
     };
 
     try {
@@ -102,7 +104,7 @@ const ViewCreateCar = () => {
       <styled.Container>
         <styled.RegisterContainer>
           <styled.Title>The car is Adding</styled.Title>
-          <Link to={"/cars"}>
+          <Link to={'/cars'}>
             <Button>View Cars</Button>
           </Link>
         </styled.RegisterContainer>
@@ -166,21 +168,21 @@ const ViewCreateCar = () => {
 
               <styled.EntryGroup>
                 <styled.HeaderOption>Select Condition</styled.HeaderOption>
-                <styled.RadioButtonGroup {...register("condition")}>
+                <styled.RadioButtonGroup {...register('condition')}>
                   <styled.RadioButton
-                    {...register("condition")}
-                    type={"radio"}
-                    value={"A"}
-                    name={"condition"}
+                    {...register('condition')}
+                    type={'radio'}
+                    value={'A'}
+                    name={'condition'}
                     checked
                     disabled={loadingADdCar}
                   />
                   <styled.Label>Salvage Title</styled.Label>
                   <styled.RadioButton
-                    {...register("condition")}
-                    type={"radio"}
-                    value={"N"}
-                    name={"condition"}
+                    {...register('condition')}
+                    type={'radio'}
+                    value={'N'}
+                    name={'condition'}
                     disabled={loadingADdCar}
                   />
                   <styled.Label>New</styled.Label>

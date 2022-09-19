@@ -1,16 +1,17 @@
-import { useParams } from "react-router-dom";
-import { useGetCar } from "../../shared/graphql/request/carRequest";
-import * as styled from "./styled";
-import Delorean from "../../shared/assets/images/delorean.jpg";
-import { useGeneralContext } from "../../shared/contexts/StoreProvider";
-import FavoriteButton from "./FavoriteButton";
-import SkeletonDetailCar from "../../components/Skeleton/SkeletonDetailCar";
+import * as styled from './styled';
+
+import Delorean from '../../shared/assets/images/delorean.jpg';
+import FavoriteButton from './FavoriteButton';
+import SkeletonDetailCar from '../../components/Skeleton/SkeletonDetailCar';
+import { useGeneralContext } from '../../shared/contexts/StoreProvider';
+import { useGetCar } from '../../shared/graphql/request/carRequest';
+import { useParams } from 'react-router-dom';
 
 export const ViewCarDetail = () => {
   const { carId } = useParams();
   const { state } = useGeneralContext();
   const { data, loading } = useGetCar(
-    parseInt(carId ? carId : "0"),
+    parseInt(carId ?? '0'),
     state.auth.admin.id
   );
   const car = data?.cars[0];
@@ -59,7 +60,7 @@ export const ViewCarDetail = () => {
                 <styled.InfoItem>
                   <styled.TextItem>Condition</styled.TextItem>
                   <styled.TextItem>
-                    {car.condition === "A" ? "Salvage Damage" : "New"}
+                    {car.condition === 'A' ? 'Salvage Damage' : 'New'}
                   </styled.TextItem>
                 </styled.InfoItem>
                 <styled.Divider />

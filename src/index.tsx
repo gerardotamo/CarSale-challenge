@@ -1,32 +1,31 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { StoreProvider } from "./shared/contexts/StoreProvider";
+import './index.css';
 import {
   ApolloClient,
+  ApolloLink,
+  ApolloProvider,
   HttpLink,
   InMemoryCache,
-  ApolloProvider,
-  ApolloLink,
-} from "@apollo/client";
-import { onError } from "@apollo/client/link/error";
-
+} from '@apollo/client';
+import App from './App';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { StoreProvider } from './shared/contexts/StoreProvider';
+import { onError } from '@apollo/client/link/error';
+import reportWebVitals from './reportWebVitals';
 export const link = new HttpLink({
-  uri: "https://working-swan-45.hasura.app/v1/graphql",
+  uri: 'https://working-swan-45.hasura.app/v1/graphql',
   headers: {
-    "x-hasura-admin-secret":
-      "6G6GeneaqR7WrQDlRdLzs7NxY0r8I480LFFT3OXGmA4Ijg8xqhIguIZkQLx5oWTl",
+    'x-hasura-admin-secret':
+      '6G6GeneaqR7WrQDlRdLzs7NxY0r8I480LFFT3OXGmA4Ijg8xqhIguIZkQLx5oWTl',
   },
 });
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (networkError) {
+  if (networkError != null) {
     // handle network error
-    if (networkError.message.includes("404")) {
-      alert("Page not found");
-    } else if (networkError.message.includes("500")) {
-      alert("Server Error");
+    if (networkError.message.includes('404')) {
+      alert('Page not found');
+    } else if (networkError.message.includes('500')) {
+      alert('Server Error');
     }
   }
 });
@@ -39,7 +38,7 @@ export const client = new ApolloClient({
 });
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
