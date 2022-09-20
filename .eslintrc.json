@@ -14,8 +14,10 @@
     "project": ["tsconfig.json"],
     "sourceType": "module"
   },
+  "parser": "@typescript-eslint/parser",
   "plugins": ["react", "prettier"],
   "rules": {
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
     "@typescript-eslint/strict-boolean-expressions": "off",
@@ -26,6 +28,7 @@
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/array-type": "off",
+    "@typescript-eslint/indent": ["error", 2],
     "sort-imports": [
       "error",
       {

@@ -1,4 +1,5 @@
 import './index.css';
+
 import {
   ApolloClient,
   ApolloLink,
@@ -6,12 +7,14 @@ import {
   HttpLink,
   InMemoryCache,
 } from '@apollo/client';
+
 import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { StoreProvider } from './shared/contexts/StoreProvider';
 import { onError } from '@apollo/client/link/error';
 import reportWebVitals from './reportWebVitals';
+
 export const link = new HttpLink({
   uri: 'https://working-swan-45.hasura.app/v1/graphql',
   headers: {

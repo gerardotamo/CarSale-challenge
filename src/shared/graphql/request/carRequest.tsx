@@ -154,17 +154,11 @@ export const useGetCarFavorite = () => {
     }
   );
   const findFavoritesCars = async (user_id: number | undefined) => {
-    const userCarsWhere = user_id
-      ? {
-          user_id: {
-            _eq: user_id,
-          },
-        }
-      : {
-          user_id: {
-            _is_null: true,
-          },
-        };
+    const userCarsWhere = {
+      user_id: {
+        _eq: user_id,
+      },
+    };
 
     await getFavoritesCars({
       variables: {

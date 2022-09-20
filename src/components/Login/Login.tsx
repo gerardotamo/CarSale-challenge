@@ -16,7 +16,7 @@ const LoginComponent = () => {
 
   useEffect(() => {
     if (errorRequest?.message) {
-      return setError(errorRequest?.clientErrors + '');
+      return setError(errorRequest?.message + '');
     }
 
     if (data !== undefined && data?.users.length !== 0) {
@@ -25,7 +25,7 @@ const LoginComponent = () => {
     if (data?.users.length === 0) {
       setError('Email not register');
     }
-  }, [data, errorRequest, dispatch]);
+  }, [data, errorRequest]);
 
   const handleClickLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -44,6 +44,10 @@ const LoginComponent = () => {
     return /\S+@\S+\.\S+/.test(email);
   }
 
+  if (data?.users.length === 0) {
+    setError('Email not register');
+  }
+
   return (
     <Form>
       <Section>
@@ -52,7 +56,7 @@ const LoginComponent = () => {
           value={email}
           onChange={text => setEmail(text.target.value)}
         />
-        <ErrorText> {error} </ErrorText>
+        <ErrorText data-testid="error">{error}</ErrorText>
       </Section>
       <ButtonLogin
         border="5px"
