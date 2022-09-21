@@ -46,7 +46,7 @@ export const CardItem = ({
       : BaseColor.redPrimaryColor;
 
   return (
-    <Container>
+    <Container data-testid="car-item">
       {data && (
         <>
           <Image src={Delorean} />

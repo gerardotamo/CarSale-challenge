@@ -9,7 +9,7 @@ export const SkeletonCar = ({ quantity }: { quantity: number }) => {
     <>
       {quant.map((item, id) => {
         return (
-          <Container key={id}>
+          <Container data-testid="skeleton-car" key={id}>
             <SkeletonTheme
               baseColor={BaseColor.blueDarkColor}
               highlightColor={BaseColor.lightBluePrimaryColor}

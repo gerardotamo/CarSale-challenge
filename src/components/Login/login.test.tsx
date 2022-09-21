@@ -21,6 +21,7 @@ const mocks = [
         },
       },
     },
+    error: new Error('Email not register'),
     result: {
       data: {
         users: [
