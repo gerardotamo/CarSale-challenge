@@ -28,7 +28,8 @@
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/array-type": "off",
-    "@typescript-eslint/indent": ["error", 2],
+    "@typescript-eslint/indent": "off",
+    "indent": "off",
     "sort-imports": [
       "error",
       {
