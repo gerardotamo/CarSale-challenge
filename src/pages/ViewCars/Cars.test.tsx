@@ -1,14 +1,12 @@
 import '@testing-library/jest-dom';
 
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, screen } from '@testing-library/react';
 
 import { FIND_CARS } from '../../shared/graphql/query/carQuery';
-import { MockedProvider } from '@apollo/client/testing';
-import { StoreProvider } from '../../shared/contexts/StoreProvider';
 import { ViewCars } from './Cars';
+import { customRender } from '../../shared/utils/test/test-utils';
 
-const mocks = [
+const mocks: any[] = [
   {
     request: {
       query: FIND_CARS,
@@ -386,15 +384,7 @@ const mocks = [
 ];
 
 beforeEach(async () => {
-  render(
-    <StoreProvider>
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <BrowserRouter>
-          <ViewCars />
-        </BrowserRouter>
-      </MockedProvider>
-    </StoreProvider>
-  );
+  customRender(<ViewCars />);
 });
 
 afterEach(cleanup);
@@ -404,17 +394,26 @@ test('header should be visible', () => {
   expect(imageText).toBeInTheDocument();
 });
 
-test('Skeleton should be visible', async () => {
-  const skeleton = await screen.getAllByTestId('skeleton-car');
+test('header should be visible', () => {
+  const imageText: HTMLHeadElement = screen.getByText(/image/i);
+  expect(imageText).toBeInTheDocument();
+});
+
+test('Skeleton should be visible', () => {
+  const skeleton = screen.getAllByTestId('skeleton-car');
   expect(skeleton).toHaveLength(3);
 });
 
 test('Cars should be visible', async () => {
+  cleanup();
+  customRender(<ViewCars />, { mockApollo: mocks });
   const nameCar = await screen.findByText('Rav 4 2017');
   expect(nameCar).toBeInTheDocument();
 });
 
 test('Cars items length should be ten', async () => {
+  cleanup();
+  customRender(<ViewCars />, { mockApollo: mocks });
   const nameCar = await screen.findAllByText(/city/i);
   expect(nameCar).toHaveLength(10);
 });
@@ -534,38 +533,22 @@ const mocks2 = [
 
 test('Found car Rav4 should be two results', async () => {
   cleanup();
-
   const badRoute = '/cars?search=Rav4&orderByYear=asc';
-  render(
-    <StoreProvider>
-      <MockedProvider mocks={mocks2} addTypename={false}>
-        <MemoryRouter initialEntries={[badRoute]}>
-          <ViewCars />
-        </MemoryRouter>
-      </MockedProvider>
-    </StoreProvider>
-  );
+  customRender(<ViewCars />, { mockApollo: mocks2, badRouter: badRoute });
   const nameCar = await screen.findAllByText(/city/i);
   expect(nameCar).toHaveLength(2);
 });
 
 test('Order by year should be ascendented', async () => {
   cleanup();
-
   const badRoute = '/cars?search=Rav4&orderByYear=asc';
-  render(
-    <StoreProvider>
-      <MockedProvider mocks={mocks2} addTypename={false}>
-        <MemoryRouter initialEntries={[badRoute]}>
-          <ViewCars />
-        </MemoryRouter>
-      </MockedProvider>
-    </StoreProvider>
-  );
+  customRender(<ViewCars />, { mockApollo: mocks2, badRouter: badRoute });
   const allCarItem = await screen.findAllByTestId('car-item');
   const yearFirstCar =
-    allCarItem[0].getElementsByClassName('sc-fLlhyt bKhWuN')[2].textContent;
+    allCarItem[0].getElementsByClassName('sc-fLlhyt bKhWuN')[2].textContent ??
+    'a';
   const yearSecondCar =
-    allCarItem[1].getElementsByClassName('sc-fLlhyt bKhWuN')[2].textContent;
+    allCarItem[1].getElementsByClassName('sc-fLlhyt bKhWuN')[2].textContent ??
+    'b';
   expect(yearFirstCar < yearSecondCar).toBe(true);
 });

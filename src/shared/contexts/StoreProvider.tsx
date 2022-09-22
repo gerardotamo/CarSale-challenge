@@ -6,7 +6,7 @@ import {
 } from './appReducer';
 import React, { createContext, useContext, useReducer } from 'react';
 
-const GeneralContext = createContext<
+export const GeneralContext = createContext<
   { state: Appstate; dispatch: React.Dispatch<ReducerActions> } | undefined
 >(undefined);
 
