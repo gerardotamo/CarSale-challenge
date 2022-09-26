@@ -51,10 +51,7 @@ export const CardItem = ({
         <>
           <Image src={Delorean} />
           <InfoContainer>
-            <Link
-              to={'/cars/' + data.id}
-              state={{ favoritesCars: favorite_cars }}
-            >
+            <Link to={`/cars/${data.id}`}>
               <Title color={BaseColor.lightBluePrimaryColor}>
                 {data.title}
               </Title>
