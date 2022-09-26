@@ -3,6 +3,7 @@ import '@testing-library/jest-dom';
 import {
   FIND_CARS,
   GET_FAVORITE_CAR,
+  REMOVE_FAVORITE_CAR,
 } from '../../shared/graphql/query/carQuery';
 import { Route, Routes } from 'react-router-dom';
 import { cleanup, screen } from '@testing-library/react';
@@ -11,6 +12,7 @@ import { FavoritesCars } from './FavoritesCars';
 import { Login } from '../Login/Login';
 import ProtectedRoutes from '../../shared/routes/ProtectedRoutes/ProtectedRoutes';
 import { customRender } from '../../shared/utils/test/test-utils';
+import userEvent from '@testing-library/user-event';
 
 const ui = (
   <Routes>
@@ -445,6 +447,22 @@ const mocksFavoritesCarsIsEmpty = {
   },
 };
 
+const muckRemoveFavoriteCar = {
+  request: {
+    query: REMOVE_FAVORITE_CAR,
+    variables: {
+      deleteUserCarsByPkId: 236,
+    },
+  },
+  result: {
+    data: {
+      delete_user_cars_by_pk: {
+        id: 236,
+      },
+    },
+  },
+};
+
 const stateProvider = {
   auth: {
     admin: {
@@ -516,4 +534,21 @@ test('Favorite page not should be visible when user is not login', async () => {
 
   const loginInput = await screen.findByPlaceholderText(/email/i);
   expect(loginInput).toBeInTheDocument();
+});
+
+test('The button favorite should be remove one car favorites', async () => {
+  cleanup();
+  customRender(<FavoritesCars />, {
+    mockApollo: [mocksAllCars, mocksFavoritesCars, muckRemoveFavoriteCar],
+    badRouter,
+    stateProvider: {
+      ...stateProvider,
+    },
+  });
+
+  const buttonsFavorites = await screen.findAllByRole('button');
+  userEvent.click(buttonsFavorites[0]);
+
+  const resultButtonsFavorites = await screen.findAllByRole('button');
+  expect(resultButtonsFavorites).toHaveLength(1);
 });
