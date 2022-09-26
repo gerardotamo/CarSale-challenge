@@ -11,6 +11,7 @@ export const InputYearVin = (props: Props) => {
       <styled.EntryGroup>
         <styled.HeaderOption>VIN</styled.HeaderOption>
         <styled.TextInput
+          data-testid="vin"
           {...props.register('vin', registerOptions.vin)}
           type={'text'}
         />
@@ -21,6 +22,7 @@ export const InputYearVin = (props: Props) => {
       <styled.EntryGroup>
         <styled.HeaderOption>Salect year for car</styled.HeaderOption>
         <styled.TextInput
+          data-testid="year"
           {...props.register('year', registerOptions.year)}
           type="number"
           placeholder="year"

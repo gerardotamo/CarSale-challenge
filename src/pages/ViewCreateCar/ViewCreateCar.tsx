@@ -116,7 +116,7 @@ const ViewCreateCar = () => {
     <styled.Container>
       <styled.RegisterContainer>
         <styled.Title>Create Car</styled.Title>
-        <styled.Form onSubmit={handleSubmit(onSubmit)}>
+        <styled.Form data-testid="form" onSubmit={handleSubmit(onSubmit)}>
           {data && (
             <>
               <SelectBrand

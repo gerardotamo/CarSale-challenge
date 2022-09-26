@@ -71,11 +71,12 @@ const SelectForm = ({
     <Select
       styles={customStyles}
       options={options}
-      aria-labelledby="aria-label"
       onChange={onChange}
       isLoading={isLoading}
       noOptionsMessage={() => 'No Categories Found'}
       isDisabled={isDisable}
+      name="select"
+      inputId="select"
     />
   );
 };

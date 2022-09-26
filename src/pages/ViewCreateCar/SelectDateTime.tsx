@@ -27,7 +27,7 @@ const SelectDateTime = (props: PropsDatePicker) => {
   };
 
   return (
-    <styled.EntryGroup>
+    <styled.EntryGroup data-testid="date-picker">
       <styled.HeaderOption>Select Sale Date</styled.HeaderOption>
       <styled.DatePicker
         {...props.register('sale_date')}

@@ -24,8 +24,11 @@ const SelectColor = (props: PropsCities) => {
 
   return (
     <styled.EntryGroup>
-      <styled.HeaderOption>Select Color</styled.HeaderOption>
-      <div {...props.register('color_id', registerOptions.color_id)}>
+      <styled.HeaderOption htmlFor="select">Select Color</styled.HeaderOption>
+      <div
+        data-testid="select"
+        {...props.register('color_id', registerOptions.color_id)}
+      >
         <SelectForm
           options={colors}
           onChange={handleChangeColor}

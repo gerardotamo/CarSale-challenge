@@ -53,10 +53,13 @@ const SelectBrand = (props: PropsBrands) => {
   return (
     <>
       <styled.EntryGroup>
-        <styled.HeaderOption>Select Brand</styled.HeaderOption>
+        <styled.HeaderOption htmlFor="select">Select Brand</styled.HeaderOption>
         {brands && (
           <>
-            <div {...props.register('brand_id', registerOptions.brand_id)}>
+            <div
+              data-testid="select"
+              {...props.register('brand_id', registerOptions.brand_id)}
+            >
               <SelectForm
                 options={brands}
                 onChange={handleChangeBrand}
@@ -70,8 +73,11 @@ const SelectBrand = (props: PropsBrands) => {
         )}
       </styled.EntryGroup>
       <styled.EntryGroup>
-        <styled.HeaderOption>Select Model</styled.HeaderOption>
-        <div {...props.register('model_id', registerOptions.model_id)}>
+        <styled.HeaderOption htmlFor="select">Select Model</styled.HeaderOption>
+        <div
+          data-testid="select"
+          {...props.register('model_id', registerOptions.model_id)}
+        >
           <SelectForm
             options={models}
             onChange={handleChangeModel}

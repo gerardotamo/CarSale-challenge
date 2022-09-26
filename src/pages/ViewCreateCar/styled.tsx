@@ -39,7 +39,7 @@ export const Group = styled('div')`
   display: flex;
 `;
 
-export const HeaderOption = styled('h6')`
+export const HeaderOption = styled('label')`
   margin: 0;
 `;
 

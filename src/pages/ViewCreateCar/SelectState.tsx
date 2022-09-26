@@ -51,8 +51,11 @@ const SelectState = (props: PropsCities) => {
   return (
     <>
       <styled.EntryGroup>
-        <styled.HeaderOption>Select State</styled.HeaderOption>
-        <div {...props.register('state_id', registerOptions.state_id)}>
+        <styled.HeaderOption htmlFor="select">Select State</styled.HeaderOption>
+        <div
+          data-testid="select"
+          {...props.register('state_id', registerOptions.state_id)}
+        >
           <SelectForm
             options={state}
             onChange={handleChangeState}
@@ -64,8 +67,11 @@ const SelectState = (props: PropsCities) => {
         </div>
       </styled.EntryGroup>
       <styled.EntryGroup>
-        <styled.HeaderOption>Select City</styled.HeaderOption>
-        <div {...props.register('city_id', registerOptions.city_id)}>
+        <styled.HeaderOption htmlFor="select">Select City</styled.HeaderOption>
+        <div
+          data-testid="select"
+          {...props.register('city_id', registerOptions.city_id)}
+        >
           <SelectForm
             options={cities}
             onChange={handleChangeCity}
