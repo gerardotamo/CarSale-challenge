@@ -149,19 +149,17 @@ test('should be render change value into select brand', async () => {
 
 test('should be change value into select model when select one brand', async () => {
   cleanup();
-  const { findByTestId, getByText, findByText, findAllByTestId } = customRender(
-    <ViewCreateCar />,
-    {
+  const { findByTestId, getByText, findByText, findAllByTestId, container } =
+    customRender(<ViewCreateCar />, {
       mockApollo: [mockGetAllBrands, mockGetModelWithBrand],
-    }
-  );
+    });
   expect(await findByTestId('form')).toBeInTheDocument();
-  const select = await findAllByTestId('select'); //react-select
-  fireEvent.keyDown(select[0].firstChild, { key: 'ArrowDown' });
+  const select = await findAllByTestId('select');
+  fireEvent.keyDown(select[0].firstChild ?? container, { key: 'ArrowDown' });
   await waitFor(() => getByText('Jeep'));
   fireEvent.click(getByText('Jeep'));
   expect(await findByText('Jeep')).toBeInTheDocument();
-  fireEvent.keyDown(select[1].firstChild, { key: 'ArrowDown' });
+  fireEvent.keyDown(select[1].firstChild ?? container, { key: 'ArrowDown' });
   await waitFor(() => getByText('Patriot'));
   fireEvent.click(getByText('Patriot'));
   expect(await findByText('Patriot')).toBeInTheDocument();
@@ -169,19 +167,17 @@ test('should be change value into select model when select one brand', async () 
 
 test('should be change value into select model when select one brand', async () => {
   cleanup();
-  const { findByTestId, getByText, findByText, findAllByTestId } = customRender(
-    <ViewCreateCar />,
-    {
+  const { findByTestId, getByText, findByText, findAllByTestId, container } =
+    customRender(<ViewCreateCar />, {
       mockApollo: [mockGetAllBrands, mockGetCityWithState],
-    }
-  );
+    });
   expect(await findByTestId('form')).toBeInTheDocument();
-  const select = await findAllByTestId('select'); //react-select
-  fireEvent.keyDown(select[2].firstChild, { key: 'ArrowDown' });
+  const select = await findAllByTestId('select');
+  fireEvent.keyDown(select[2].firstChild ?? container, { key: 'ArrowDown' });
   expect(getByText('UTAH')).toBeInTheDocument();
   fireEvent.click(getByText('UTAH'));
   expect(await findByText('UTAH')).toBeInTheDocument();
-  fireEvent.keyDown(select[3].firstChild, { key: 'ArrowDown' });
+  fireEvent.keyDown(select[3].firstChild ?? container, { key: 'ArrowDown' });
   await waitFor(() => getByText('Provo'));
   fireEvent.click(getByText('Provo'));
   expect(await findByText('Provo')).toBeInTheDocument();
@@ -203,45 +199,46 @@ test('should be value of date input equal today', async () => {
 
 test('should be send create car', async () => {
   cleanup();
-  customRender(<ViewCreateCar />, {
-    mockApollo: [
-      mockGetAllBrands,
-      mockGetCityWithState,
-      mockGetModelWithBrand,
-      mockCreateNewCar,
-    ],
+  const { container, findByTestId, findAllByTestId, getByText, findByText } =
+    customRender(<ViewCreateCar />, {
+      mockApollo: [
+        mockGetAllBrands,
+        mockGetCityWithState,
+        mockGetModelWithBrand,
+        mockCreateNewCar,
+      ],
+    });
+  expect(await findByTestId('form')).toBeInTheDocument();
+  const select = await findAllByTestId('select');
+
+  fireEvent.keyDown(select[0].firstChild ?? container, {
+    key: 'ArrowDown',
   });
-  expect(await screen.findByTestId('form')).toBeInTheDocument();
-  const select = await screen.findAllByTestId('select');
+  fireEvent.click(getByText('Jeep'));
+  expect(await findByText('Jeep')).toBeInTheDocument();
+  fireEvent.keyDown(select[1].firstChild ?? container, { key: 'ArrowDown' });
+  await waitFor(() => getByText('Patriot'));
+  fireEvent.click(getByText('Patriot'));
+  expect(await findByText('Patriot')).toBeInTheDocument();
 
-  fireEvent.keyDown(select[0].firstChild, { key: 'ArrowDown' });
-  fireEvent.click(screen.getByText('Jeep'));
-  expect(await screen.findByText('Jeep')).toBeInTheDocument();
-  fireEvent.keyDown(select[1].firstChild, { key: 'ArrowDown' });
-  await waitFor(() => screen.getByText('Patriot'));
-  fireEvent.click(screen.getByText('Patriot'));
-  expect(await screen.findByText('Patriot')).toBeInTheDocument();
+  fireEvent.keyDown(select[2].firstChild ?? container, { key: 'ArrowDown' });
+  expect(getByText('UTAH')).toBeInTheDocument();
+  fireEvent.click(getByText('UTAH'));
+  fireEvent.keyDown(select[3].firstChild ?? container, { key: 'ArrowDown' });
+  await waitFor(() => getByText('Provo'));
+  fireEvent.click(getByText('Provo'));
+  expect(await findByText('Provo')).toBeInTheDocument();
 
-  fireEvent.keyDown(select[2].firstChild, { key: 'ArrowDown' });
-  expect(screen.getByText('UTAH')).toBeInTheDocument();
-  fireEvent.click(screen.getByText('UTAH'));
-  fireEvent.keyDown(select[3].firstChild, { key: 'ArrowDown' });
-  await waitFor(() => screen.getByText('Provo'));
-  fireEvent.click(screen.getByText('Provo'));
-  expect(await screen.findByText('Provo')).toBeInTheDocument();
+  fireEvent.keyDown(select[4].firstChild ?? container, { key: 'ArrowDown' });
+  expect(getByText('red')).toBeInTheDocument();
+  fireEvent.click(getByText('red'));
+  expect(await findByText('red')).toBeInTheDocument();
 
-  fireEvent.keyDown(select[4].firstChild, { key: 'ArrowDown' });
-  expect(screen.getByText('red')).toBeInTheDocument();
-  fireEvent.click(screen.getByText('red'));
-  expect(await screen.findByText('red')).toBeInTheDocument();
-
-  const vinInput: HTMLInputElement = await screen.findByTestId('vin');
-  const yearInput: HTMLInputElement = await screen.findByTestId('year');
+  const vinInput = await findByTestId('vin');
+  const yearInput = await findByTestId('year');
 
   userEvent.type(vinInput, 'AAAAAA');
   userEvent.type(yearInput, '1940');
-  expect(vinInput.value).toBe('AAAAAA');
-  expect(yearInput.value).toBe('1940');
 
   const buttonSend = await screen.findByRole('button');
   userEvent.click(buttonSend);
