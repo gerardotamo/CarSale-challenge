@@ -6,6 +6,7 @@ import { BaseColor } from '../../config/color';
 import Button from '../Button/Button';
 import { Type } from '../../shared/contexts/actions';
 import { User } from '../../shared/contexts/provider.types';
+import storage from '../../shared/utils/storage';
 import { useGeneralContext } from '../../shared/contexts/StoreProvider';
 
 const Navbar = () => {
@@ -17,7 +18,7 @@ const Navbar = () => {
     if (admin.uuid === undefined) {
       return navigate('login');
     }
-
+    storage.remove('user');
     dispatch({ type: Type.LOGOUT, payload: undefined });
   };
   return (

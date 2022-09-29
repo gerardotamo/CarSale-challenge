@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { BaseColor } from '../../config/color';
 import Button from '../Button/Button';
 import { Type } from '../../shared/contexts/actions';
+import storage from '../../shared/utils/storage';
 import styled from 'styled-components';
 import { useFindUser } from '../../shared/graphql/request/userRequest';
 import { useGeneralContext } from '../../shared/contexts/StoreProvider';
@@ -20,6 +21,7 @@ const LoginComponent = () => {
     }
 
     if (data !== undefined && data?.users.length !== 0) {
+      storage.set('user', JSON.stringify(data?.users[0]));
       dispatch({ type: Type.LOGIN, payload: data?.users[0] });
     }
     if (data?.users.length === 0) {
@@ -103,6 +105,5 @@ const ErrorText = styled('p')`
 const Section = styled('div')``;
 const ButtonLogin = styled(Button)<{ disable: boolean }>`
   cursor: ${props => (props.disable ? 'wait' : 'pointer')};
-
   width: 100%;
 `;
