@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Button from '../../components/Button/Button';
-import { InputYearVin } from './InputYearVin';
 import { Link } from 'react-router-dom';
 import SelectBrand from './SelectBrand';
 import SelectColor from './SelectColor';
@@ -12,6 +11,7 @@ import SelectDateTime from './SelectDateTime';
 import SelectOdometer from './SelectOdometer';
 import SelectPrice from './SelectPrice';
 import SelectState from './SelectState';
+import { YearVinInput } from './InputYearVin';
 import { useAddCar } from '../../shared/graphql/request/carRequest';
 import { useMultiple_QueryQuery } from '../../shared/graphql/__generate__/generated';
 
@@ -153,7 +153,7 @@ const ViewCreateCar = () => {
                 isDisable={loadingADdCar}
               />
 
-              <InputYearVin register={register} errors={errors} />
+              <YearVinInput register={register} errors={errors} />
 
               <SelectOdometer
                 register={register}

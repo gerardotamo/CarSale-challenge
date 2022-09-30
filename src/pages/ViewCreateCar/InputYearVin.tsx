@@ -5,7 +5,7 @@ import { registerOptions } from '../../shared/utils/validatios';
 
 type Props = Pick<SelectProps, 'errors' | 'register'>;
 
-export const InputYearVin = (props: Props) => {
+export const YearVinInput = (props: Props) => {
   return (
     <styled.GroupOptions>
       <styled.EntryGroup>
