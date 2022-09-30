@@ -5,10 +5,8 @@ import {
   useGetCarFavorite,
 } from '../../shared/graphql/request/carRequest';
 
-import { CardItem } from '../../components/CardItem/CardItem';
-import { Cars } from '../../shared/graphql/__generate__/generated';
+import CarsList from './CarsList';
 import { HeaderListCar } from '../../components/HeaderListCar/HeaderListCar';
-import { NotFoundItem } from '../../components/NotFoundItem/NotFoundItem';
 import { SkeletonCar } from '../../components/Skeleton/SkeletonCar';
 import { useEffect } from 'react';
 import { useGeneralContext } from '../../shared/contexts/StoreProvider';
@@ -68,23 +66,14 @@ export const ViewCars = () => {
   return (
     <styled.Container>
       <HeaderListCar />
-      {!loading ? (
-        data?.cars?.length === 0 ? (
-          <NotFoundItem />
-        ) : (
-          data?.cars.map((item: Cars, index: number) => {
-            return (
-              <CardItem
-                data={item}
-                key={index}
-                favorite_cars={favoriteCar ? favoriteCar.user_cars : []}
-                loadingFavoriteCar={loadingFavoriteCar}
-              />
-            );
-          })
-        )
-      ) : (
+      {loading ? (
         <SkeletonCar quantity={3} />
+      ) : (
+        <CarsList
+          cars={data?.cars}
+          favoriteCar={favoriteCar}
+          loadingFavoriteCar={loadingFavoriteCar}
+        />
       )}
     </styled.Container>
   );
