@@ -24,9 +24,6 @@ const LoginComponent = () => {
       storage.set('user', JSON.stringify(data?.users[0]));
       dispatch({ type: Type.LOGIN, payload: data?.users[0] });
     }
-    if (data?.users.length === 0) {
-      setError('Email not register');
-    }
   }, [data, errorRequest]);
 
   const handleClickLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -46,10 +43,6 @@ const LoginComponent = () => {
     return /\S+@\S+\.\S+/.test(email);
   }
 
-  if (data?.users.length === 0) {
-    setError('Email not register');
-  }
-
   return (
     <Form>
       <Section>
@@ -58,9 +51,12 @@ const LoginComponent = () => {
           value={email}
           onChange={text => setEmail(text.target.value)}
         />
+        {data?.users.length === 0 && (
+          <ErrorText data-testid="error">Email not register</ErrorText>
+        )}
         <ErrorText data-testid="error">{error}</ErrorText>
       </Section>
-      <ButtonLogin
+      <LoginButton
         border="5px"
         onClick={handleClickLogin}
         disabled={loading}
@@ -68,7 +64,7 @@ const LoginComponent = () => {
         disable={loading}
       >
         {loading ? 'Loading...' : 'Login'}
-      </ButtonLogin>
+      </LoginButton>
     </Form>
   );
 };
@@ -103,7 +99,8 @@ const ErrorText = styled('p')`
   align-content: flex-start;
 `;
 const Section = styled('div')``;
-const ButtonLogin = styled(Button)<{ disable: boolean }>`
+
+const LoginButton = styled(Button)<{ disable: boolean }>`
   cursor: ${props => (props.disable ? 'wait' : 'pointer')};
   width: 100%;
 `;
