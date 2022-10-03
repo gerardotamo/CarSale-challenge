@@ -1,0 +1,25 @@
+import { FIND_MODEL } from '../query/modelQuery';
+import { Models } from '../__generate__/generated';
+import { useLazyQuery } from '@apollo/client';
+type Model = Pick<Models, 'id' | 'name'>;
+export const useFindModel = () => {
+  const [getModels, result] = useLazyQuery<{ models: Model[] }>(FIND_MODEL);
+
+  const findModel = async (id: number) => {
+    await getModels({
+      variables: {
+        where: {
+          brand_id: {
+            _eq: id,
+          },
+        },
+      },
+    });
+  };
+  return {
+    findModel,
+    errorRequest: result.error,
+    data: result.data,
+    loading: result.loading,
+  };
+};
