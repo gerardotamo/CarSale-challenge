@@ -1,7 +1,5 @@
 import * as styled from './styled';
 
-import { useEffect, useState } from 'react';
-
 import { MyOption } from '../../shared/types/MyOptions';
 import SelectForm from '../../components/Select/Select';
 import { SelectProps } from '../../shared/types/SelectProps';
@@ -16,12 +14,9 @@ const SelectState = (props: PropsCities) => {
   });
   const { findCity, data, loading, errorRequest } = useFindCity();
 
-  const [cities, setCities] = useState<MyOption[]>([]);
-
   const handleChangeState = (option: MyOption | null) => {
     if (option) {
       props.setValue('state_id', option.value);
-      setCities([]);
       try {
         findCity(option.value);
       } catch (error) {
@@ -31,22 +26,13 @@ const SelectState = (props: PropsCities) => {
       props.clearErrors('state_id');
     }
   };
+
   const handleChangeCity = (option: MyOption | null) => {
     if (option) {
       props.setValue('city_id', option.value);
       props.clearErrors('city_id');
     }
   };
-
-  useEffect(() => {
-    if (data) {
-      setCities(
-        data.cities.map(item => {
-          return { value: item.id, label: item.name };
-        })
-      );
-    }
-  }, [data]);
 
   return (
     <>
@@ -73,7 +59,13 @@ const SelectState = (props: PropsCities) => {
           {...props.register('city_id', registerOptions.city_id)}
         >
           <SelectForm
-            options={cities}
+            options={
+              data
+                ? data.cities.map(item => {
+                    return { value: item.id, label: item.name };
+                  })
+                : []
+            }
             onChange={handleChangeCity}
             isLoading={loading}
             isDisable={props.isDisable}

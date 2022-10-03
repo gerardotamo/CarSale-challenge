@@ -1,7 +1,5 @@
 import * as styled from './styled';
 
-import { useEffect, useState } from 'react';
-
 import { MyOption } from '../../shared/types/MyOptions';
 import SelectForm from '../../components/Select/Select';
 import { SelectProps } from '../../shared/types/SelectProps';
@@ -16,13 +14,10 @@ const SelectBrand = (props: PropsBrands) => {
   });
   const { findModel, data, loading, errorRequest } = useFindModel();
 
-  const [models, setModels] = useState<MyOption[]>([]);
-
   const handleChangeBrand = async (option: MyOption | null) => {
     if (option) {
       props.setValue('brand_id', option.value);
       props.setValue('title', option.label);
-      setModels([]);
       props.setValue('model_id', '');
       try {
         await findModel(option.value);
@@ -39,16 +34,6 @@ const SelectBrand = (props: PropsBrands) => {
       props.clearErrors('model_id');
     }
   };
-
-  useEffect(() => {
-    if (data) {
-      setModels(
-        data.models.map(item => {
-          return { value: item.id, label: item.name };
-        })
-      );
-    }
-  }, [data]);
 
   return (
     <>
@@ -79,7 +64,13 @@ const SelectBrand = (props: PropsBrands) => {
           {...props.register('model_id', registerOptions.model_id)}
         >
           <SelectForm
-            options={models}
+            options={
+              data
+                ? data.models.map(item => {
+                    return { value: item.id, label: item.name };
+                  })
+                : []
+            }
             onChange={handleChangeModel}
             isLoading={loading}
             isDisable={props.isDisable}
