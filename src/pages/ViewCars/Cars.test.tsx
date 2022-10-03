@@ -1,12 +1,19 @@
 import '@testing-library/jest-dom';
 
-import { cleanup, screen } from '@testing-library/react';
+import {
+  ADD_FAVORITE_CAR,
+  FIND_CARS,
+  GET_FAVORITE_CAR,
+  REMOVE_FAVORITE_CAR,
+} from '../../shared/graphql/query/carQuery';
+import { act, cleanup, screen } from '@testing-library/react';
 
-import { FIND_CARS } from '../../shared/graphql/query/carQuery';
 import { ViewCars } from './Cars';
 import { customRender } from '../../shared/utils/test/test-utils';
+import stateProvider from '../../shared/utils/data/StateProvider';
+import userEvent from '@testing-library/user-event';
 
-const mocks: any[] = [
+const mocks = [
   {
     request: {
       query: FIND_CARS,
@@ -387,15 +394,18 @@ beforeEach(async () => {
   customRender(<ViewCars />);
 });
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  jest.clearAllMocks();
+});
 
 test('header should be visible', () => {
-  const imageText: HTMLHeadElement = screen.getByText(/image/i);
+  const imageText = screen.getByText(/image/i);
   expect(imageText).toBeInTheDocument();
 });
 
 test('header should be visible', () => {
-  const imageText: HTMLHeadElement = screen.getByText(/image/i);
+  const imageText = screen.getByText(/image/i);
   expect(imageText).toBeInTheDocument();
 });
 
@@ -551,4 +561,156 @@ test('Order by year should be ascendented', async () => {
     allCarItem[1].getElementsByClassName('sc-fLlhyt bKhWuN')[2].textContent ??
     'b';
   expect(yearFirstCar < yearSecondCar).toBe(true);
+});
+
+const mocksFavoritesCars = {
+  request: {
+    query: GET_FAVORITE_CAR,
+    variables: {
+      where: {
+        user_id: {
+          _eq: 1,
+        },
+      },
+    },
+  },
+  result: {
+    data: {
+      user_cars: [
+        {
+          id: 1,
+          user_id: 1,
+          car_id: 236,
+        },
+        {
+          id: 2,
+          user_id: 1,
+          car_id: 238,
+        },
+      ],
+    },
+  },
+};
+
+test('User`s favorites cars should be visible if they have favorites cars', async () => {
+  cleanup();
+  customRender(<ViewCars />, {
+    mockApollo: [...mocks, mocksFavoritesCars],
+    stateProvider: stateProvider(),
+  });
+
+  const favoritesButtons = await screen.findAllByRole('button', {
+    name: 'Remove Favorite',
+  });
+  expect(favoritesButtons).toHaveLength(2);
+});
+
+let removeMutationCalled = false;
+
+const muckRemoveFavoriteCar = {
+  request: {
+    query: REMOVE_FAVORITE_CAR,
+    variables: {
+      deleteUserCarsByPkId: 1,
+    },
+  },
+  result: () => {
+    removeMutationCalled = true;
+    return {
+      data: {
+        delete_user_cars_by_pk: {
+          id: 1,
+        },
+      },
+    };
+  },
+};
+
+test('should be call request for remove favorite car', async () => {
+  cleanup();
+  customRender(<ViewCars />, {
+    mockApollo: [...mocks, mocksFavoritesCars, muckRemoveFavoriteCar],
+    stateProvider: stateProvider(),
+  });
+
+  const favoritesButtons = await screen.findAllByRole('button', {
+    name: 'Remove Favorite',
+  });
+  expect(favoritesButtons).toHaveLength(2);
+
+  await act(async () => {
+    userEvent.click(favoritesButtons[0]);
+    mocksFavoritesCars.result.data.user_cars = [
+      mocksFavoritesCars.result.data.user_cars[1],
+    ];
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
+
+  expect(removeMutationCalled).toBe(true);
+});
+
+let addMutationCalled = false;
+
+test('should be render one favorite in list cars', async () => {
+  cleanup();
+  customRender(<ViewCars />, {
+    mockApollo: [...mocks, mocksFavoritesCars, muckRemoveFavoriteCar],
+    stateProvider: stateProvider(),
+  });
+
+  const favoritesButtons = await screen.findAllByRole('button', {
+    name: 'Remove Favorite',
+  });
+  expect(favoritesButtons).toHaveLength(1);
+});
+
+const mockAddFavoriteCar = {
+  request: {
+    query: ADD_FAVORITE_CAR,
+    variables: {
+      object: {
+        car_id: 236,
+        user_id: 1,
+      },
+    },
+  },
+  result: () => {
+    addMutationCalled = true;
+    return {
+      data: {
+        insert_user_cars_one: {
+          car_id: 236,
+          user_id: 1,
+          id: 1,
+        },
+      },
+    };
+  },
+};
+
+test('should be call request for add favorite car', async () => {
+  cleanup();
+  customRender(<ViewCars />, {
+    mockApollo: [...mocks, mocksFavoritesCars, mockAddFavoriteCar],
+    stateProvider: stateProvider(),
+  });
+
+  const favoritesButtons = await screen.findAllByRole('button', {
+    name: 'Add Favorite',
+  });
+  expect(favoritesButtons).toHaveLength(9);
+  await act(async () => {
+    userEvent.click(favoritesButtons[0]);
+    mocksFavoritesCars.result.data.user_cars = [
+      {
+        id: 1,
+        user_id: 1,
+        car_id: 236,
+      },
+      ...mocksFavoritesCars.result.data.user_cars,
+    ];
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
+
+  expect(addMutationCalled).toBe(true);
 });
