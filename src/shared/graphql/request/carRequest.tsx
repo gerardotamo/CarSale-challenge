@@ -40,7 +40,7 @@ export const useGetCar = (carId: number, userId: number | undefined) => {
 };
 
 export const useFindCar = () => {
-  const [getCars, result] = useLazyQuery(FIND_CARS);
+  const [getCars, result] = useLazyQuery<{ cars: Cars[] }>(FIND_CARS);
 
   const findCars = async (
     search: string | null,
@@ -242,41 +242,34 @@ export const useAddFavoriteCar = () => {
   };
 };
 
-export const useRemoveFavoriteCar = () => {
-  const [removeFavCar, { data, loading, error }] =
-    useMutation(REMOVE_FAVORITE_CAR);
-  const removeFavoriteCar = async (id: number, user_id: number) => {
-    const variables = {
-      variables: {
-        where: {
-          user_id: {
-            _eq: user_id,
-          },
+export const useRemoveFavoriteCar = (
+  id: number | undefined,
+  user_id: number | undefined
+) => {
+  const [removeFavCar, { data, loading, error }] = useMutation(
+    REMOVE_FAVORITE_CAR,
+    {
+      optimisticResponse: {
+        delete_user_cars_by_pk: {
+          id: user_id,
         },
       },
-    };
+      update(cache) {
+        cache.modify({
+          fields: {
+            user_cars: data => {
+              return data.filter((car: User_Cars) => car.id !== id);
+            },
+          },
+          optimistic: true,
+        });
+      },
+    }
+  );
+  const removeFavoriteCar = async (id: number, user_id: number) => {
     await removeFavCar({
       variables: {
         deleteUserCarsByPkId: id,
-      },
-      optimisticResponse: {
-        delete_user_cars_by_pk: {
-          id: Math.random() * 100,
-        },
-      },
-      update: (proxy, response, cache) => {
-        const previousData = proxy.readQuery<{ user_cars: User_Cars[] }>({
-          query: GET_FAVORITE_CAR,
-          ...variables,
-        });
-        console.log(previousData);
-        proxy.writeQuery({
-          query: GET_FAVORITE_CAR,
-          ...variables,
-          data: {
-            user_cars: previousData?.user_cars.filter(car => car.id !== id),
-          },
-        });
       },
     });
   };

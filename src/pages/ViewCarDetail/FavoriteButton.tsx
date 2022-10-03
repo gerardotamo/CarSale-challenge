@@ -39,7 +39,10 @@ const FavoriteButton = ({
   const handleCloseModal = () => setOpenModal(false);
 
   const { addFavoriteCar, errorAddFavorite, addData } = useAddFavoriteCar();
-  const { removeFavoriteCar, errorRemoveFavorite } = useRemoveFavoriteCar();
+  const { removeFavoriteCar, errorRemoveFavorite } = useRemoveFavoriteCar(
+    favoriteCar?.id,
+    state.auth.admin.id
+  );
 
   const handleFavoriteButton = async () => {
     if (!state.auth.admin.uuid) {
